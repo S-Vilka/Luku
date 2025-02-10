@@ -17,6 +17,21 @@ public class UserService {
         this.userDao = new UserDao();
     }
 
+    public boolean authenticateUser(String email, String password) {
+        User user = userDao.getUserByEmail(email);
+        if (user == null) {
+            return false;
+        }
+        try {
+            var hashedPassword = this.hashPassword(password);
+            return password.equals(user.getPassword());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void registerUser(User user) {
         // Hash the password before saving
         try {

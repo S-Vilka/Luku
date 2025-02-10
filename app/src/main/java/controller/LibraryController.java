@@ -8,20 +8,23 @@ import service.ReservationService;
 import service.NotificationService;
 import service.AuthorService;
 import service.WritesService;
-
-
+import view.View;
 
 import java.time.LocalDateTime;
 
 
 public class LibraryController {
+    private View View;
+    public void setMainApp(View View) {
+        this.View = View;
+    }
+
     private final UserService userService;
     private final BookService bookService;
     private ReservationService reservationService;
     private final NotificationService notificationService;
     private final AuthorService authorService;
     private final WritesService writesService;
-
 
     public LibraryController() {
         this.userService = new UserService();
@@ -31,6 +34,10 @@ public class LibraryController {
         this.authorService = new AuthorService();
         this.writesService = new WritesService();
 
+    }
+
+    public boolean authenticateUser(String email, String password) {
+        return userService.authenticateUser(email, password);
     }
 
     public void registerUser(String username, String password, String email, String phone, String role, int book_count, LocalDateTime created_at, LocalDateTime deleted_at) {
