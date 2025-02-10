@@ -18,13 +18,7 @@ public class BookService {
         return bookDao.getBookById(bookId);
     }
 
-    public List<Book> getBooksByCategoryId(Long categoryId) {
-        return bookDao.getBooksByCategoryId(categoryId);
-    }
 
-    public List<Book> getBooksByLanguageId(Long languageId) {
-        return bookDao.getBooksByLanguageId(languageId);
-    }
 
     public List<Book> getBooksByAuthorId(Long authorId) {
         return bookDao.getBooksByAuthorId(authorId);
@@ -38,4 +32,15 @@ public class BookService {
         return bookDao.getBookCount();
     }
 
+    public List<Book> getBooksByTitle(String title) {
+        return bookDao.getBooksByTitle(title);
+    }
+
+    public List<Book> getBooksByCategory(String genre) {
+        return bookDao.getBooksByCategory(genre);
+    }
+
+    public List<Book>  getBooksByLanguage(String language) {
+        return bookDao.getBooksByLanguage(language);
+    }
 }

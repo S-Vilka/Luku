@@ -56,6 +56,18 @@ public class UserService {
         byte[] hash = factory.generateSecret(spec).getEncoded();
         return Base64.getEncoder().encodeToString(hash);
     }
+
+    public int getUserBookCount(Long userId) {
+        return userDao.getUserBookCount(userId);
+    }
+
+    public void updateUser(User user) {
+        userDao.updateUser(user);
+    }
+
+    public User getUserById(Long Id) {
+        return userDao.getUserById(Id);
+    }
 }
 
 

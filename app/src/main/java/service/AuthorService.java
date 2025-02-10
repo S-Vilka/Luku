@@ -2,6 +2,7 @@ package service;
 
 import model.dao.impl.AuthorDao;
 import model.entity.Author;
+import model.entity.Book;
 
 import java.util.List;
 
@@ -31,5 +32,9 @@ public class AuthorService {
 
     public void deleteAuthor(Long authorId) {
         authorDao.deleteAuthor(authorId);
+    }
+
+    public List<Book> getBooksByAuthor(String authorFirstName, String authorLastName) {
+        return authorDao.getBooksByAuthorName(authorFirstName,authorLastName );
     }
 }

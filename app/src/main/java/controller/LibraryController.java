@@ -1,5 +1,6 @@
 package controller;
 
+import model.entity.Book;
 import model.entity.Reservation;
 import model.entity.User;
 import service.UserService;
@@ -11,6 +12,7 @@ import service.WritesService;
 import view.View;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class LibraryController {
@@ -19,11 +21,11 @@ public class LibraryController {
         this.View = View;
     }
 
-    private final UserService userService;
-    private final BookService bookService;
+    private UserService userService;
+    private BookService bookService;
     private ReservationService reservationService;
     private final NotificationService notificationService;
-    private final AuthorService authorService;
+    private AuthorService authorService;
     private final WritesService writesService;
 
     public LibraryController() {
@@ -59,11 +61,23 @@ public class LibraryController {
     }
 
     public void reserveBook(Long userId, Long bookId) {
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+        if ("student".equalsIgnoreCase(user.getRole()) && user.getBookCount() >= 5) {
+            throw new IllegalArgumentException("Students cannot reserve more than 5 books.");
+        }
         Reservation reservation = new Reservation();
         reservation.setUserId(userId);
         reservation.setBookId(bookId);
 
         reservationService.createReservation(reservation);
+
+        // Update the user's book count
+        user.setBookCount(user.getBookCount() + 1);
+        userService.updateUser(user);
+
     }
 
     public void extendDueDate(Long reservationId, LocalDateTime newDueDate) {
@@ -76,6 +90,49 @@ public class LibraryController {
         }
     }
 
+    public List<Book> searchBooksByAuthor(String authorFirstName, String authorLastName) {
+        return authorService.getBooksByAuthor(authorFirstName, authorLastName);
+
+    }
+
+    public List<Book> searchBooksByTitle(String title) {
+        return bookService.getBooksByTitle(title);
+    }
+
+    public List<Book> searchBooksByCategory(String genre) {
+        return bookService.getBooksByCategory(genre);
+    }
+
+    public List<Book>  searchBooksByLanguage(String language) {
+       return bookService.getBooksByLanguage(language);
+    }
+
+    public int getUserBookCount(Long userId) {
+        return userService.getUserBookCount(userId);
+    }
+
+    public  List<Reservation> getMyBookings(Long userId) {
+       return  reservationService.getReservationsByUserId(userId);
+    }
+
+    public void updateUserInfo(User user) {
+        userService.updateUser(user);
+    }
 
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void setReservationService(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
+
+    public void setAuthorService(AuthorService authorService) {
+        this.authorService = authorService;
+    }
+
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
 }
