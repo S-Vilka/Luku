@@ -101,4 +101,20 @@ public class UserDao extends BaseDao {
         user.setDeletedAt(deletedAt != null ? deletedAt.toLocalDateTime() : null);
         return user;
     }
+
+    public int getUserBookCount(Long userId) {
+        String query = "SELECT COUNT(*) FROM users WHERE user_id = ?";
+        int bookCount = 0;
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                bookCount = rs.getInt(1);
+                System.out.println("User has " + bookCount + " books");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookCount;
+    }
 }

@@ -12,29 +12,6 @@ public class Writes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //    @ManyToMany
-//    @JoinTable(
-//            name = "writes_books",
-//            joinColumns = @JoinColumn(name = "writes_id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id")
-//    )
-//    private Set<Book> books;
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "writes_authors",
-//            joinColumns = @JoinColumn(name = "writes_id"),
-//            inverseJoinColumns = @JoinColumn(name = "author_id")
-//    )
-//    private Set<Author> authors;
-//
-//    // Default constructor
-//    public Writes() {}
-//
-//    // Constructor with id
-//    public Writes(Long id) {
-//        this.id = id;
-//    }
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;

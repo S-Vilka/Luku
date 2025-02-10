@@ -24,39 +24,40 @@ public class BookDao extends BaseDao {
         return null;
     }
 
-    public List<Book> getBooksByCategoryId(Long categoryId) {
-        List<Book> books = new ArrayList<>();
-        String query = "SELECT * FROM books WHERE category_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, categoryId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                books.add(mapRowToBook(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return books;
-    }
+//    public List<Book> getBooksByCategoryId(Long categoryId) {
+//        List<Book> books = new ArrayList<>();
+//        String query = "SELECT * FROM books WHERE category_id = ?";
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            stmt.setLong(1, categoryId);
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                books.add(mapRowToBook(rs));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return books;
+//    }
 
-    public List<Book> getBooksByLanguageId(Long languageId) {
-        List<Book> books = new ArrayList<>();
-        String query = "SELECT * FROM books WHERE language_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, languageId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                books.add(mapRowToBook(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return books;
-    }
+//    public List<Book> getBooksByLanguageId(Long languageId) {
+//        List<Book> books = new ArrayList<>();
+//        String query = "SELECT * FROM books WHERE language_id = ?";
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            stmt.setLong(1, languageId);
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                books.add(mapRowToBook(rs));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return books;
+//    }
 
     public List<Book> getBooksByAuthorId(Long authorId) {
         List<Book> books = new ArrayList<>();
-        String query = "SELECT * FROM books WHERE author_id = ?";
+//        String query = "SELECT * FROM books WHERE author_id = ?";
+        String query = "SELECT b.* FROM books b JOIN writes w ON b.book_id = w.book_id WHERE w.author_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, authorId);
             ResultSet rs = stmt.executeQuery();
@@ -110,7 +111,7 @@ public class BookDao extends BaseDao {
         book.setLocation(rs.getString("location"));
 
         // Fetch authors for the book
-//        book.setAuthors(getAuthorsByBookId(book.getBookId()));
+        book.setAuthors(getAuthorsByBookId(book.getBookId()));
 
         return book;
     }
@@ -124,13 +125,58 @@ public class BookDao extends BaseDao {
             while (rs.next()) {
                 Author author = new Author();
                 author.setAuthorId(rs.getLong("author_id"));
-                author.setFirstName(rs.getString("firstName"));
-                // Set other fields of Author as needed
+//                author.setFirstName(rs.getString("firstName"));
+                // Set other fields of Author as needed for the frontend
                 authors.add(author);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return authors;
+    }
+
+    public List<Book> getBooksByTitle(String title) {
+        List<Book> books = new ArrayList<>();
+        String query = "SELECT * FROM books WHERE title LIKE ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "%" + title + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                books.add(mapRowToBook(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+    public List<Book> getBooksByCategory(String genre) {
+        List<Book> books = new ArrayList<>();
+        String query = "SELECT * FROM books WHERE category LIKE ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "%" + genre + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                books.add(mapRowToBook(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+    public List<Book>  getBooksByLanguage(String language) {
+        List<Book> books = new ArrayList<>();
+        String query = "SELECT * FROM books WHERE language LIKE ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "%" + language + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                books.add(mapRowToBook(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
     }
 }

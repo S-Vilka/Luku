@@ -11,19 +11,19 @@ import java.util.List;
 //
 public class ReservationDao extends BaseDao{
 
-//    public Reservation getReservationById(Long reservationId) {
-//        String query = "SELECT * FROM reservations WHERE reservation_id = ?";
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setLong(1, reservationId);
-//            ResultSet rs = stmt.executeQuery();
-//            if (rs.next()) {
-//                return mapRowToReservation(rs);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    public Reservation getReservationByIdWithoutUserDetails(Long reservationId) {
+        String query = "SELECT * FROM reservations WHERE reservation_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, reservationId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return mapRowToReservation(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
         public Reservation getReservationById(Long reservationId) {
@@ -51,12 +51,12 @@ public class ReservationDao extends BaseDao{
             user.setUserId(rs.getLong("user_id"));
 //            user.setUsername(rs.getString("username"));
 //            user.setEmail(rs.getString("email"));
-            // Set other user fields as needed
+            // Set other user fields as needed by frontend
             reservation.setUser(user);
 
             Book book = new Book();
             book.setBookId(rs.getLong("book_id"));
-//            book.setTitle(rs.getString("title"));
+            book.setTitle(rs.getString("title"));
             // Set other book fields as needed
             reservation.setBook(book);
 
@@ -68,7 +68,8 @@ public class ReservationDao extends BaseDao{
 
     public List<Reservation> getAllReservations() {
         List<Reservation> reservations = new ArrayList<>();
-        String query = "SELECT * FROM reservations";
+        String query = "SELECT r.*, b.title FROM reservations r " +
+                "JOIN books b ON r.book_id = b.book_id";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
@@ -92,9 +93,27 @@ public class ReservationDao extends BaseDao{
     }
 
 
+//    public List<Reservation> getReservationsByUserId(Long userId) {
+//        List<Reservation> reservations = new ArrayList<>();
+//        String query = "SELECT * FROM reservations WHERE user_id = ?";
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            stmt.setLong(1, userId);
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                reservations.add(mapRowToReservation(rs));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return reservations;
+//    }
+
     public List<Reservation> getReservationsByUserId(Long userId) {
         List<Reservation> reservations = new ArrayList<>();
-        String query = "SELECT * FROM reservations WHERE user_id = ?";
+        String query = "SELECT r.*, b.title AS title FROM reservations r " +
+//        String query = "SELECT r.*, b.book_id FROM reservations r " +
+                "JOIN books b ON r.book_id = b.book_id " +
+                "WHERE r.user_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, userId);
             ResultSet rs = stmt.executeQuery();
@@ -106,6 +125,7 @@ public class ReservationDao extends BaseDao{
         }
         return reservations;
     }
+
 
     public Long saveReservation(Reservation reservation) {
         String query = "INSERT INTO reservations (user_id, book_id, borrow_date, due_date) VALUES (?, ?, ?, ?)";
@@ -162,19 +182,11 @@ public class ReservationDao extends BaseDao{
     }
 
 
-
-//    private Reservation mapRowToReservation(ResultSet rs) throws SQLException {
-//        Reservation reservation = new Reservation();
-//        reservation.setReservationId(rs.getLong("reservation_id"));
-//        reservation.setUser(new User(rs.getLong("user_id"))); // Assuming User has a constructor that accepts userId
-//        reservation.setBook(new Book(rs.getLong("book_id"))); // Assuming Book has a constructor that accepts bookId
-//        reservation.setBorrowDate(rs.getTimestamp("borrow_date").toLocalDateTime());
-//        reservation.setDueDate(rs.getTimestamp("due_date").toLocalDateTime());
-//        return reservation;
-//    }
-
     public Reservation getReservationByUserAndBook(Long userId, Long bookId) {
-        String query = "SELECT * FROM reservations WHERE user_id = ? AND book_id = ?";
+//        String query = "SELECT * FROM reservations WHERE user_id = ? AND book_id = ?";
+        String query =   "SELECT r.*, b.title FROM reservations r " +
+                "JOIN books b ON r.book_id = b.book_id " +
+                "WHERE r.user_id = ? AND r.book_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, userId);
             stmt.setLong(2, bookId);

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorDao extends BaseDao {
-    private Connection connection;
+//    private Connection connection;
 
 
     public Author getAuthorById(Long authorId) {
@@ -79,23 +79,6 @@ public class AuthorDao extends BaseDao {
         }
     }
 
-//    public Book getBookByAuthorId(Long authorId) {
-//        String query = "SELECT * FROM books WHERE author_id = ?";
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setLong(1, authorId);
-//            ResultSet rs = stmt.executeQuery();
-//            if (rs.next()) {
-//                return mapRowToBook(rs);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-//
-//    private Book mapRowToBook(ResultSet rs) {
-//
-//    }
 
     private Author mapRowToAuthor(ResultSet rs) throws SQLException {
         Author author = new Author();
@@ -107,4 +90,33 @@ public class AuthorDao extends BaseDao {
         author.setPlaceOfBirth(rs.getString("place_of_birth"));
         return author;
     }
-}
+
+    public List<Book> getBooksByAuthorName(String authorFirstName, String authorLastName) {
+        List<Book> books = new ArrayList<>();
+        String query = "SELECT b.* FROM books b " +
+                "JOIN writes w ON b.book_id = w.book_id " +
+                "JOIN authors a ON w.author_id = a.author_id " +
+                "WHERE a.first_name LIKE ? AND a.last_name LIKE ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "%" + authorFirstName + "%");
+            stmt.setString(2, "%" + authorLastName + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                books.add(mapRowToBook(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+    private Book mapRowToBook(ResultSet rs) throws SQLException {
+        Book book = new Book();
+        book.setBookId(rs.getLong("book_id"));
+        book.setTitle(rs.getString("title"));
+        book.setCategory(rs.getString("genre"));
+        book.setPublicationDate(rs.getDate("published_date").toLocalDate());
+        // Set other fields as needed
+        return book;
+    }
+    }
