@@ -36,6 +36,11 @@ public class UserServiceTest {
             userDao = new UserDao();
             userService = new UserService();
 
+            // Drop the users table if it exists
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("DROP TABLE IF EXISTS users");
+            }
+
             // Create the users table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS users (" +
@@ -95,15 +100,57 @@ public class UserServiceTest {
         @Test
         public void testGetUserByEmail() {
             User fetchedUser = userService.getUserByEmail("newuser@example.com");
-            System.out.println("fetchedUser: " + fetchedUser);
                 if (fetchedUser != null) {
-                    System.out.println("User fetched by email: " + fetchedUser.getUsername());
                     var token = JwtUtil.generateToken(fetchedUser.getUsername());
-                    System.out.println("Token: " + token);
                     JwtUtil.parseToken(token);
                 } else {
                     System.out.println("In test email.");
                     System.out.println("User not found.");
                 }
             }
+
+        @Test
+        public void testGetUserById() {
+            User fetchedUser = userService.getUserByEmail("newuser@example.com");
+            if (fetchedUser != null) {
+                User user = userService.getUserById(fetchedUser.getUserId());
+                System.out.println("In testGetUserById");
+                System.out.println("User found: " + user);
+            } else {
+                System.out.println("User not found.");
+            }
+        }
+
+
+    @Test
+    public void testUpdateUser() {
+        // Retrieve the user from the database
+        User user = userService.getUserByEmail("newuser@example.com");
+        if (user != null) {
+            // Update the necessary fields
+            user.setUsername("testUser");
+            user.setPassword("testPass");
+            user.setPhone("123456789");
+            user.setRole("user");
+            user.setBookCount(5);
+            user.setCreatedAt(LocalDateTime.now());
+            user.setDeletedAt(null);
+
+            // Call the updateUser method
+            userService.updateUser(user);
+            System.out.println("In testUpdateUser");
+            System.out.println("User updated successfully!");
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
+    @Test
+    public void testGetUserBookCount() {
+        Long userId = 1L;
+        int bookCount = userService.getUserBookCount(userId);
+        System.out.println("In testGetUserBookCount");
+        assertEquals(0, bookCount);
+    }
+
         }

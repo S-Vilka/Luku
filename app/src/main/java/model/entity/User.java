@@ -22,9 +22,6 @@ public class User {
     private LocalDateTime deletedAt;
 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Authentication> authentications;
-
     // Default constructor
     public User() {}
 
@@ -104,15 +101,5 @@ public class User {
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
-
-    public List<Authentication> getAuthentications() {
-        return authentications;
-    }
-
-    public void setAuthentications(List<Authentication> authentications) {
-        this.authentications = authentications;
-    }
-
-
 
 }

@@ -1,10 +1,7 @@
 package service;
 
 import model.dao.impl.ReservationDao;
-import model.entity.Book;
 import model.entity.Notification;
-import model.entity.Reservation;
-import model.entity.User;
 import model.dao.impl.NotificationDao;
 
 import java.util.List;

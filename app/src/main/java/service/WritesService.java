@@ -12,18 +12,18 @@ public class WritesService {
     }
 
     public Writes getWritesById(Long writesId) {
+
         return writesDao.getWritesById(writesId);
     }
 
-    public void deleteWrites(Long writesId) {
-        writesDao.deleteWrites(writesId);
-    }
 
     public List<Writes> getWritesByBookId(Long bookId) {
+
         return writesDao.getWritesByBookId(bookId);
     }
 
     public List<Writes> getWritesByAuthorId(Long authorId) {
+
         return writesDao.getWritesByAuthorId(authorId);
     }
 }

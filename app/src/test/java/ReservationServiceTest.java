@@ -1,4 +1,3 @@
-import model.dao.impl.AuthorDao;
 import model.dao.impl.BaseDao;
 import model.dao.impl.ReservationDao;
 import model.entity.Book;
@@ -8,9 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
-import service.AuthorService;
 import service.ReservationService;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -138,6 +135,16 @@ public class ReservationServiceTest {
         assertNotNull(reservation);
         assertEquals(1L, reservation.getUser().getUserId());
         assertEquals(1L, reservation.getBook().getBookId());
+    }
+
+    @Test
+    public void testUpdateReservation() {
+        Reservation reservation = reservationService.getReservationById(1L);
+        reservation.setDueDate(LocalDateTime.now().plusDays(7).withNano(0));
+        reservationService.updateReservation(reservation);
+
+        Reservation updatedReservation = reservationService.getReservationById(1L);
+        assertEquals(reservation.getDueDate().withNano(0), updatedReservation.getDueDate().withNano(0));
     }
 
 }
