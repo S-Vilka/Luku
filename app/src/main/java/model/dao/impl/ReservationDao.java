@@ -11,19 +11,19 @@ import java.util.List;
 //
 public class ReservationDao extends BaseDao{
 
-    public Reservation getReservationByIdWithoutUserDetails(Long reservationId) {
-        String query = "SELECT * FROM reservations WHERE reservation_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, reservationId);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapRowToReservation(rs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    public Reservation getReservationByIdWithoutUserDetails(Long reservationId) {
+//        String query = "SELECT * FROM reservations WHERE reservation_id = ?";
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            stmt.setLong(1, reservationId);
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                return mapRowToReservation(rs);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
 
         public Reservation getReservationById(Long reservationId) {
@@ -111,7 +111,6 @@ public class ReservationDao extends BaseDao{
     public List<Reservation> getReservationsByUserId(Long userId) {
         List<Reservation> reservations = new ArrayList<>();
         String query = "SELECT r.*, b.title AS title FROM reservations r " +
-//        String query = "SELECT r.*, b.book_id FROM reservations r " +
                 "JOIN books b ON r.book_id = b.book_id " +
                 "WHERE r.user_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -165,16 +164,6 @@ public class ReservationDao extends BaseDao{
             stmt.setTimestamp(3, Timestamp.valueOf(reservation.getBorrowDate()));
             stmt.setTimestamp(4, Timestamp.valueOf(reservation.getDueDate()));
             stmt.setLong(5, reservation.getReservationId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteReservation(Long reservationId) {
-        String query = "DELETE FROM reservations WHERE reservation_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, reservationId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

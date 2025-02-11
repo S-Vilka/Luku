@@ -42,13 +42,19 @@ public class AuthorDao extends BaseDao {
 
     public void saveAuthor(Author author) {
         String query = "INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, author.getFirstName());
             stmt.setString(2, author.getLastName());
             stmt.setString(3, author.getDescription());
             stmt.setDate(4, Date.valueOf(author.getDateOfBirth()));
             stmt.setString(5, author.getPlaceOfBirth());
             stmt.executeUpdate();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                author.setAuthorId(generatedKeys.getLong(1));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

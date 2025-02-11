@@ -35,6 +35,7 @@ public class Writes {
     }
 
     public void setWritesId(Long id) {
+
         this.id = id;
     }
 
@@ -52,6 +53,7 @@ public class Writes {
     }
 
     public void setBook(Book book) {
+
         this.book = book;
     }
 }

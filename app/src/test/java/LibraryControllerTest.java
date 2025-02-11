@@ -236,13 +236,6 @@ public class LibraryControllerTest extends BaseDao {
         // Verify that the reservationService.getReservationsByUserId method was called
         verify(reservationService).getReservationsByUserId(userId);
 
-        // Verify the result
-//        assertEquals(reservations, result);
-//        assertEquals(2, result.size());
-//        assertEquals("Effective Java", result.get(0).getBook().getTitle());
-//        assertEquals(101L, result.get(0).getBook().getBookId());
-//        assertEquals("Clean Code", result.get(1).getBook().getTitle());
-//        assertEquals(102L, result.get(1).getBook().getBookId());
     }
 
     @Test

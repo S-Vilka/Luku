@@ -1,6 +1,5 @@
 package model.dao.impl;
 
-//import model.dao.UserDao;
 import model.entity.User;
 import java.sql.*;
 
@@ -23,19 +22,6 @@ public class UserDao extends BaseDao {
         }
     }
 
-    public User getUserByUsername(String username) {
-        String query = "SELECT * FROM users WHERE username = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapRowToUser(rs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public User getUserById(Long userId) {
         String query = "SELECT * FROM users WHERE user_id = ?";
@@ -103,7 +89,7 @@ public class UserDao extends BaseDao {
     }
 
     public int getUserBookCount(Long userId) {
-        String query = "SELECT COUNT(*) FROM users WHERE user_id = ?";
+        String query = "SELECT book_count FROM users WHERE user_id = ?";
         int bookCount = 0;
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, userId);

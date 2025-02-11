@@ -8,7 +8,6 @@ import service.BookService;
 import service.ReservationService;
 import service.NotificationService;
 import service.AuthorService;
-import service.WritesService;
 import view.View;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public class LibraryController {
     private ReservationService reservationService;
     private final NotificationService notificationService;
     private AuthorService authorService;
-    private final WritesService writesService;
+//    private final WritesService writesService;
 
     public LibraryController() {
         this.userService = new UserService();
@@ -34,7 +33,7 @@ public class LibraryController {
         this.reservationService = new ReservationService();
         this.notificationService = new NotificationService();
         this.authorService = new AuthorService();
-        this.writesService = new WritesService();
+//        this.writesService = new WritesService();
 
     }
 

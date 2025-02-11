@@ -5,13 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.MariaDBContainer;
 import org.testcontainers.junit.jupiter.Container;
-import service.AuthorService;
 import service.BookService;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,6 +34,13 @@ public class BookServiceTest {
             BaseDao.setConnection(connection);
             bookDao = new BookDao();
             bookService = new BookService();
+
+            // Drop the tables if they exist
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("DROP TABLE IF EXISTS writes");
+                stmt.execute("DROP TABLE IF EXISTS books");
+                stmt.execute("DROP TABLE IF EXISTS authors");
+            }
 
             // Create the authors table
             try (Statement stmt = connection.createStatement()) {
@@ -64,7 +69,6 @@ public class BookServiceTest {
                         ")");
             }
 
-            // Insert a sample author
             // Create the writes table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS writes (" +
@@ -144,6 +148,13 @@ public class BookServiceTest {
     @Test
     public void testGetBooksByLanguage() {
         List<Book> books = bookService.getBooksByLanguage("English");
+        assertNotNull(books);
+        assertEquals(1, books.size());
+    }
+
+    @Test
+    public void testGetBooksbyAuthorId() {
+        List<Book> books = bookService.getBooksByAuthorId(1L);
         assertNotNull(books);
         assertEquals(1, books.size());
     }

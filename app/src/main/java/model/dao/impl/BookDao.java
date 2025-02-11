@@ -24,35 +24,6 @@ public class BookDao extends BaseDao {
         return null;
     }
 
-//    public List<Book> getBooksByCategoryId(Long categoryId) {
-//        List<Book> books = new ArrayList<>();
-//        String query = "SELECT * FROM books WHERE category_id = ?";
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setLong(1, categoryId);
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                books.add(mapRowToBook(rs));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return books;
-//    }
-
-//    public List<Book> getBooksByLanguageId(Long languageId) {
-//        List<Book> books = new ArrayList<>();
-//        String query = "SELECT * FROM books WHERE language_id = ?";
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setLong(1, languageId);
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                books.add(mapRowToBook(rs));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return books;
-//    }
 
     public List<Book> getBooksByAuthorId(Long authorId) {
         List<Book> books = new ArrayList<>();
@@ -125,7 +96,6 @@ public class BookDao extends BaseDao {
             while (rs.next()) {
                 Author author = new Author();
                 author.setAuthorId(rs.getLong("author_id"));
-//                author.setFirstName(rs.getString("firstName"));
                 // Set other fields of Author as needed for the frontend
                 authors.add(author);
             }

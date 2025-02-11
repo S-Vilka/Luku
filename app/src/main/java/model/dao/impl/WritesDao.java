@@ -15,7 +15,7 @@ public class WritesDao extends BaseDao {
         String query = "SELECT * FROM writes WHERE writes_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, writesId);
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return mapRowToWrites(rs);
             }
@@ -31,7 +31,7 @@ public class WritesDao extends BaseDao {
             try (PreparedStatement stmt = connection.prepareStatement(query)) {
 //                stmt.setLong(1, writesId);
             stmt.setLong(1, authorId);
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 writes.add(mapRowToWrites(rs));
             }
@@ -47,7 +47,7 @@ public class WritesDao extends BaseDao {
             try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
             stmt.setLong(1, bookId);
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 writes.add(mapRowToWrites(rs));
             }
@@ -57,38 +57,6 @@ public class WritesDao extends BaseDao {
         return writes;
     }
 
-    public void saveWrites(Writes writes) {
-        String query = "INSERT INTO writes (author_id, book_id) VALUES (?, ?)";
-            try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, writes.getAuthor().getAuthorId());
-            stmt.setLong(2, writes.getBook().getBookId());
-            stmt.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateWrites(Writes writes) {
-        String query = "UPDATE writes SET author_id = ?, book_id = ? WHERE writes_id = ?";
-            try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, writes.getAuthor().getAuthorId());
-            stmt.setLong(2, writes.getBook().getBookId());
-            stmt.setLong(3, writes.getWritesId());
-            stmt.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteWrites(Long writesId) {
-        String query = "DELETE FROM writes WHERE writes_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, writesId);
-            stmt.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private Writes mapRowToWrites(ResultSet rs) throws SQLException {
         Writes writes = new Writes();

@@ -26,7 +26,7 @@ public class NotificationDao extends BaseDao {
 
     public List<Notification> getNotificationsByUserId(Long userId) {
         List<Notification> notifications = new ArrayList<>();
-        String query = "SELECT * FROM notification WHERE user_id = ?";
+        String query = "SELECT * FROM notifications WHERE user_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, userId);
             ResultSet rs = stmt.executeQuery();
@@ -77,16 +77,4 @@ public class NotificationDao extends BaseDao {
 
     }
 
-    public Long getLastInsertedNotificationId() {
-        String query = "SELECT LAST_INSERT_ID()";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getLong(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
