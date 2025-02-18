@@ -41,6 +41,23 @@ public class LibraryController {
         return userService.authenticateUser(email, password);
     }
 
+    public String getUserNameByEmail(String email) {
+        return userService.getUserByEmail(email).getUsername();
+    }
+
+    public void registerUserSimple(String username, String password, String email) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setRole("student");
+        user.setBookCount(0);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setDeletedAt(null);
+
+        userService.registerUser(user);
+    }
+
     public void registerUser(String username, String password, String email, String phone, String role, int book_count, LocalDateTime created_at, LocalDateTime deleted_at) {
         User user = new User();
         user.setUsername(username);
@@ -57,6 +74,10 @@ public class LibraryController {
 
     public User getUserByEmail(String email) {
         return userService.getUserByEmail(email);
+    }
+
+    public List<Book> getBooksByCategory(String category) {
+        return bookService.getBooksByCategory(category);
     }
 
     public void reserveBook(Long userId, Long bookId) {
