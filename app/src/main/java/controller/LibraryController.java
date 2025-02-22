@@ -8,6 +8,8 @@ import service.BookService;
 import service.ReservationService;
 import service.NotificationService;
 import service.AuthorService;
+import util.AuthManager;
+import util.JwtUtil;
 import view.View;
 
 import java.time.LocalDateTime;
@@ -16,6 +18,7 @@ import java.util.List;
 
 public class LibraryController {
     private View View;
+
     public void setMainApp(View View) {
         this.View = View;
     }
@@ -25,7 +28,6 @@ public class LibraryController {
     private ReservationService reservationService;
     private final NotificationService notificationService;
     private AuthorService authorService;
-//    private final WritesService writesService;
 
     public LibraryController() {
         this.userService = new UserService();
@@ -33,8 +35,12 @@ public class LibraryController {
         this.reservationService = new ReservationService();
         this.notificationService = new NotificationService();
         this.authorService = new AuthorService();
-//        this.writesService = new WritesService();
 
+    }
+
+    public boolean validateToken() {
+        String token = AuthManager.getInstance().getToken();
+        return JwtUtil.validateToken(token);
     }
 
     public boolean authenticateUser(String email, String password) {
@@ -77,10 +83,16 @@ public class LibraryController {
     }
 
     public List<Book> getBooksByCategory(String category) {
+        if (!validateToken()) {
+            throw new SecurityException("Invalid token");
+        }
         return bookService.getBooksByCategory(category);
     }
 
     public void reserveBook(Long userId, Long bookId) {
+        if (!validateToken()) {
+            throw new SecurityException("Invalid token");
+        }
         User user = userService.getUserById(userId);
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
@@ -88,6 +100,7 @@ public class LibraryController {
         if ("student".equalsIgnoreCase(user.getRole()) && user.getBookCount() >= 5) {
             throw new IllegalArgumentException("Students cannot reserve more than 5 books.");
         }
+
         Reservation reservation = new Reservation();
         reservation.setUserId(userId);
         reservation.setBookId(bookId);
@@ -97,8 +110,8 @@ public class LibraryController {
         // Update the user's book count
         user.setBookCount(user.getBookCount() + 1);
         userService.updateUser(user);
-
     }
+
 
     public void extendDueDate(Long reservationId, LocalDateTime newDueDate) {
         Reservation reservation = reservationService.getReservationById(reservationId);
@@ -123,16 +136,16 @@ public class LibraryController {
         return bookService.getBooksByCategory(genre);
     }
 
-    public List<Book>  searchBooksByLanguage(String language) {
-       return bookService.getBooksByLanguage(language);
+    public List<Book> searchBooksByLanguage(String language) {
+        return bookService.getBooksByLanguage(language);
     }
 
     public int getUserBookCount(Long userId) {
         return userService.getUserBookCount(userId);
     }
 
-    public  List<Reservation> getMyBookings(Long userId) {
-       return  reservationService.getReservationsByUserId(userId);
+    public List<Reservation> getMyBookings(Long userId) {
+        return reservationService.getReservationsByUserId(userId);
     }
 
     public void updateUserInfo(User user) {

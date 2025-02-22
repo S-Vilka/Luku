@@ -39,9 +39,9 @@ public class ReservationService {
         return reservationDao.getReservationsByUserId(userId);
     }
 
+
     public void createReservation(Reservation reservation) {
         Long reservationId = reservationDao.saveReservation(reservation);
-
         // create notification
         notificationService.createNotificationForReservation(reservationId);
     }

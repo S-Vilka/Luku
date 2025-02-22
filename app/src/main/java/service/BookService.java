@@ -1,7 +1,6 @@
 package service;
 
 import model.dao.impl.BookDao;
-import model.entity.Author;
 import model.entity.Book;
 
 import java.util.List;
@@ -17,7 +16,6 @@ public class BookService {
     public Book getBookById(Long bookId) {
         return bookDao.getBookById(bookId);
     }
-
 
 
     public List<Book> getBooksByAuthorId(Long authorId) {
