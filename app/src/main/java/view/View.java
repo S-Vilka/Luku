@@ -99,8 +99,12 @@ public class View extends Application {
 
     @FXML
     private void chooseFiction() throws Exception {
-        loadScene("/categoryFiction.fxml");
         List<Book> books = controller.getBooksByCategory("Fiction");
+        if (books == null || books.isEmpty()) {
+            System.out.println("Access denied. Invalid token.");
+            return;
+        }
+        loadScene("/categoryFiction.fxml");
         Book book = books.get(0);
         bookName.setText(book.getTitle().toString());
         publicationDate.setText(book.getPublicationDate().toString());

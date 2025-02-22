@@ -7,6 +7,8 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import model.dao.impl.UserDao;
+import util.AuthManager;
+import util.JwtUtil;
 
 //@Service
 public class UserService {
@@ -24,12 +26,15 @@ public class UserService {
         }
         try {
             var hashedPassword = this.hashPassword(password);
-            return password.equals(user.getPassword());
-        }
-        catch (Exception e) {
+            if (hashedPassword.equals(user.getPassword())) {
+                String token = JwtUtil.generateToken(user.getUsername());
+                AuthManager.getInstance().setToken(token);
+                return true;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+            return false;
     }
 
     public void registerUser(User user) {
@@ -38,6 +43,8 @@ public class UserService {
             var password = this.hashPassword(user.getPassword());
             user.setPassword(password); // Save the hashed password
             userDao.saveUser(user);
+            String token = JwtUtil.generateToken(user.getUsername());
+            AuthManager.getInstance().setToken(token);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -56,6 +63,7 @@ public class UserService {
         byte[] hash = factory.generateSecret(spec).getEncoded();
         return Base64.getEncoder().encodeToString(hash);
     }
+
 
     public int getUserBookCount(Long userId) {
         return userDao.getUserBookCount(userId);

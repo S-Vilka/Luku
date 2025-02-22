@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.matchers.text.ValuePrinter.print;
 
@@ -51,6 +52,9 @@ public class LibraryControllerTest extends BaseDao {
         libraryController.setReservationService(reservationService);
         libraryController.setAuthorService(authorService);
         libraryController.setBookService(bookService);
+
+        // Mock the token validation
+//        Mockito.when(reservationService.validateToken()).thenReturn(true);
     }
 
     @Test
@@ -82,6 +86,12 @@ public class LibraryControllerTest extends BaseDao {
         // Mock the behavior of userService.getUserById
         Mockito.when(userService.getUserById(userId)).thenReturn(user);
 
+        // Create a mock of LibraryController
+        LibraryController mockLibraryController = Mockito.mock(LibraryController.class);
+
+        // Mock the token validation to return false
+        Mockito.when(mockLibraryController.validateToken()).thenReturn(false);
+
         // Call the method to be tested
         libraryController.reserveBook(userId, bookId);
 
@@ -96,6 +106,40 @@ public class LibraryControllerTest extends BaseDao {
         // Verify that the user's book count was updated
         assertEquals(4, user.getBookCount());
         verify(userService).updateUser(user);
+    }
+
+    @Test
+    public void testReserveBookWithInvalidToken() {
+        Long userId = 1L;
+        Long bookId = 2L;
+
+        // Mock the User object
+        User user = new User();
+        user.setUserId(userId);
+        user.setRole("student");
+        user.setBookCount(3);
+
+        // Mock the behavior of userService.getUserById
+        Mockito.when(userService.getUserById(userId)).thenReturn(user);
+
+        // Create a spy of LibraryController
+        LibraryController spyLibraryController = Mockito.spy(libraryController);
+
+        // Mock the token validation to return false
+        Mockito.doReturn(false).when(spyLibraryController).validateToken();
+
+        // Call the method to be tested and expect a SecurityException
+        SecurityException exception = assertThrows(SecurityException.class, () -> {
+            spyLibraryController.reserveBook(userId, bookId);
+        });
+
+        assertEquals("Invalid token", exception.getMessage());
+
+        // Verify that the reservationService.createReservation method was not called
+        verify(reservationService, Mockito.never()).createReservation(Mockito.any(Reservation.class));
+
+        // Verify that the user's book count was not updated
+        verify(userService, Mockito.never()).updateUser(user);
     }
 
 
