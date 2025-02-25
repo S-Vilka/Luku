@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,58 +14,16 @@
 
 <AnchorPane minHeight="1117.0" minWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <AnchorPane layoutY="618.0">
+        <AnchorPane layoutX="-1.0" layoutY="796.0" prefHeight="316.0" prefWidth="1739.0">
             <children>
                 <ImageView fitHeight="525.0" fitWidth="1739.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@Library_Backgroudn.png" />
+                        <Image url="@Library_Backgroudn%20-%20Copy.png" />
                     </image>
                 </ImageView>
             </children>
         </AnchorPane>
-        <AnchorPane layoutX="6.0" layoutY="264.0" prefHeight="386.0" prefWidth="1022.0">
-         <children>
-            <Label layoutX="290.0" layoutY="50.0" text="Name">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="changeNameField" layoutX="360.0" layoutY="46.0" prefHeight="32.0" prefWidth="399.0" />
-            <Label layoutX="290.0" layoutY="110.0" text="Email">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="290.0" layoutY="170.0" text="Phone">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="changeEmailField" layoutX="360.0" layoutY="106.0" prefHeight="32.0" prefWidth="399.0" />
-            <TextField fx:id="changePhoneField" layoutX="360.0" layoutY="166.0" prefHeight="32.0" prefWidth="399.0" />
-            <Button fx:id="editNameButton" layoutX="790.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="editEmailButton" layoutX="790.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="editPhoneButton" layoutX="790.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="changePasswordButton" layoutX="290.0" layoutY="230.0" mnemonicParsing="false" onAction="#changePasswordField" prefHeight="32.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Change Password">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-         </children>
-        </AnchorPane>
-        <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="99.0" prefWidth="552.0">
+        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="99.0" prefWidth="552.0">
             <children>
                 <ImageView fitHeight="65.0" fitWidth="153.0" layoutX="229.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -103,7 +60,7 @@
                 <Circle fill="#f54f03" layoutX="690.0" layoutY="125.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
             </children>
         </AnchorPane>
-        <AnchorPane layoutX="1308.0" layoutY="127.0" prefHeight="45.0" prefWidth="155.0">
+        <AnchorPane layoutX="1298.0" layoutY="117.0" prefHeight="45.0" prefWidth="155.0">
             <children>
                 <Button fx:id="searchButton" mnemonicParsing="false" onAction="#chooseSearch" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff;" text="Search">
                     <font>
@@ -114,7 +71,57 @@
                 <Rectangle arcHeight="5.0" arcWidth="5.0" height="13.0" layoutX="126.0" layoutY="26.0" rotate="-45.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="categoryList" layoutX="231.0" layoutY="191.0" prefHeight="157.0" prefWidth="148.0" visible="false">
+        <AnchorPane layoutX="1304.0" layoutY="61.0">
+            <children>
+                <Button fx:id="userProfile" layoutX="38.0" mnemonicParsing="false" onAction="#chooseUserProfile" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff;" text="Username ">
+                    <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                    </font>
+                </Button>
+                <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@profile_pic.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#eeeeee" height="328.0" layoutX="303.0" layoutY="292.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
+        <ImageView fitHeight="265.0" fitWidth="202.0" layoutX="347.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@bookpicture.jpg" />
+            </image>
+        </ImageView>
+        <Button fx:id="checkAuthorsBooks" layoutX="541.0" layoutY="538.0" mnemonicParsing="false" onAction="#checkAuthorsBooks" prefHeight="43.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Check theit books">
+            <font>
+                <Font name="System Bold Italic" size="18.0" />
+            </font>
+        </Button>
+        <Label fx:id="bookName" layoutX="538.0" layoutY="317.0" prefHeight="32.0" prefWidth="249.0" text="S. E. Hinton">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font>
+        </Label>
+        <Label fx:id="author" layoutX="540.0" layoutY="350.0" prefHeight="27.0" prefWidth="247.0" text="22 July 1948">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="publicationDate" layoutX="541.0" layoutY="373.0" prefHeight="27.0" prefWidth="247.0" text="Oklahoma, USA">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="540.0" layoutY="410.0" prefHeight="32.0" prefWidth="249.0" text="Known for:">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Label>
+        <Label layoutX="540.0" layoutY="440.0" prefHeight="30.0" prefWidth="247.0" text="The Outsiders (1983) ">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <AnchorPane fx:id="categoryList" layoutX="221.0" layoutY="181.0" prefHeight="157.0" prefWidth="148.0" visible="false">
             <children>
                 <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
                     <children>
@@ -154,7 +161,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="languageList" layoutX="420.0" layoutY="190.0" prefHeight="114.0" prefWidth="148.0" visible="false">
+        <AnchorPane fx:id="languageList" layoutX="410.0" layoutY="180.0" prefHeight="114.0" prefWidth="148.0" visible="false">
             <children>
                 <VBox prefHeight="114.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
                     <children>
@@ -186,7 +193,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="searchBox" layoutX="882.0" layoutY="205.0" visible="false">
+        <AnchorPane fx:id="searchBox" layoutX="872.0" layoutY="195.0" visible="false">
             <children>
                 <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="76.0" stroke="#979797" strokeType="INSIDE" strokeWidth="2.0" width="572.0" />
                 <TextField fx:id="searchBar" layoutX="26.0" layoutY="21.0" prefHeight="32.0" prefWidth="347.0" promptText="Search" />
@@ -202,98 +209,105 @@
                 </ImageView>
             </children>
         </AnchorPane>
-      <AnchorPane layoutX="1314.0" layoutY="71.0">
+        <AnchorPane fx:id="userList" layoutX="1320.0" layoutY="110.0" prefHeight="157.0" prefWidth="148.0" visible="false">
+            <children>
+                <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
+                    <children>
+                        <Button fx:id="profileButton" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Profile">
+                            <font>
+                                <Font name="System Bold Italic" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="myBookingsButton" mnemonicParsing="false" onAction="#chooseBookings" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Bookings">
+                            <font>
+                                <Font name="System Bold Italic" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Logout">
+                            <font>
+                                <Font name="System Bold Italic" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <Button fx:id="showMoreButton" layoutX="824.0" layoutY="672.0" mnemonicParsing="false" onAction="#changePasswordField" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Show more">
+            <font>
+                <Font name="System Bold Italic" size="18.0" />
+            </font>
+        </Button>
+        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#eeeeee" height="328.0" layoutX="963.0" layoutY="292.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
+        <ImageView fitHeight="265.0" fitWidth="202.0" layoutX="1007.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@bookpicture.jpg" />
+            </image>
+        </ImageView>
+        <Button fx:id="checkAuthorsBooks" layoutX="1201.0" layoutY="538.0" mnemonicParsing="false" onAction="#checkAuthorsBooks" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Check theit books">
+            <font>
+                <Font name="System Bold Italic" size="18.0" />
+            </font>
+        </Button>
+        <Label fx:id="bookName1" layoutX="1198.0" layoutY="317.0" prefHeight="32.0" prefWidth="249.0" text="F. Scott Fitzgerald">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font>
+        </Label>
+        <Label fx:id="author1" layoutX="1200.0" layoutY="350.0" prefHeight="27.0" prefWidth="247.0" text="1896-1940">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="publicationDate1" layoutX="1201.0" layoutY="373.0" prefHeight="27.0" prefWidth="247.0" text="Minnesota, USA">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="1199.0" layoutY="410.0" prefHeight="32.0" prefWidth="249.0" text="Known for: ">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Label>
+      <AnchorPane layoutX="252.0" layoutY="167.0" prefHeight="94.0" prefWidth="969.0">
          <children>
-            <Button fx:id="userProfile" layoutX="38.0" mnemonicParsing="false" onAction="#chooseUserProfile" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff;" text="Username ">
+              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutY="59.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="201.0" />
+              <Label layoutX="4.0" layoutY="18.0" text="Authors">
+                  <font>
+                      <Font name="System Bold" size="30.0" />
+                  </font>
+              </Label>
+            <TextField layoutX="239.0" layoutY="30.0" prefHeight="32.0" prefWidth="526.0" promptText="Search" style="-fx-background-color: #ffffff;" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="2.0" layoutX="237.0" layoutY="61.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="529.0" />
+            <Button fx:id="searchAuthorsButton" layoutX="791.0" layoutY="27.0" mnemonicParsing="false" onAction="#searchAutors" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Search">
                <font>
-                  <Font name="System Bold Italic" size="20.0" />
+                  <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@profile_pic.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="260.0" layoutY="231.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-      <Label layoutX="261.0" layoutY="186.0" text="My Information">
+      <Label fx:id="availability2" layoutX="540.0" layoutY="470.0" prefHeight="30.0" prefWidth="247.0" text="Rumble Fish (1990)">
          <font>
-            <Font name="System Bold" size="30.0" />
+            <Font size="18.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="1028.0" layoutY="264.0" prefHeight="386.0" prefWidth="707.0">
-         <children>
-            <ImageView fx:id="profilePicture1" fitHeight="158.0" fitWidth="176.0" layoutX="30.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@profile_pic.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="changePictureButton" layoutX="60.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Change">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="userList" layoutX="1330.0" layoutY="120.0" prefHeight="157.0" prefWidth="148.0" visible="false">
-         <children>
-            <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
-               <children>
-                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Profile">
-                     <font>
-                        <Font name="System Bold Italic" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="myBookingsButton" mnemonicParsing="false" onAction="#chooseBookings" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Bookings">
-                     <font>
-                        <Font name="System Bold Italic" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Logout">
-                     <font>
-                        <Font name="System Bold Italic" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="6.0" layoutY="264.0" prefHeight="386.0" prefWidth="1022.0" visible="false">
-         <children>
-            <Label layoutX="221.0" layoutY="49.0" text="Old Password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="212.0" layoutY="108.0" text="New Password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="165.0" layoutY="170.0" text="Confrim New Password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="confirmPasswordChangeButton" layoutX="290.0" layoutY="230.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="32.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Change Password">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <PasswordField fx:id="oldPasswordInput" layoutX="360.0" layoutY="46.0" prefHeight="32.0" prefWidth="399.0" />
-            <PasswordField fx:id="newPasswordInput" layoutX="360.0" layoutY="106.0" prefHeight="32.0" prefWidth="399.0" />
-            <PasswordField fx:id="confirmPasswordInput" layoutX="360.0" layoutY="166.0" prefHeight="32.0" prefWidth="399.0" />
-         </children>
-      </AnchorPane>
+      <Label fx:id="availability1" layoutX="1199.0" layoutY="440.0" prefHeight="30.0" prefWidth="247.0" text="The Great Gatsby">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="availability21" layoutX="1199.0" layoutY="470.0" prefHeight="30.0" prefWidth="247.0" text="Grit">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

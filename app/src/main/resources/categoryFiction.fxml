@@ -122,7 +122,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="availability" layoutX="540.0" layoutY="437.0" prefHeight="27.0" prefWidth="247.0" text="Available">
+      <Label fx:id="availability" layoutX="540.0" layoutY="437.0" prefHeight="27.0" prefWidth="247.0" text="Available" textFill="#0e833d">
          <font>
             <Font size="18.0" />
          </font>
@@ -237,7 +237,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="myReservationsButton" mnemonicParsing="false" onAction="#chooseReservations" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Reservations">
+                  <Button fx:id="myBookingsButton" mnemonicParsing="false" onAction="#chooseBookings" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Bookings">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -257,5 +257,10 @@
             </VBox>
          </children>
       </AnchorPane>
+      <Button fx:id="showMoreButton" layoutX="824.0" layoutY="672.0" mnemonicParsing="false" onAction="#changePasswordField" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Show more">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
