@@ -70,17 +70,4 @@ public class SignUpController extends LibraryController {
         loadScene("/mainpage.fxml");
         userProfile.setText(username);
     }
-    @FXML
-    private void switchToSignUp() throws Exception {
-//        View = getView();
-//        primaryStage = getPrimaryStage();
-        loadScene2("/signup.fxml");
-    }
-
-    @FXML
-    private void switchToLogin() throws Exception {
-//        View = getView();
-//        primaryStage = getPrimaryStage();
-        loadScene("/login.fxml");
-    }
 }
