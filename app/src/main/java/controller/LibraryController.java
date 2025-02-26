@@ -1,5 +1,12 @@
 package controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import model.entity.Book;
 import model.entity.Reservation;
 import model.entity.User;
@@ -11,23 +18,60 @@ import service.AuthorService;
 import util.AuthManager;
 import util.JwtUtil;
 import view.View;
+import java.util.List;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 public class LibraryController {
-    private View View;
+    private static View View;
+    private static Stage primaryStage;
 
     public void setMainApp(View View) {
-        this.View = View;
+        this.View = View;;
     }
 
-    private UserService userService;
-    private BookService bookService;
-    private ReservationService reservationService;
-    private final NotificationService notificationService;
-    private AuthorService authorService;
+    public View getView() {
+        return View;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    private static UserService userService;
+    private static BookService bookService;
+    private static ReservationService reservationService;
+    private static NotificationService notificationService;
+    private static AuthorService authorService;
+
+    @FXML
+    private TextField email, usernameField, emailField, teacherID, searchBar;
+    @FXML
+    private PasswordField password, passwordField, repeatPassword;
+    @FXML
+    private Button enterBurron, loginButtonTop, categoryButton, languageButton, authorButtom, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2;
+    @FXML
+    private Label wrongLogIn, bookName, author, publicationDate, availability;
+    @FXML
+    private ImageView profilePicture;
+    @FXML
+    private AnchorPane searchBox, categoryList, languageList;
 
     public LibraryController() {
         this.userService = new UserService();
@@ -35,8 +79,119 @@ public class LibraryController {
         this.reservationService = new ReservationService();
         this.notificationService = new NotificationService();
         this.authorService = new AuthorService();
-
     }
+
+    public void loadScene(String fxmlFile) throws Exception {
+        setPrimaryStage(View.getPrimaryStage());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+        fxmlLoader.setController(this);
+        Parent root = fxmlLoader.load();
+        primaryStage.setTitle("Luku Library");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
+    public void loadScene2(String fxmlFile) throws Exception {
+        setPrimaryStage(View.getPrimaryStage());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = fxmlLoader.load();
+        primaryStage.setTitle("Luku Library");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
+    @FXML
+    private void handleLogin() throws Exception {
+        String userEmail = email.getText();
+        String pass = password.getText();
+
+        if (authenticateUser(userEmail, pass)) {
+//            wrongLogIn.setText("Login successful!");
+//            wrongLogIn.setStyle("-fx-text-fill: green;");
+            loadScene2("/mainpage.fxml");
+            String username = getUserNameByEmail(userEmail);
+            userProfile.setText(username);
+        } else {
+            wrongLogIn.setText("Invalid email or password!");
+            wrongLogIn.setStyle("-fx-text-fill: red;");
+        }
+    }
+
+    @FXML
+    private void switchToSignUp() throws Exception {
+        loadScene2("/signup.fxml");
+    }
+
+    @FXML
+    private void switchToLogin() throws Exception {
+        loadScene("/login.fxml");
+    }
+
+    @FXML
+    private void chooseAuthor() throws Exception {
+    }
+
+    @FXML
+    private void chooseUserProfile() throws Exception {
+    }
+
+    @FXML
+    private void chooseFiction() throws Exception {
+        List<Book> books = getBooksByCategory("Fiction");
+        if (books == null || books.isEmpty()) {
+            System.out.println("Access denied. Invalid token.");
+            return;
+        }
+        loadScene("/categoryFiction.fxml");
+        Book book = books.get(0);
+        bookName.setText(book.getTitle().toString());
+        publicationDate.setText(book.getPublicationDate().toString());
+        availability.setText(book.getAvailabilityStatus().toString());
+    }
+
+    @FXML
+    private void chooseNonFiction() throws Exception {
+    }
+
+    @FXML
+    private void chooseScience() throws Exception {
+    }
+
+    @FXML
+    private void chooseHistory() throws Exception {
+    }
+
+    @FXML
+    private void chooseEnglish() throws Exception {
+    }
+
+    @FXML
+    private void chooseFinnish() throws Exception {
+    }
+
+    @FXML
+    private void chooseSwedish() throws Exception {
+    }
+
+    @FXML
+    private void searchAction() throws Exception {
+    }
+
+    @FXML
+    private void chooseCategory() {
+        categoryList.setVisible(!categoryList.isVisible());
+    }
+
+    @FXML
+    private void chooseLanguage() {
+        languageList.setVisible(!languageList.isVisible());
+    }
+
+    @FXML
+    private void chooseSearch() {
+        searchBox.setVisible(!searchBox.isVisible());
+    }
+
 
     public boolean validateToken() {
         String token = AuthManager.getInstance().getToken();
