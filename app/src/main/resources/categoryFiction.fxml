@@ -73,7 +73,7 @@
       </AnchorPane>
       <AnchorPane layoutX="1304.0" layoutY="61.0">
          <children>
-            <Button fx:id="userProfile" layoutX="38.0" mnemonicParsing="false" onAction="#chooseUserProfile" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff;" text="Username">
+            <Button fx:id="userProfile" layoutX="38.0" mnemonicParsing="false" onAction="#chooseUserProfile" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff;" text="Username ">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
@@ -92,7 +92,7 @@
             <Image url="@bookpicture.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="categoryButton1" layoutX="541.0" layoutY="538.0" mnemonicParsing="false" onAction="#chooseCategory" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px;" text="Reserve">
+      <Button fx:id="categoryButton1" layoutX="541.0" layoutY="538.0" mnemonicParsing="false" onAction="#chooseCategory" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Reserve">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
@@ -223,6 +223,38 @@
                   <Image url="@x.png" />
                </image>
             </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="userList" layoutX="1320.0" layoutY="110.0" prefHeight="157.0" prefWidth="148.0" visible="false">
+         <children>
+            <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
+               <children>
+                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Profile">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="myReservationsButton" mnemonicParsing="false" onAction="#chooseReservations" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Reservations">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Logout">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </children>

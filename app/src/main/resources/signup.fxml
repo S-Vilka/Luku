@@ -36,20 +36,20 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="245.0" layoutY="65.0" prefHeight="30.0" prefWidth="390.0" promptText="username (mandatroy)" />
-            <PasswordField fx:id="passwordField" layoutX="245.0" layoutY="135.0" prefHeight="30.0" prefWidth="390.0" promptText="password (mandatory)" />
+            <TextField fx:id="usernameField" layoutX="245.0" layoutY="65.0" prefHeight="30.0" prefWidth="390.0" promptText="username (mandatroy)" style="-fx-background-radius: 10;" />
+            <PasswordField fx:id="passwordField" layoutX="245.0" layoutY="135.0" prefHeight="30.0" prefWidth="390.0" promptText="password (mandatory)" style="-fx-background-radius: 10;" />
             <Label layoutX="280.0" layoutY="180.0" prefHeight="20.0" prefWidth="131.0" text="Repeat password">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <PasswordField fx:id="repeatPassword" layoutX="245.0" layoutY="205.0" prefHeight="30.0" prefWidth="390.0" promptText="repeat password (mandatory)" />
+            <PasswordField fx:id="repeatPassword" layoutX="245.0" layoutY="205.0" prefHeight="30.0" prefWidth="390.0" promptText="repeat password (mandatory)" style="-fx-background-radius: 10;" />
             <Label layoutX="280.0" layoutY="250.0" prefHeight="20.0" prefWidth="131.0" text="Email">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="emailField" layoutX="245.0" layoutY="275.0" prefHeight="30.0" prefWidth="390.0" promptText="email (mandatroy)" />
+            <TextField fx:id="emailField" layoutX="245.0" layoutY="275.0" prefHeight="30.0" prefWidth="390.0" promptText="email (mandatroy)" style="-fx-background-radius: 10;" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="694.0" layoutY="271.0" prefHeight="386.0" prefWidth="429.0">
@@ -59,13 +59,13 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="teacherID" layoutX="56.0" layoutY="65.0" prefHeight="30.0" prefWidth="390.0" promptText="teacher id (optional)" />
+            <TextField fx:id="teacherID" layoutX="56.0" layoutY="65.0" prefHeight="30.0" prefWidth="390.0" promptText="teacher id (optional)" style="-fx-background-radius: 10;" />
             <Label fx:id="wrongLogIn1" layoutX="620.0" layoutY="248.0" textFill="#f20b0b">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="signupButton1" layoutX="71.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3;" text="Sign  Up">
+            <Button fx:id="signupButton1" layoutX="71.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Sign  Up">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
@@ -114,19 +114,19 @@
             <Circle fill="#f54f03" layoutX="690.0" layoutY="125.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
          </children>
       </AnchorPane>
-      <Button fx:id="loginButtonTop" layoutX="1319.0" layoutY="62.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3;" text="Log In">
+      <Button fx:id="loginButtonTop" layoutX="1319.0" layoutY="62.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Log In">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
       <AnchorPane layoutX="264.0" layoutY="218.0" prefHeight="32.0" prefWidth="317.0">
          <children>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3;" text="Log In">
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Log In">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="signupButton" layoutX="188.0" mnemonicParsing="false" onAction="#switchToSignUp" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3;" text="Sign  Up">
+            <Button fx:id="signupButton" layoutX="188.0" mnemonicParsing="false" onAction="#switchToSignUp" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Sign  Up">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>

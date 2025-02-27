@@ -173,5 +173,37 @@
             </ImageView>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="userList" layoutX="1330.0" layoutY="120.0" prefHeight="157.0" prefWidth="148.0" visible="false">
+         <children>
+            <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
+               <children>
+                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Profile">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="myBookingsButton" mnemonicParsing="false" onAction="#chooseBookings" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Bookings">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Logout">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
