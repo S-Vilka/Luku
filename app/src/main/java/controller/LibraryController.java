@@ -37,23 +37,6 @@ import javafx.scene.image.ImageView;
 public class LibraryController {
     private static View View;
     private static Stage primaryStage;
-
-    public void setMainApp(View View) {
-        this.View = View;;
-    }
-
-    public View getView() {
-        return View;
-    }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
     private static UserService userService;
     private static BookService bookService;
     private static ReservationService reservationService;
@@ -81,7 +64,7 @@ public class LibraryController {
         this.authorService = new AuthorService();
     }
 
-    public void loadScene(String fxmlFile) throws Exception {
+    public void loadScene2(String fxmlFile) throws Exception {
         setPrimaryStage(View.getPrimaryStage());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         fxmlLoader.setController(this);
@@ -91,7 +74,7 @@ public class LibraryController {
         primaryStage.show();
     }
 
-    public void loadScene2(String fxmlFile) throws Exception {
+    public void loadScene(String fxmlFile) throws Exception {
         setPrimaryStage(View.getPrimaryStage());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = fxmlLoader.load();
@@ -108,7 +91,7 @@ public class LibraryController {
         if (authenticateUser(userEmail, pass)) {
 //            wrongLogIn.setText("Login successful!");
 //            wrongLogIn.setStyle("-fx-text-fill: green;");
-            loadScene2("/mainpage.fxml");
+            loadScene("/mainpage.fxml");
             String username = getUserNameByEmail(userEmail);
             userProfile.setText(username);
         } else {
@@ -119,12 +102,12 @@ public class LibraryController {
 
     @FXML
     private void switchToSignUp() throws Exception {
-        loadScene2("/signup.fxml");
+        loadScene("/signup.fxml");
     }
 
     @FXML
     private void switchToLogin() throws Exception {
-        loadScene("/login.fxml");
+        loadScene2("/login.fxml");
     }
 
     @FXML
@@ -322,5 +305,33 @@ public class LibraryController {
 
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+    public ReservationService getReservationService() {
+        return reservationService;
+    }
+    public AuthorService getAuthorService() {
+        return authorService;
+    }
+    public BookService getBookService() {
+        return bookService;
+    }
+    public NotificationService getNotificationService() {
+        return notificationService;
+    }
+    public void setMainApp(View View) {
+        this.View = View;;
+    }
+    public View getView() {
+        return View;
+    }
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }
