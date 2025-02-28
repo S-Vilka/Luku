@@ -47,4 +47,8 @@ public class BookService {
     public List<Book>  getBooksByLanguage(String language) {
         return bookDao.getBooksByLanguage(language);
     }
+
+    public void setBookAvailability(Long bookId, String isAvailable) {
+        bookDao.updateBookAvailabilityStatus(bookId, isAvailable);
+    }
 }

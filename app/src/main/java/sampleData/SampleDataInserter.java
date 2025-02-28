@@ -110,8 +110,8 @@ public class SampleDataInserter {
                 stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
                         "('Book One', '2021-01-01', 'Description of Book One', 'Available', 'Fiction', 'English', '111-1111111111', 'Shelf A1'), " +
                         "('Book Two', '2022-02-02', 'Description of Book Two', 'Checked Out', 'Non-Fiction', 'English', '222-2222222', 'Shelf B2'), " +
-                        "('Science Book', '2020-03-03', 'Description of Science Book', 'Available', 'Fiction', 'Finnish', '333-3333333', 'Shelf C3'), " +
-                        "('History Book', '2019-04-04', 'Description of History Book', 'Available', 'Fiction', 'Swedish', '444-4444444', 'Shelf D4'), " +
+                        "('Science Book', '2020-03-03', 'Description of Science Book', 'Available', 'Science', 'Finnish', '333-3333333', 'Shelf C3'), " +
+                        "('History Book', '2019-04-04', 'Description of History Book', 'Available', 'History', 'Swedish', '444-4444444', 'Shelf D4'), " +
                         "('Fictional Tales', '2018-05-05', 'Description of Fictional Tales', 'Available', 'Fiction', 'English', '555-5555555', 'Shelf E5'), " +
                         "('Non-Fictional Stories', '2017-06-06', 'Description of Non-Fictional Stories', 'Available', 'Non-Fiction', 'Swedish', '666-6666666', 'Shelf F6'), " +
                         "('Advanced Science', '2016-07-07', 'Description of Advanced Science', 'Available', 'Science', 'Finnish', '777-7777777', 'Shelf G7'), " +

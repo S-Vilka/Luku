@@ -15,9 +15,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
 
 public class categoryPageController extends LibraryController {
-    private List<Book> allBooks;
+    private List<Book> allBooks, availableBooks;
     @FXML
     private VBox bookVBox;
     @FXML
@@ -25,16 +26,32 @@ public class categoryPageController extends LibraryController {
     @FXML
     private CheckBox availabilityCheckBox;
     @FXML
-    private AnchorPane noBooks;
+    private AnchorPane noBooks, scrollBox;
 
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;
     }
 
+    public void setAvailableBooks(List<Book> availableBooks) {
+        this.availableBooks = availableBooks;
+    }
+
+    public CheckBox getAvailabilityCheckBox() {
+        return availabilityCheckBox;
+    }
+
+    public void clearBookLists() {
+        if (allBooks == null) {
+            return;
+        }
+        allBooks.clear();
+        availableBooks.clear();
+    }
+
     @FXML
     public void chooseOnlyAvailable() {
         if (availabilityCheckBox.isSelected()) {
-            List<Book> availableBooks = allBooks.stream()
+            availableBooks = allBooks.stream()
                     .filter(book -> "Available".equalsIgnoreCase(book.getAvailabilityStatus()))
                     .collect(Collectors.toList());
             setBooks(availableBooks);
@@ -43,18 +60,22 @@ public class categoryPageController extends LibraryController {
         }
     }
     public void setBooks(List<Book> books) {
-        if (books.size() == 0) {
+        bookVBox.getChildren().clear();
+        bookVBox.setSpacing(40);
+
+        if (books.isEmpty()) {
+            scrollBox.setVisible(false);
             noBooks.setVisible(true);
             return;
         } else {
+            scrollBox.setVisible(true);
             noBooks.setVisible(false);
         }
 
         if (!availabilityCheckBox.isSelected()) {
             setAllBooks(books);
         }
-        bookVBox.getChildren().clear();
-        bookVBox.setSpacing(40);
+
         HBox hBox = null;
         for (int i = 0; i < books.size(); i++) {
             if (i % 2 == 0) {
@@ -69,6 +90,8 @@ public class categoryPageController extends LibraryController {
                 Label publicationDate = (Label) bookBox.lookup("#publicationDate");
                 Label availability = (Label) bookBox.lookup("#availability");
                 Label location = (Label) bookBox.lookup("#locationTag");
+                Label bookId = (Label) bookBox.lookup("#bookId");
+                Button reserveButton = (Button) bookBox.lookup("#reserveButton");
 
                 Book book = books.get(i);
                 bookName.setText(book.getTitle());
@@ -88,6 +111,29 @@ public class categoryPageController extends LibraryController {
                 publicationDate.setText(book.getPublicationDate().toString());
                 availability.setText(book.getAvailabilityStatus());
                 location.setText(book.getLocation());
+                bookId.setText(String.valueOf(book.getBookId()));
+
+                // Update reserveButton based on availability
+                if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
+                    reserveButton.setText("Reserve");
+                    reserveButton.setStyle("-fx-text-fill: green;");
+                    reserveButton.setDisable(false);
+                    availability.setStyle("-fx-text-fill: green;");
+                } else {
+                    reserveButton.setText("Unavailable");
+                    reserveButton.setStyle("-fx-text-fill: red;");
+                    reserveButton.setDisable(true);
+                    availability.setStyle("-fx-text-fill: red;");
+                }
+
+                Long bookIdNo = book.getBookId();
+                reserveButton.setOnAction(event -> {
+                    try {
+                        chooseReserve(bookIdNo);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
 
                 hBox.getChildren().add(bookBox);
             } catch (Exception e) {

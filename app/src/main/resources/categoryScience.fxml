@@ -102,7 +102,7 @@
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="250.0" layoutY="221.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-      <Label layoutX="251.0" layoutY="176.0" text="Category: Fiction">
+      <Label layoutX="251.0" layoutY="176.0" prefHeight="45.0" prefWidth="254.0" text="Category: Science">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -119,6 +119,11 @@
             </ScrollPane>
          </children>
       </AnchorPane>
+      <CheckBox fx:id="availabilityCheckBox" layoutX="1188.0" layoutY="190.0" mnemonicParsing="false" onAction="#chooseOnlyAvailable" prefHeight="30.0" prefWidth="277.0" text="Show only available books">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </CheckBox>
       <AnchorPane fx:id="noBooks" layoutX="650.0" layoutY="300.0" prefHeight="172.0" prefWidth="324.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="400.0" text="Oops! No books found :(">
@@ -128,11 +133,6 @@
             </Label>
          </children>
       </AnchorPane>
-      <CheckBox fx:id="availabilityCheckBox" layoutX="1188.0" layoutY="190.0" mnemonicParsing="false" onAction="#chooseOnlyAvailable" prefHeight="30.0" prefWidth="277.0" text="Show only available books">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </CheckBox>
       <AnchorPane fx:id="categoryList" layoutX="211.0" layoutY="171.0" prefHeight="157.0" prefWidth="148.0" visible="false">
          <children>
             <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">

@@ -168,4 +168,15 @@ private Set<Author> getAuthorsByBookId(Long bookId) {
         }
         return books;
     }
+
+    public void updateBookAvailabilityStatus(Long bookId, String availabilityStatus) {
+        String query = "UPDATE books SET availability_status = ? WHERE book_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, availabilityStatus);
+            stmt.setLong(2, bookId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

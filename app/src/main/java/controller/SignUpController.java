@@ -45,6 +45,9 @@ public class SignUpController extends LibraryController {
         registerUserSimple(username, password, email);
         setSavedUsername(username);
         setSavedEmail(email);
+        User user = getUserByEmail(email);
+        Long userId = user.getUserId();
+        setSavedUserId(userId);
         loadScene("/mainpage.fxml");
     }
     public void registerUserSimple(String username, String password, String email) {

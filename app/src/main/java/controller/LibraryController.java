@@ -1,10 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.entity.Book;
@@ -38,6 +35,7 @@ public class LibraryController {
     private static AuthorService authorService;
     private static String savedUsername;
     private static String savedEmail;
+    private static Long savedUserId;
 
     @FXML
     private TextField email, usernameField, emailField, teacherID, searchBar;
@@ -145,33 +143,39 @@ public class LibraryController {
         userList.setVisible(!userList.isVisible());
     }
 
-    @FXML
-    private void chooseFiction() throws Exception {
-        List<Book> books = getBooksByCategory("Fiction");
-        if (books == null || books.isEmpty()) {
-            System.out.println("Access denied. Invalid token.");
-            return;
-        }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/categoryFiction.fxml"));
+    private void chooseCategory(String category) throws Exception {
+        String fxmlFile = "/category" + category + ".fxml";
+        List<Book> books = getBooksByCategory(category);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
         categoryPageController controller = loader.getController();
+        controller.clearBookLists();
+        controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books);
-        primaryStage.setTitle("Luku Library - Fiction");
+        primaryStage.setTitle("Luku Library - " + category);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         updateHeader();
     }
 
     @FXML
+    private void chooseFiction() throws Exception {
+        chooseCategory("Fiction");
+    }
+
+    @FXML
     private void chooseNonFiction() throws Exception {
+        chooseCategory("Non-Fiction");
     }
 
     @FXML
     private void chooseScience() throws Exception {
+        chooseCategory("Science");
     }
 
     @FXML
     private void chooseHistory() throws Exception {
+        chooseCategory("History");
     }
 
     @FXML
@@ -223,8 +227,21 @@ public class LibraryController {
         loadScene("/myBookings.fxml");
     }
 
-    @FXML
-    private void chooseReserve() throws Exception {
+    public void chooseReserve(Long bookId) throws Exception {
+        Long userId = getSavedUserId();
+        if (userId == null) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        Book book = bookService.getBookById(bookId);
+        String category = book.getCategory();
+
+        try {
+            reserveBook(userId, bookId);
+            chooseCategory(category);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean validateToken() {
@@ -267,6 +284,8 @@ public class LibraryController {
         reservation.setBookId(bookId);
 
         reservationService.createReservation(reservation);
+        notificationService.createNotificationForReservation(reservation.getReservationId());
+        bookService.setBookAvailability(bookId, "Checked Out");
 
         // Update the user's book count
         user.setBookCount(user.getBookCount() + 1);
@@ -345,6 +364,10 @@ public class LibraryController {
         this.savedEmail = savedEmail;
     }
 
+    public void setSavedUserId(Long savedUserId) {
+        this.savedUserId = savedUserId;
+    }
+
 //**Getters**//
 
     public UserService getUserService() {
@@ -381,5 +404,9 @@ public class LibraryController {
 
     public String getSavedEmail() {
         return savedEmail;
+    }
+
+    public Long getSavedUserId() {
+        return savedUserId;
     }
 }

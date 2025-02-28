@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import model.entity.User;
 import service.UserService;
 
 public class LoginController extends LibraryController {
@@ -26,6 +27,9 @@ public class LoginController extends LibraryController {
             String username = getUserNameByEmail(userEmail);
             setSavedUsername(username);
             setSavedEmail(userEmail);
+            User user = getUserByEmail(userEmail);
+            Long userId = user.getUserId();
+            setSavedUserId(userId);
             loadScene("/mainpage.fxml");
         } else {
             wrongLogIn.setText("Invalid email or password!");

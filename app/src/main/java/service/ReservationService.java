@@ -8,11 +8,9 @@ import java.util.List;
 
 public class ReservationService {
     private ReservationDao reservationDao;
-    private final NotificationService notificationService;
 
     public ReservationService() {
         reservationDao = new ReservationDao();
-        notificationService = new NotificationService();
     }
 
     public Reservation getReservationById(Long reservationId) {
@@ -25,10 +23,8 @@ public class ReservationService {
 
     public void extendReservation(Long reservationId, LocalDateTime newDueDate) {
         reservationDao.extendReservation(reservationId, newDueDate);
-
         // new updated notification
-        notificationService.createNotificationForReservation(reservationId);
-
+//        notificationService.createNotificationForReservation(reservationId);
     }
 
     public void updateReservation(Reservation reservation) {
@@ -42,8 +38,6 @@ public class ReservationService {
 
     public void createReservation(Reservation reservation) {
         Long reservationId = reservationDao.saveReservation(reservation);
-        // create notification
-        notificationService.createNotificationForReservation(reservationId);
     }
 
     public Reservation getReservationByUserAndBook(Long userId, Long bookId) {
