@@ -2,8 +2,6 @@ package model.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "writes")
 public class Writes {
@@ -20,10 +18,10 @@ public class Writes {
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
+    // Default constructor
+    public Writes() {}
 
-    public Writes() {
-    }
-
+    // Constructor with parameters
     public Writes(Book book, Author author) {
         this.book = book;
         this.author = author;
@@ -35,25 +33,22 @@ public class Writes {
     }
 
     public void setWritesId(Long id) {
-
         this.id = id;
-    }
-
-
-    public Author getAuthor() {
-        return author;
     }
 
     public Book getBook() {
         return book;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public void setBook(Book book) {
+    public Author getAuthor() {
+        return author;
+    }
 
-        this.book = book;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

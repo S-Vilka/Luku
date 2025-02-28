@@ -48,7 +48,7 @@ public class JwtUtil {
 
             return true;
         } catch (Exception e) {
-            System.out.println("Invalid Token: " + e.getMessage());
+            System.out.println("Invalid Token Error: " + e.getMessage());
             return false;
         }
     }

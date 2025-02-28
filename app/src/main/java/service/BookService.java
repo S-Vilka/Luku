@@ -1,9 +1,11 @@
 package service;
 
 import model.dao.impl.BookDao;
+import model.entity.Author;
 import model.entity.Book;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class BookService {
@@ -36,6 +38,10 @@ public class BookService {
 
     public List<Book> getBooksByCategory(String genre) {
         return bookDao.getBooksByCategory(genre);
+    }
+    public Set<Author> getAuthorsByBookId(Long bookId) {
+        Book book = bookDao.getBookById(bookId);
+        return book != null ? book.getAuthors() : null;
     }
 
     public List<Book>  getBooksByLanguage(String language) {

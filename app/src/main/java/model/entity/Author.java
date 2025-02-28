@@ -19,8 +19,11 @@ public class Author {
     private LocalDate dateOfBirth;
     private String placeOfBirth;
 
-    @ManyToMany(mappedBy = "authors")
-    private Set<Book> books = new HashSet<>();
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Writes> writes = new HashSet<>();
+
+    // Default constructor
+    public Author() {}
 
     // Getters and Setters
     public Long getAuthorId() {
@@ -71,7 +74,11 @@ public class Author {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public Set<Book> getBooks() { return books; }
-    public void setBooks(Set<Book> books) { this.books = books; }
+    public Set<Writes> getWrites() {
+        return writes;
+    }
 
+    public void setWrites(Set<Writes> writes) {
+        this.writes = writes;
+    }
 }

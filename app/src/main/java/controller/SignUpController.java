@@ -5,34 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import model.entity.Book;
-import model.entity.Reservation;
 import model.entity.User;
 import service.UserService;
-import service.BookService;
-import service.ReservationService;
-import service.NotificationService;
-import service.AuthorService;
-import util.AuthManager;
-import util.JwtUtil;
-import view.View;
-import java.util.List;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 public class SignUpController extends LibraryController {
     @FXML
@@ -67,7 +43,21 @@ public class SignUpController extends LibraryController {
 
         // Create a new user
         registerUserSimple(username, password, email);
+        setSavedUsername(username);
+        setSavedEmail(email);
         loadScene("/mainpage.fxml");
-        userProfile.setText(username);
+    }
+    public void registerUserSimple(String username, String password, String email) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setRole("student");
+        user.setBookCount(0);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setDeletedAt(null);
+
+        UserService userService = getUserService();
+        userService.registerUser(user);
     }
 }

@@ -18,12 +18,7 @@ public class View extends Application {
         this.primaryStage = stage;
         this.controller = new LibraryController();
         controller.setMainApp(this);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
-        fxmlLoader.setController(controller);
-        Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Luku Library");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        controller.loadScene("/mainpage.fxml");
     }
 
     public Stage getPrimaryStage() {

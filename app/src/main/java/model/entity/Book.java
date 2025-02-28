@@ -22,23 +22,11 @@ public class Book {
     private String isbn;
     private String location;
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "writes",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
-    )
-
-    private Set<Author> authors = new HashSet<>();
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Writes> writes = new HashSet<>();
 
     // Default constructor
     public Book() {}
-
-    // Constructor with bookId
-    public Book(Long bookId) {
-        this.bookId = bookId;
-    }
 
     // Getters and Setters
     public Long getBookId() {
@@ -113,7 +101,27 @@ public class Book {
         this.location = location;
     }
 
-    public Set<Author> getAuthors() { return authors; }
-    public void setAuthors(Set<Author> authors) { this.authors = authors; }
+    public Set<Writes> getWrites() {
+        return writes;
+    }
 
+    public void setWrites(Set<Writes> writes) {
+        this.writes = writes;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.writes.clear();
+        for (Author author : authors) {
+            Writes writes = new Writes(this, author);
+            this.writes.add(writes);
+        }
+    }
+
+    public Set<Author> getAuthors() {
+        Set<Author> authors = new HashSet<>();
+        for (Writes writes : this.writes) {
+            authors.add(writes.getAuthor());
+        }
+        return authors;
+    }
 }
