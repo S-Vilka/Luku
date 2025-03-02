@@ -32,5 +32,13 @@ public class NotificationService {
         return notificationDao.getNotificationsByUserId(userId);
     }
 
+    public void deleteNotificationByReservationId(Long reservation) {
+        notificationDao.deleteNotification(reservation);
+    }
+
+    public void updateNotification(Long reservationId) {
+
+        notificationDao.updateNotification(reservationId);
+    }
 
 }

@@ -42,9 +42,9 @@ public class LibraryController {
     @FXML
     private PasswordField password, passwordField, repeatPassword;
     @FXML
-    private Button enterBurron, loginButtonTop, categoryButton, languageButton, authorButtom, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton;
+    private Button enterBurron, loginButtonTop, categoryButton, languageButton, authorButtom, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton, extendButton, returnButton;
     @FXML
-    private Label locationTag, wrongLogIn, bookName, author, publicationDate, availability;
+    private Label locationTag, wrongLogIn, bookName, author, publicationDate, availability, borrowDate, dueDate, bookId;
     @FXML
     private ImageView noti;
     @FXML
@@ -224,7 +224,14 @@ public class LibraryController {
 
     @FXML
     private void chooseBookings() throws Exception {
-        loadScene("/myBookings.fxml");
+        Long userId = getSavedUserId();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
+        Parent root = loader.load();
+        myBookingController controller = loader.getController();
+        controller.setBooksForUser(userId);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+//        loadScene();
     }
 
     public void chooseReserve(Long bookId) throws Exception {
@@ -302,6 +309,17 @@ public class LibraryController {
         }
     }
 
+    public void extendReservation(Long reservationId) {
+        Reservation reservation = reservationService.getReservationById(reservationId);
+        if (reservation != null) {
+            LocalDateTime newDueDate = reservation.getDueDate().plusDays(7);
+            reservation.setDueDate(newDueDate);
+            reservationService.updateReservation(reservation);
+        } else {
+            throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
+        }
+    }
+
     public List<Book> searchBooksByAuthor(String authorFirstName, String authorLastName) {
         return authorService.getBooksByAuthor(authorFirstName, authorLastName);
     }
@@ -368,6 +386,10 @@ public class LibraryController {
         this.savedUserId = savedUserId;
     }
 
+    public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
+        return reservationService.getReservationByUserAndBook(userId, bookId);
+    }
+
 //**Getters**//
 
     public UserService getUserService() {
@@ -377,6 +399,7 @@ public class LibraryController {
     public ReservationService getReservationService() {
         return reservationService;
     }
+
 
     public AuthorService getAuthorService() {
         return authorService;

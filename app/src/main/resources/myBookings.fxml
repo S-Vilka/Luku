@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="1117.0" minWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="1117.0" minWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.myBookingController">
     <children>
         <AnchorPane layoutX="-1.0" layoutY="796.0" prefHeight="316.0" prefWidth="1739.0">
             <children>
@@ -100,119 +100,27 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="250.0" layoutY="221.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#eeeeee" height="328.0" layoutX="303.0" layoutY="292.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
-        <ImageView fitHeight="265.0" fitWidth="202.0" layoutX="347.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@bookpicture.jpg" />
-            </image>
-        </ImageView>
-        <Button fx:id="extendButton" layoutX="540.0" layoutY="538.0" mnemonicParsing="false" onAction="#extendReservation" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Extend">
-            <font>
-                <Font name="System Bold Italic" size="18.0" />
-            </font>
-        </Button>
+
         <Label layoutX="251.0" layoutY="176.0" text="My Bookings">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Label>
-        <Label fx:id="bookName" layoutX="538.0" layoutY="317.0" prefHeight="32.0" prefWidth="249.0" text="Outsiders">
-            <font>
-                <Font name="System Bold" size="22.0" />
-            </font>
-        </Label>
-        <Label fx:id="author" layoutX="540.0" layoutY="350.0" prefHeight="27.0" prefWidth="247.0" text="S.E. Hinton">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <Label fx:id="publicationDate" layoutX="541.0" layoutY="373.0" prefHeight="27.0" prefWidth="247.0" text="2018">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <Label layoutX="539.0" layoutY="409.0" prefHeight="32.0" prefWidth="249.0" text="Borrow Date:">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font>
-        </Label>
-        <Label layoutX="540.0" layoutY="437.0" prefHeight="27.0" prefWidth="247.0" text="01.05.2024">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <Label layoutX="540.0" layoutY="473.0" prefHeight="32.0" prefWidth="249.0" text="Due Date:">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font>
-        </Label>
-        <Label layoutX="540.0" layoutY="499.0" prefHeight="27.0" prefWidth="247.0" text="21.05.2024">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <Button fx:id="showMoreButton" layoutX="824.0" layoutY="672.0" mnemonicParsing="false" onAction="#changePasswordField" prefHeight="50.0" prefWidth="120.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Show more">
-            <font>
-                <Font name="System Bold Italic" size="18.0" />
-            </font>
-        </Button>
-        <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#eeeeee" height="328.0" layoutX="963.0" layoutY="292.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
-        <ImageView fitHeight="265.0" fitWidth="202.0" layoutX="1007.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@bookpicture.jpg" />
-            </image>
-        </ImageView>
-        <Label fx:id="bookName1" layoutX="1198.0" layoutY="317.0" prefHeight="32.0" prefWidth="249.0" text="The Great Gatsby">
-            <font>
-                <Font name="System Bold" size="22.0" />
-            </font>
-        </Label>
-        <Label fx:id="author1" layoutX="1200.0" layoutY="350.0" prefHeight="27.0" prefWidth="247.0" text="F. Scott Fitzgerald">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <Label fx:id="publicationDate1" layoutX="1201.0" layoutY="373.0" prefHeight="27.0" prefWidth="247.0" text="2018">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <Label layoutX="1199.0" layoutY="409.0" prefHeight="32.0" prefWidth="249.0" text="Borrow Date:">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font>
-        </Label>
-        <Label layoutX="1200.0" layoutY="437.0" prefHeight="27.0" prefWidth="247.0" text="02.05.2024">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-        <Label layoutX="1200.0" layoutY="473.0" prefHeight="32.0" prefWidth="249.0" text="Due Date:">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font>
-        </Label>
-        <Label layoutX="1200.0" layoutY="499.0" prefHeight="27.0" prefWidth="247.0" text="22.05.2024">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-      <Button fx:id="rerutnBookButton" layoutX="670.0" layoutY="538.0" mnemonicParsing="false" onAction="#returnBook" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-background-radius: 10; -fx-border-radius: 10;" text="Return">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="extendButton1" layoutX="1198.0" layoutY="539.0" mnemonicParsing="false" onAction="#extendReservation" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Extend">
-         <font>
-            <Font name="System Bold Italic" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="rerutnBookButton1" layoutX="1327.0" layoutY="539.0" mnemonicParsing="false" onAction="#returnBook" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-background-radius: 10; -fx-border-radius: 10;" text="Return">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Button>
+        <AnchorPane fx:id="scrollBox" layoutX="285.0" layoutY="269.0" prefHeight="490.0" prefWidth="1088.0">
+            <children>
+                <ScrollPane fx:id="bookScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">
+                    <content>
+                        <VBox fx:id="bookVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="1108.0" style="-fx-background-color: white;">
+                            <padding>
+                                <Insets bottom="30.0" left="30.0" right="30.0" />
+                            </padding>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </children>
+        </AnchorPane>
+
+
       <AnchorPane fx:id="categoryList" layoutX="211.0" layoutY="171.0" prefHeight="157.0" prefWidth="148.0" visible="false">
          <children>
             <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
