@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import model.entity.Book;
-import model.entity.Reservation;
-import model.entity.Notification;
-import model.entity.User;
+import model.entity.*;
 import service.UserService;
 import service.BookService;
 import service.ReservationService;
@@ -136,6 +133,15 @@ public class LibraryController {
 
     @FXML
     private void chooseAuthor() throws Exception {
+        List<Author> authors = authorService.getAllAuthors();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/authorsPage.fxml"));
+        Parent root = loader.load();
+        authorsPageController controller = loader.getController();
+        controller.setAuthors(authors);
+        primaryStage.setTitle("Luku Library - Authors");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        updateHeader();
     }
 
     @FXML
