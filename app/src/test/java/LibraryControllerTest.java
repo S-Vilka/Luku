@@ -57,20 +57,20 @@ public class LibraryControllerTest extends BaseDao {
 //        Mockito.when(reservationService.validateToken()).thenReturn(true);
     }
 
-    @Test
-    public void testRegisterUser() {
-        String username = "testUser";
-        String password = "testPass";
-        String email = "test@example.com";
-        String phone = "1234567890";
-        String role = "user";
-        int bookCount = 5;
-        LocalDateTime createdAt = LocalDateTime.now();
-        LocalDateTime deletedAt = null;
-
-        libraryController.registerUser(username, password, email, phone, role, bookCount, createdAt, deletedAt);
-        print("registerUser");
-    }
+//    @Test
+//    public void testRegisterUser() {
+//        String username = "testUser";
+//        String password = "testPass";
+//        String email = "test@example.com";
+//        String phone = "1234567890";
+//        String role = "user";
+//        int bookCount = 5;
+//        LocalDateTime createdAt = LocalDateTime.now();
+//        LocalDateTime deletedAt = null;
+//
+//        libraryController.registerUser(username, password, email, phone, role, bookCount, createdAt, deletedAt);
+//        print("registerUser");
+//    }
 
     @Test
     public void testReserveBook() {

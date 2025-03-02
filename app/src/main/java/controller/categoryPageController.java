@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
+import service.UserService;
 
 public class categoryPageController extends LibraryController {
     private List<Book> allBooks, availableBooks;
@@ -114,7 +115,33 @@ public class categoryPageController extends LibraryController {
                 bookId.setText(String.valueOf(book.getBookId()));
 
                 // Update reserveButton based on availability
-                if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
+//                if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
+//                    reserveButton.setText("Reserve");
+//                    reserveButton.setStyle("-fx-text-fill: green;");
+//                    reserveButton.setDisable(false);
+//                    availability.setStyle("-fx-text-fill: green;");
+//                } else {
+//                    reserveButton.setText("Unavailable");
+//                    reserveButton.setStyle("-fx-text-fill: red;");
+//                    reserveButton.setDisable(true);
+//                    availability.setStyle("-fx-text-fill: red;");
+//                }
+                // Check user role and book count
+                Long userId = getSavedUserId();
+                int userBookCount = getUserService().getUserBookCount(userId);
+                String userRole = getUserService().getUserRole(userId);
+
+
+                if ("teacher".equalsIgnoreCase(userRole)) {
+                    reserveButton.setText("Reserve");
+                    reserveButton.setStyle("-fx-text-fill: green;");
+                    reserveButton.setDisable(false);
+                    availability.setStyle("-fx-text-fill: green;");
+                } else if ("student".equalsIgnoreCase(userRole) && userBookCount >= 5) {
+                    reserveButton.setText("You cannot reserve anymore books");
+                    reserveButton.setStyle("-fx-text-fill: red;");
+                    reserveButton.setDisable(true);
+                } else if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
                     reserveButton.setText("Reserve");
                     reserveButton.setStyle("-fx-text-fill: green;");
                     reserveButton.setDisable(false);

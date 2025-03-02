@@ -49,7 +49,7 @@ public class ReservationDao extends BaseDao{
 
             User user = new User();
             user.setUserId(rs.getLong("user_id"));
-//            user.setUsername(rs.getString("username"));
+            user.setUsername(rs.getString("username"));
 //            user.setEmail(rs.getString("email"));
             // Set other user fields as needed by frontend
             reservation.setUser(user);
@@ -110,7 +110,8 @@ public class ReservationDao extends BaseDao{
 
     public List<Reservation> getReservationsByUserId(Long userId) {
         List<Reservation> reservations = new ArrayList<>();
-        String query = "SELECT r.*, b.title AS title FROM reservations r " +
+        String query = "SELECT r.*, u.username, b.title AS title FROM reservations r " +
+                "JOIN users u ON r.user_id = u.user_id " +
                 "JOIN books b ON r.book_id = b.book_id " +
                 "WHERE r.user_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -173,7 +174,8 @@ public class ReservationDao extends BaseDao{
 
     public Reservation getReservationByUserAndBook(Long userId, Long bookId) {
 //        String query = "SELECT * FROM reservations WHERE user_id = ? AND book_id = ?";
-        String query =   "SELECT r.*, b.title FROM reservations r " +
+        String query =   "SELECT r.*, u.username, b.title FROM reservations r " +
+                "JOIN users u ON r.user_id = u.user_id " +
                 "JOIN books b ON r.book_id = b.book_id " +
                 "WHERE r.user_id = ? AND r.book_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -187,5 +189,15 @@ public class ReservationDao extends BaseDao{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void deleteReservation(Long reservationId) {
+        String query = "DELETE FROM reservations WHERE reservation_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, reservationId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

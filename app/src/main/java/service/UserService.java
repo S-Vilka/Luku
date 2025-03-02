@@ -69,12 +69,21 @@ public class UserService {
         return userDao.getUserBookCount(userId);
     }
 
+    public void decreaseUserBookCount(Long userId) {
+        userDao.decreaseUserBookCount(userId);
+    }
+
+
     public void updateUser(User user) {
         userDao.updateUser(user);
     }
 
     public User getUserById(Long Id) {
         return userDao.getUserById(Id);
+    }
+
+    public String getUserRole(Long userId) {
+        return userDao.getUserRole(userId);
     }
 }
 

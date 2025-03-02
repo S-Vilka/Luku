@@ -44,5 +44,9 @@ public class ReservationService {
         return reservationDao.getReservationByUserAndBook(userId, bookId);
     }
 
+    public void deleteReservation(Long reservationId) {
+        reservationDao.deleteReservation(reservationId);
+    }
+
 
 }

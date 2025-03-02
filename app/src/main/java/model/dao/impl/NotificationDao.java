@@ -77,4 +77,32 @@ public class NotificationDao extends BaseDao {
 
     }
 
+    public void deleteNotification(Long reservationId) {
+        String query = "DELETE FROM notifications WHERE reservation_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, reservationId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateNotification(Long reservationId) {
+        ReservationDao reservationDao = new ReservationDao();
+        Reservation reservation = reservationDao.getReservationById(reservationId);
+        User user = reservation.getUser();
+        System.out.println("user name" + user.getUsername());
+        Book book = reservation.getBook();
+        String query = "UPDATE notifications SET message = ? WHERE reservation_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "Reservation extended. Dear " + user.getUsername() + ", you have borrowed the book '" + book.getTitle() +
+            "'. Please return it by " + reservation.getDueDate() + ".");
+            stmt.setLong(2, reservationId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

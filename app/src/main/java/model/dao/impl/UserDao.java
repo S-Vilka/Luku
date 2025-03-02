@@ -103,4 +103,29 @@ public class UserDao extends BaseDao {
         }
         return bookCount;
     }
+
+    public void decreaseUserBookCount(Long userId) {
+        String query = "UPDATE users SET book_count = book_count - 1 WHERE user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, userId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getUserRole(Long userId) {
+        String query = "SELECT role FROM users WHERE user_id = ?";
+        String role = null;
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                role = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return role;
+    }
 }
