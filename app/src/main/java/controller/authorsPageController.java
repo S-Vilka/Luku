@@ -1,6 +1,9 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import model.entity.Author;
@@ -10,10 +13,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
-import model.entity.Writes;
+import model.entity.Book;
 
 public class authorsPageController extends LibraryController {
     private List<Author> allAuthors;
+
     @FXML
     private VBox authorVBox;
     @FXML
@@ -69,6 +73,7 @@ public class authorsPageController extends LibraryController {
                 Label authorBirth = (Label) authorBox.lookup("#authorBirth");
                 Label authorBirthplace = (Label) authorBox.lookup("#authorBirthplace");
                 Label authorBooks = (Label) authorBox.lookup("#authorBooks");
+                Button checkAuthorBooks = (Button) authorBox.lookup("#checkAuthorBooks");
 
                 Author author = authors.get(i);
                 authorName.setText(author.getFirstName() + " " + author.getLastName());
@@ -78,8 +83,18 @@ public class authorsPageController extends LibraryController {
                         .map(w -> w.getBook().getTitle())
                         .collect(Collectors.joining(", ")));
 
+                // Set event handler for "Check their books" button
+                checkAuthorBooks.setOnAction(event -> {
+                    try {
+                        showAuthorBooks(author);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
                 hBox.getChildren().add(authorBox);
                 System.out.println("Added authorBox for: " + author.getFirstName()); // Debugging
+
             } catch (Exception e) {
                 System.out.println("Error loading authorBox.fxml:");
                 e.printStackTrace();
@@ -88,8 +103,18 @@ public class authorsPageController extends LibraryController {
     }
 
     @FXML
-    private void showAuthorBooks() {
-        System.out.println("Show books for selected author");
+    private void showAuthorBooks(Author author) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
+        Parent root = loader.load();
+
+        booksByAuthorController controller = loader.getController();
+        controller.setSelectedAuthor(author); // Pass the selected author
+        controller.loadBooksByAuthor(); // Load books for that author
+
+        getPrimaryStage().setTitle("Luku Library - Books by " + author.getFirstName() + " " + author.getLastName());
+        getPrimaryStage().setScene(new Scene(root));
+        getPrimaryStage().show();
+        updateHeader();
     }
 
     @FXML
