@@ -23,25 +23,22 @@ public class authorsPageController extends LibraryController {
     @FXML
     private ScrollPane authorScrollPane;
     @FXML
-    private AnchorPane noAuthors;
+    private AnchorPane noAuthors, scrollBox;
 
     public void setAllAuthors(List<Author> allAuthors) {
         this.allAuthors = allAuthors;
     }
 
     public void setAuthors(List<Author> authors) {
-        System.out.println("setAuthors() called with " + authors.size() + " authors."); // Debugging
-
-        if (noAuthors == null) {
-            System.out.println("Error: noAuthors is null! Check FXML file.");
-            return;
-        }
+        authorVBox.getChildren().clear();
+        authorVBox.setSpacing(40);
 
         if (authors.isEmpty()) {
-            System.out.println("No authors found.");
+            scrollBox.setVisible(false);
             noAuthors.setVisible(true);
             return;
         } else {
+            scrollBox.setVisible(true);
             noAuthors.setVisible(false);
         }
 
@@ -49,8 +46,6 @@ public class authorsPageController extends LibraryController {
             setAllAuthors(authors);
         }
 
-        authorVBox.getChildren().clear();
-        authorVBox.setSpacing(40);
         HBox hBox = null;
 
         for (int i = 0; i < authors.size(); i++) {
@@ -64,11 +59,6 @@ public class authorsPageController extends LibraryController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/authorBox.fxml"));
                 AnchorPane authorBox = loader.load();
 
-                if (authorBox == null) {
-                    System.out.println("Error: authorBox is null!");
-                    continue;
-                }
-
                 Label authorName = (Label) authorBox.lookup("#authorName");
                 Label authorBirth = (Label) authorBox.lookup("#authorBirth");
                 Label authorBirthplace = (Label) authorBox.lookup("#authorBirthplace");
@@ -79,9 +69,19 @@ public class authorsPageController extends LibraryController {
                 authorName.setText(author.getFirstName() + " " + author.getLastName());
                 authorBirth.setText(author.getDateOfBirth().toString());
                 authorBirthplace.setText(author.getPlaceOfBirth());
-                authorBooks.setText(author.getWrites().stream()
-                        .map(w -> w.getBook().getTitle())
-                        .collect(Collectors.joining(", ")));
+
+                // Fetch books by author and set the text of authorBooks label
+                List<Book> books = getAuthorService().getBooksByAuthor(author.getFirstName(), author.getLastName());
+                System.out.println("Books by author: " + books);
+                StringBuilder bookTitles = new StringBuilder();
+                for (Book book : books) {
+                    if (bookTitles.length() > 0) {
+                        bookTitles.append(", ");
+                    }
+                    bookTitles.append(book.getTitle());
+                }
+                System.out.println("Book titles: " + bookTitles.toString());
+                authorBooks.setText(bookTitles.toString());
 
                 // Set event handler for "Check their books" button
                 checkAuthorBooks.setOnAction(event -> {

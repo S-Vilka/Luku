@@ -2,6 +2,8 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -98,7 +100,14 @@ public class myBookingController extends LibraryController {
                         if (res != null) {
                             extendReservation(reservation.getReservationId());
                             getNotificationService().updateNotification(res.getReservationId());
-                            System.out.println("RESERVATION EXTENDED");
+                            //Refresh page after extending reservation
+                            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
+                            Parent root = loader2.load();
+                            myBookingController controller = loader2.getController();
+                            controller.setBooksForUser(userId);
+                            getPrimaryStage().setScene(new Scene(root));
+                            getPrimaryStage().show();
+                            updateHeader();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

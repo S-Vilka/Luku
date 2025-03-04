@@ -120,9 +120,13 @@ public class AuthorDao extends BaseDao {
         Book book = new Book();
         book.setBookId(rs.getLong("book_id"));
         book.setTitle(rs.getString("title"));
-        book.setCategory(rs.getString("genre"));
-        book.setPublicationDate(rs.getDate("published_date").toLocalDate());
-        // Set other fields as needed
+        book.setCategory(rs.getString("category"));
+        book.setPublicationDate(rs.getDate("publication_date").toLocalDate());
+        book.setDescription(rs.getString("description"));
+        book.setAvailabilityStatus(rs.getString("availability_status"));
+        book.setLanguage(rs.getString("language"));
+        book.setIsbn(rs.getString("isbn"));
+        book.setLocation(rs.getString("location"));
         return book;
     }
     }

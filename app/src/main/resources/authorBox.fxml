@@ -41,7 +41,7 @@
                 <Font name="System Bold" size="20.0" />
             </font>
         </Label>
-        <Label fx:id="authorBooks" layoutX="237.0" layoutY="145.0" prefHeight="98.0" prefWidth="247.0" text="-list of books-">
+        <Label fx:id="authorBooks" layoutX="237.0" layoutY="145.0" prefHeight="98.0" prefWidth="247.0" text="hello af dsrfehrj arejb lfkweo dfwejfhjh dsfsdjf dsf df" wrapText="true">
             <font>
                 <Font size="18.0" />
             </font>

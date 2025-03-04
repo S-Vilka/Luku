@@ -24,7 +24,7 @@
                 </ImageView>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="noAuthors" layoutX="20.0" layoutY="20.0">
+        <AnchorPane layoutX="20.0" layoutY="20.0">
             <children>
                 <AnchorPane prefHeight="99.0" prefWidth="552.0">
                     <children>
@@ -106,29 +106,27 @@
                 <Font name="System Bold" size="30.0" />
             </font>
         </Label>
-        <AnchorPane layoutX="285.0" layoutY="269.0" prefHeight="490.0" prefWidth="1088.0">
+        <AnchorPane fx:id="scrollBox" layoutX="285.0" layoutY="269.0" prefHeight="490.0" prefWidth="1088.0">
             <children>
-                <ScrollPane fx:id="bookScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">
+                <ScrollPane fx:id="authorScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">
                     <content>
                         <VBox fx:id="authorVBox" alignment="TOP_CENTER" prefHeight="485.0" prefWidth="1108.0" style="-fx-background-color: white;">
                             <padding>
                                 <Insets bottom="30.0" left="30.0" right="30.0" />
-                            </padding>
-                            <children>
-                                <AnchorPane fx:id="noAuthors" prefHeight="172.0" prefWidth="712.0">
-                                    <children>
-                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="1060.0" text="Oops! No books found :(">
-                                            <font>
-                                                <Font name="System Bold" size="22.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </AnchorPane>
-                            </children></VBox>
+                            </padding></VBox>
                     </content>
                 </ScrollPane>
             </children>
         </AnchorPane>
+              <AnchorPane fx:id="noAuthors" layoutX="253.0" layoutY="292.0" prefHeight="172.0" prefWidth="712.0">
+                  <children>
+                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="1060.0" text="Oops! No authors found :(">
+                          <font>
+                              <Font name="System Bold" size="22.0" />
+                          </font>
+                      </Label>
+                  </children>
+              </AnchorPane>
         <AnchorPane fx:id="categoryList" layoutX="211.0" layoutY="171.0" prefHeight="157.0" prefWidth="148.0" visible="false">
             <children>
                 <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
