@@ -16,12 +16,12 @@
                 <Image url="@bookpicture.jpg" />
             </image>
         </ImageView>
-        <Button fx:id="extendButton" layoutX="238.0" layoutY="246.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Extend">
+        <Button fx:id="extendButton" layoutX="238.0" layoutY="246.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="107.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Extend">
             <font>
                 <Font name="System Bold Italic" size="18.0" />
             </font>
         </Button>
-        <Button fx:id="returnButton" layoutX="238.0" layoutY="299.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Return">
+        <Button fx:id="returnButton" layoutX="364.0" layoutY="246.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="107.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Return">
             <font>
                 <Font name="System Bold Italic" size="18.0" />
             </font>

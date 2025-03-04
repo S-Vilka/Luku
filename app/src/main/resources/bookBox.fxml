@@ -16,7 +16,7 @@
             <Image url="@bookpicture.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="reserveButton" layoutX="238.0" layoutY="246.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Reserve">
+      <Button fx:id="reserveButton" layoutX="238.0" layoutY="246.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="237.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Reserve">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>

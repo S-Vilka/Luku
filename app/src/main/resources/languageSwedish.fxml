@@ -2,8 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -14,18 +14,18 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="1117.0" minWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.myProfileController">
-    <children>
-        <AnchorPane layoutY="618.0">
-            <children>
-                <ImageView fitHeight="525.0" fitWidth="1739.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@Library_Backgroudn.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </AnchorPane>
-      <AnchorPane layoutX="20.0" layoutY="20.0">
+<AnchorPane minHeight="1117.0" minWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.languagePageController">
+   <children>
+      <AnchorPane layoutX="-1.0" layoutY="796.0" prefHeight="316.0" prefWidth="1739.0">
+         <children>
+            <ImageView fitHeight="525.0" fitWidth="1739.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Library_Backgroudn2.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="noBooks" layoutX="20.0" layoutY="20.0">
          <children>
             <AnchorPane prefHeight="99.0" prefWidth="552.0">
                <children>
@@ -101,130 +101,38 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-        <AnchorPane fx:id="showState" layoutX="28.0" layoutY="261.0" prefHeight="204.0" prefWidth="791.0" visible="false">
-         <children>
-            <Label layoutX="290.0" layoutY="50.0" text="Name">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="290.0" layoutY="110.0" text="Email">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="290.0" layoutY="170.0" text="Phone">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="editNameButton" layoutX="790.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="editEmailButton" layoutX="790.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="editPhoneButton" layoutX="790.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="49.0" prefHeight="27.0" prefWidth="389.0" text="Name" textAlignment="CENTER" textFill="#ff5000">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="emailLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="363.0" layoutY="109.0" prefHeight="27.0" prefWidth="389.0" text="Email" textAlignment="CENTER" textFill="#ff5000">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="phoneLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="364.0" layoutY="169.0" prefHeight="27.0" prefWidth="389.0" text="Phone" textAlignment="CENTER" textFill="#ff5000">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-        </AnchorPane>
-      <AnchorPane fx:id="editState" layoutX="28.0" layoutY="261.0" prefHeight="204.0" prefWidth="791.0" visible="false">
-         <children>
-            <Label layoutX="290.0" layoutY="50.0" text="Name">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="changeNameField" layoutX="360.0" layoutY="46.0" prefHeight="32.0" prefWidth="399.0" />
-            <Label layoutX="290.0" layoutY="110.0" text="Email">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="290.0" layoutY="170.0" text="Phone">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="changeEmailField" layoutX="360.0" layoutY="106.0" prefHeight="32.0" prefWidth="399.0" />
-            <TextField fx:id="changePhoneField" layoutX="360.0" layoutY="166.0" prefHeight="32.0" prefWidth="399.0" />
-            <Button fx:id="doneNameButton" layoutX="790.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="editEmailButtondon1" layoutX="790.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="donePhoneButton" layoutX="790.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="passwordChangeState" layoutX="151.0" layoutY="261.0" prefHeight="204.0" prefWidth="791.0">
-         <children>
-            <Label layoutX="228.0" layoutY="50.0" prefHeight="27.0" prefWidth="122.0" text="Old password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="221.0" layoutY="110.0" prefHeight="27.0" prefWidth="129.0" text="New password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="151.0" layoutY="170.0" prefHeight="27.0" prefWidth="200.0" text="Confirm new password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="oldPasswordField" layoutX="361.0" layoutY="46.0" prefHeight="32.0" prefWidth="399.0" style="-fx-background-radius: 3;" />
-            <PasswordField fx:id="newPasswordField" layoutX="360.0" layoutY="106.0" prefHeight="32.0" prefWidth="399.0" style="-fx-background-radius: 3;" />
-            <PasswordField fx:id="confirmNewPasswordField" layoutX="360.0" layoutY="166.0" prefHeight="32.0" prefWidth="399.0" style="-fx-background-radius: 3;" />
-         </children>
-      </AnchorPane>
-      <Button fx:id="changePasswordButton" layoutX="511.0" layoutY="502.0" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="32.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Change Password">
-         <font>
-            <Font name="System Bold Italic" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="donePasswordButton" layoutX="551.0" layoutY="502.0" mnemonicParsing="false" onAction="#handleDonePassword" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done" visible="false">
-         <font>
-            <Font name="System Bold Italic" size="18.0" />
-         </font>
-      </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="260.0" layoutY="231.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-      <Label layoutX="261.0" layoutY="186.0" text="My Information">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="250.0" layoutY="221.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
+      <Label layoutX="251.0" layoutY="176.0" prefHeight="45.0" prefWidth="277.0" text="Language: Swedish">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <AnchorPane fx:id="scrollBox" layoutX="285.0" layoutY="269.0" prefHeight="490.0" prefWidth="1088.0">
+         <children>
+            <ScrollPane fx:id="bookScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">
+               <content>
+                  <VBox fx:id="bookVBox" alignment="TOP_CENTER" prefHeight="485.0" prefWidth="1108.0" style="-fx-background-color: white;">
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" />
+                     </padding></VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="noBooks" layoutX="650.0" layoutY="300.0" prefHeight="172.0" prefWidth="324.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="400.0" text="Oops! No books found :(">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <CheckBox fx:id="availabilityCheckBox" layoutX="1188.0" layoutY="190.0" mnemonicParsing="false" onAction="#chooseOnlyAvailable" prefHeight="30.0" prefWidth="277.0" text="Show only available books">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </CheckBox>
       <AnchorPane fx:id="categoryList" layoutX="211.0" layoutY="171.0" prefHeight="157.0" prefWidth="148.0" visible="false">
          <children>
             <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
@@ -354,10 +262,5 @@
             </ScrollPane>
          </children>
       </AnchorPane>
-      <Label fx:id="errorMessage" layoutX="739.0" layoutY="509.0" prefHeight="27.0" prefWidth="461.0" textFill="RED">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-    </children>
+   </children>
 </AnchorPane>

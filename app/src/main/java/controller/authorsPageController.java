@@ -103,21 +103,6 @@ public class authorsPageController extends LibraryController {
     }
 
     @FXML
-    private void showAuthorBooks(Author author) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
-        Parent root = loader.load();
-
-        booksByAuthorController controller = loader.getController();
-        controller.setSelectedAuthor(author); // Pass the selected author
-        controller.loadBooksByAuthor(); // Load books for that author
-
-        getPrimaryStage().setTitle("Luku Library - Books by " + author.getFirstName() + " " + author.getLastName());
-        getPrimaryStage().setScene(new Scene(root));
-        getPrimaryStage().show();
-        updateHeader();
-    }
-
-    @FXML
     private void searchAuthors() {
         System.out.println("Searching for authors...");
     }

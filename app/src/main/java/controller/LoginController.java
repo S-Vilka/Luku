@@ -25,8 +25,10 @@ public class LoginController extends LibraryController {
 
         if (authenticateUser(userEmail, pass)) {
             String username = getUserNameByEmail(userEmail);
+            String phoneNumber = getUserPhone(userEmail);
             setSavedUsername(username);
             setSavedEmail(userEmail);
+            setSavedPhoneNumber(phoneNumber);
             User user = getUserByEmail(userEmail);
             Long userId = user.getUserId();
             setSavedUserId(userId);

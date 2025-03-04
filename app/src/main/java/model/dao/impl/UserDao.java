@@ -128,4 +128,30 @@ public class UserDao extends BaseDao {
         }
         return role;
     }
+
+    public String getUserPhone(String email){
+        String query = "SELECT phone FROM users WHERE email = ?";
+        String phone = null;
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                phone = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return phone;
+    }
+
+    public void setNewPassword(String email, String newPassword) {
+        String query = "UPDATE users SET password = ? WHERE email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, newPassword);
+            stmt.setString(2, email);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

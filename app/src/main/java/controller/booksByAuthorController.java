@@ -84,6 +84,7 @@ public class booksByAuthorController extends LibraryController {
         getPrimaryStage().setTitle("Luku Library - Authors");
         getPrimaryStage().setScene(new Scene(root));
         getPrimaryStage().show();
+        updateHeader();
     }
 
     @FXML
@@ -95,6 +96,20 @@ public class booksByAuthorController extends LibraryController {
             setBooks(availableBooks);
         } else {
             setBooks(allBooks);
+        }
+    }
+
+    public void chooseReserveAuthor(Long bookId) throws Exception {
+        Long userId = getSavedUserId();
+        if (userId == null) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        try {
+            reserveBook(userId, bookId);
+            showAuthorBooks(selectedAuthor);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -144,21 +159,37 @@ public class booksByAuthorController extends LibraryController {
                         .collect(Collectors.joining(", "));
                 author.setText(authorNames);
 
-                // Handle reserve button
-                if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
+                // Check user role and book count
+                Long userId = getSavedUserId();
+                int userBookCount = getUserService().getUserBookCount(userId);
+                String userRole = getUserService().getUserRole(userId);
+
+
+                if ("teacher".equalsIgnoreCase(userRole)) {
                     reserveButton.setText("Reserve");
-                    reserveButton.setStyle("-fx-text-fill: green;");
+                    reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
                     reserveButton.setDisable(false);
+                    availability.setStyle("-fx-text-fill: green;");
+                } else if ("student".equalsIgnoreCase(userRole) && userBookCount >= 5) {
+                    reserveButton.setText("You cannot reserve anymore books");
+                    reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 13px; -fx-font-weight: bold;");
+                    reserveButton.setDisable(true);
+                } else if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
+                    reserveButton.setText("Reserve");
+                    reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
+                    reserveButton.setDisable(false);
+                    availability.setStyle("-fx-text-fill: green;");
                 } else {
                     reserveButton.setText("Unavailable");
-                    reserveButton.setStyle("-fx-text-fill: red;");
+                    reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 18px; -fx-font-weight: bold;");
                     reserveButton.setDisable(true);
+                    availability.setStyle("-fx-text-fill: red;");
                 }
 
                 Long bookIdNo = book.getBookId();
                 reserveButton.setOnAction(event -> {
                     try {
-                        chooseReserve(bookIdNo);
+                        chooseReserveAuthor(bookIdNo);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

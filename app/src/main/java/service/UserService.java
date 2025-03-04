@@ -85,6 +85,10 @@ public class UserService {
     public String getUserRole(Long userId) {
         return userDao.getUserRole(userId);
     }
+
+    public String getUserPhone(String email) {
+        return userDao.getUserPhone(email);
+    }
 }
 
 

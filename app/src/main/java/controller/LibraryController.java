@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
+import java.util.function.Consumer;
 
 public class LibraryController {
     private static View View;
@@ -33,6 +34,7 @@ public class LibraryController {
     private static String savedUsername;
     private static String savedEmail;
     private static Long savedUserId;
+    private static String savedPhoneNumber;
 
     @FXML
     private TextField email, usernameField, emailField, teacherID, searchBar;
@@ -164,6 +166,35 @@ public class LibraryController {
         updateHeader();
     }
 
+    private void chooseLanguage(String language) throws Exception {
+        String fxmlFile = "/language" + language + ".fxml";
+        List<Book> books = searchBooksByLanguage(language);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+        languagePageController controller = loader.getController();
+        controller.clearBookLists();
+        controller.getAvailabilityCheckBox().setSelected(false);
+        controller.setBooks(books);
+        primaryStage.setTitle("Luku Library - " + language);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        updateHeader();
+    }
+
+    public void showAuthorBooks(Author author) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
+        Parent root = loader.load();
+
+        booksByAuthorController controller = loader.getController();
+        controller.setSelectedAuthor(author); // Pass the selected author
+        controller.loadBooksByAuthor(); // Load books for that author
+
+        getPrimaryStage().setTitle("Luku Library - Books by " + author.getFirstName() + " " + author.getLastName());
+        getPrimaryStage().setScene(new Scene(root));
+        getPrimaryStage().show();
+        updateHeader();
+    }
+
     @FXML
     private void chooseFiction() throws Exception {
         chooseCategory("Fiction");
@@ -186,14 +217,17 @@ public class LibraryController {
 
     @FXML
     private void chooseEnglish() throws Exception {
+        chooseLanguage("English");
     }
 
     @FXML
     private void chooseFinnish() throws Exception {
+        chooseLanguage("Finnish");
     }
 
     @FXML
     private void chooseSwedish() throws Exception {
+        chooseLanguage("Swedish");
     }
 
     @FXML
@@ -217,7 +251,13 @@ public class LibraryController {
 
     @FXML
     private void chooseProfile() throws Exception {
-        loadScene("/myProfile.fxml");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/myProfile.fxml"));
+        Parent root = loader.load();
+        myProfileController controller = loader.getController();
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        controller.initializeProfilePage();
+        updateHeader();
     }
 
     @FXML
@@ -237,10 +277,10 @@ public class LibraryController {
         controller.setBooksForUser(userId);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-//        loadScene();
+        updateHeader();
     }
 
-    public void chooseReserve(Long bookId) throws Exception {
+    public void chooseReserveCategory(Long bookId) throws Exception {
         Long userId = getSavedUserId();
         if (userId == null) {
             throw new IllegalStateException("User is not logged in.");
@@ -252,6 +292,23 @@ public class LibraryController {
         try {
             reserveBook(userId, bookId);
             chooseCategory(category);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void chooseReserveLanguage(Long bookId) throws Exception {
+        Long userId = getSavedUserId();
+        if (userId == null) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        Book book = bookService.getBookById(bookId);
+        String language = book.getLanguage();
+
+        try {
+            reserveBook(userId, bookId);
+            chooseLanguage(language);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -392,6 +449,10 @@ public class LibraryController {
         this.savedUserId = savedUserId;
     }
 
+    public void setSavedPhoneNumber(String savedPhoneNumber) {
+        this.savedPhoneNumber = savedPhoneNumber;
+    }
+
     public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
         return reservationService.getReservationByUserAndBook(userId, bookId);
     }
@@ -437,5 +498,13 @@ public class LibraryController {
 
     public Long getSavedUserId() {
         return savedUserId;
+    }
+
+    public String getSavedPhoneNumber() {
+        return savedPhoneNumber;
+    }
+
+    public String getUserPhone(String email){
+        return userService.getUserPhone(email);
     }
 }

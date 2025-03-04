@@ -18,7 +18,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
 import service.UserService;
 
-public class categoryPageController extends LibraryController {
+public class languagePageController extends LibraryController {
     private List<Book> allBooks, availableBooks;
     @FXML
     private VBox bookVBox;
@@ -156,7 +156,7 @@ public class categoryPageController extends LibraryController {
                 Long bookIdNo = book.getBookId();
                 reserveButton.setOnAction(event -> {
                     try {
-                        chooseReserveCategory(bookIdNo);
+                        chooseReserveLanguage(bookIdNo);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

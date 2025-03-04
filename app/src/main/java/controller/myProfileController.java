@@ -1,34 +1,50 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import model.entity.Author;
-import model.entity.Book;
 import model.entity.User;
-import service.BookService;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-public class myProfileController extends LibraryController{
+public class myProfileController extends LibraryController {
 
     @FXML
-    private TextField changeNameField;
+    private AnchorPane showState, editState, passwordChangeState;
     @FXML
-    private TextField changeEmailField;
+    private TextField changeNameField, changeEmailField, changePhoneField;
     @FXML
-    private TextField changePhoneField;
+    private PasswordField oldPasswordField, newPasswordField, confirmNewPasswordField;
+    @FXML
+    private Label nameLabel, emailLabel, phoneLabel, errorMessage;
+    @FXML
+    private Button changePasswordButton, donePasswordButton;
+
+    public void initializeProfilePage() {
+        // Initialize the profile information
+        nameLabel.setText(getSavedUsername());
+        emailLabel.setText(getSavedEmail());
+        phoneLabel.setText(getSavedPhoneNumber());
+
+        // Set initial visibility
+        showState.setVisible(true);
+        editState.setVisible(false);
+        passwordChangeState.setVisible(false);
+        changePasswordButton.setVisible(true);
+        donePasswordButton.setVisible(false);
+    }
 
     @FXML
-    private void handleUpdateUser() throws Exception {
+    private void handleEditUser() {
+        // Show edit state and hide others
+        showState.setVisible(false);
+        editState.setVisible(true);
+        passwordChangeState.setVisible(false);
+    }
+
+    @FXML
+    private void handleDoneUser() throws Exception {
         String newName = changeNameField.getText();
         String newEmail = changeEmailField.getText();
         String newPhone = changePhoneField.getText();
@@ -39,24 +55,154 @@ public class myProfileController extends LibraryController{
         if (user != null) {
             if (!newName.isEmpty()) {
                 user.setUsername(newName);
+                setSavedUsername(newName);
             }
             if (!newEmail.isEmpty()) {
                 user.setEmail(newEmail);
+                setSavedEmail(newEmail);
             }
             if (!newPhone.isEmpty()) {
                 user.setPhone(newPhone);
+                setSavedPhoneNumber(newPhone);
             }
 
             // Save the updated user
             getUserService().updateUser(user);
 
-            // Reload profile page
-            loadScene("/myProfile.fxml");
+            // Update profile information
+            nameLabel.setText(getSavedUsername());
+            emailLabel.setText(getSavedEmail());
+            phoneLabel.setText(getSavedPhoneNumber());
 
+            // Show showState and hide others
+            showState.setVisible(true);
+            editState.setVisible(false);
+            passwordChangeState.setVisible(false);
+            changePasswordButton.setVisible(true);
+            donePasswordButton.setVisible(false);
+
+            updateHeader();
         } else {
-            // Handle the case where the user is not found
             System.out.println("User not found");
         }
     }
 
+    @FXML
+    private void handleChangePassword() {
+        // Show password change state and hide others
+        showState.setVisible(false);
+        editState.setVisible(false);
+        passwordChangeState.setVisible(true);
+        changePasswordButton.setVisible(false);
+        donePasswordButton.setVisible(true);
+    }
+
+    @FXML
+    private void handleDonePassword() {
+        try {
+            String oldPassword = oldPasswordField.getText();
+            String newPassword = newPasswordField.getText();
+            String confirmNewPassword = confirmNewPasswordField.getText();
+            Long userId = getSavedUserId();
+
+            User user = getUserService().getUserById(userId);
+            if (user != null) {
+                String hashedOldPassword = getUserService().hashPassword(oldPassword);
+                if (!hashedOldPassword.equals(user.getPassword())) {
+                    errorMessage.setText("Old password is incorrect.");
+                    return;
+                }
+
+                if (!newPassword.equals(confirmNewPassword)) {
+                    errorMessage.setText("New passwords do not match.");
+                    return;
+                }
+
+                String hashedNewPassword = getUserService().hashPassword(newPassword);
+                user.setPassword(hashedNewPassword);
+                getUserService().updateUser(user);
+
+                // Clear error message
+                errorMessage.setText("");
+
+                // Switch back to showState
+                showState.setVisible(true);
+                editState.setVisible(false);
+                passwordChangeState.setVisible(false);
+                changePasswordButton.setVisible(true);
+                donePasswordButton.setVisible(false);
+            } else {
+                errorMessage.setText("User not found.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorMessage.setText("An error occurred while changing the password.");
+        }
+    }
 }
+
+//package controller;
+//
+//import javafx.fxml.FXML;
+//import javafx.fxml.FXMLLoader;
+//import javafx.scene.Parent;
+//import javafx.scene.Scene;
+//import javafx.scene.control.*;
+//import javafx.scene.layout.AnchorPane;
+//import javafx.scene.layout.HBox;
+//import javafx.scene.layout.VBox;
+//import javafx.stage.Stage;
+//import model.entity.Author;
+//import model.entity.Book;
+//import model.entity.User;
+//import service.BookService;
+//
+//import java.util.List;
+//import java.util.Set;
+//import java.util.stream.Collectors;
+//
+//public class myProfileController extends LibraryController{
+//
+//    @FXML
+//    private TextField changeNameField;
+//    @FXML
+//    private TextField changeEmailField;
+//    @FXML
+//    private TextField changePhoneField;
+//
+//    @FXML
+//    private void handleUpdateUser() throws Exception {
+//        String newName = changeNameField.getText();
+//        String newEmail = changeEmailField.getText();
+//        String newPhone = changePhoneField.getText();
+//        Long userId = getSavedUserId();
+//
+//        // Retrieve the user's information and update it
+//        User user = getUserService().getUserById(userId);
+//        if (user != null) {
+//            if (!newName.isEmpty()) {
+//                user.setUsername(newName);
+//            }
+//            if (!newEmail.isEmpty()) {
+//                user.setEmail(newEmail);
+//            }
+//            if (!newPhone.isEmpty()) {
+//                user.setPhone(newPhone);
+//            }
+//
+//            // Save the updated user
+//            getUserService().updateUser(user);
+//            setSavedUsername(newName);
+//            setSavedEmail(newEmail);
+//            setSavedPhoneNumber(newPhone);
+//
+//            // Reload profile page
+//            loadScene("/myProfile.fxml");
+//
+//        } else {
+//            // Handle the case where the user is not found
+//            System.out.println("User not found");
+//        }
+//    }
+//
+//}

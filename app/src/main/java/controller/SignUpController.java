@@ -47,6 +47,8 @@ public class SignUpController extends LibraryController {
         setSavedEmail(email);
         User user = getUserByEmail(email);
         Long userId = user.getUserId();
+        String phoneNumber = getUserPhone(email);
+        setSavedPhoneNumber(phoneNumber);
         setSavedUserId(userId);
         loadScene("/mainpage.fxml");
     }
