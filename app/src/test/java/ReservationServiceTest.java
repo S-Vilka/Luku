@@ -147,6 +147,33 @@ public class ReservationServiceTest {
         assertEquals(reservation.getDueDate().withNano(0), updatedReservation.getDueDate().withNano(0));
     }
 
+    @Test
+    public void testDeleteReservation() {
+        User user = new User();
+        user.setUserId(1L);
+
+        Book book = new Book();
+        book.setBookId(1L);
+
+        Reservation reservation = new Reservation();
+        reservation.setUser(user);
+        reservation.setBook(book);
+
+        reservationService.createReservation(reservation);
+
+        // Ensure the reservation was created
+        assertNotNull(reservation.getReservationId());
+
+        // Delete the created reservation
+        reservationService.deleteReservation(reservation.getReservationId());
+
+        // Verify the reservation has been deleted
+        Reservation deletedReservation = reservationService.getReservationById(reservation.getReservationId());
+        assertNull(deletedReservation);
+    }
+
+
+
 }
 
 

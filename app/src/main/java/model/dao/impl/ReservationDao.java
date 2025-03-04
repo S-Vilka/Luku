@@ -11,21 +11,6 @@ import java.util.List;
 //
 public class ReservationDao extends BaseDao{
 
-//    public Reservation getReservationByIdWithoutUserDetails(Long reservationId) {
-//        String query = "SELECT * FROM reservations WHERE reservation_id = ?";
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setLong(1, reservationId);
-//            ResultSet rs = stmt.executeQuery();
-//            if (rs.next()) {
-//                return mapRowToReservation(rs);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-
         public Reservation getReservationById(Long reservationId) {
             String query = "SELECT r.*, u.*, b.* FROM reservations r " +
                     "JOIN users u ON r.user_id = u.user_id " +
@@ -68,7 +53,8 @@ public class ReservationDao extends BaseDao{
 
     public List<Reservation> getAllReservations() {
         List<Reservation> reservations = new ArrayList<>();
-        String query = "SELECT r.*, b.title FROM reservations r " +
+        String query = "SELECT r.*, u.username, b.title FROM reservations r " +
+                "JOIN users u ON r.user_id = u.user_id " +
                 "JOIN books b ON r.book_id = b.book_id";
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -92,21 +78,6 @@ public class ReservationDao extends BaseDao{
         }
     }
 
-
-//    public List<Reservation> getReservationsByUserId(Long userId) {
-//        List<Reservation> reservations = new ArrayList<>();
-//        String query = "SELECT * FROM reservations WHERE user_id = ?";
-//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setLong(1, userId);
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                reservations.add(mapRowToReservation(rs));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return reservations;
-//    }
 
     public List<Reservation> getReservationsByUserId(Long userId) {
         List<Reservation> reservations = new ArrayList<>();

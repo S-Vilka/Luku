@@ -86,22 +86,33 @@ public class LibraryControllerTest extends BaseDao {
         // Mock the behavior of userService.getUserById
         Mockito.when(userService.getUserById(userId)).thenReturn(user);
 
-        // Create a mock of LibraryController
-        LibraryController mockLibraryController = Mockito.mock(LibraryController.class);
+        // Create a spy of LibraryController
+        LibraryController spyLibraryController = Mockito.spy(libraryController);
 
-        // Mock the token validation to return false
-        Mockito.when(mockLibraryController.validateToken()).thenReturn(false);
+        // Mock the token validation to return true
+        Mockito.doReturn(true).when(spyLibraryController).validateToken();
+
+        // Mock the reservation creation to do nothing
+        Mockito.doAnswer(invocation -> {
+            Reservation reservation = invocation.getArgument(0);
+            reservation.setReservationId(1L); // Manually set reservationId
+            return null;
+        }).when(reservationService).createReservation(Mockito.any(Reservation.class));
+
 
         // Call the method to be tested
-        libraryController.reserveBook(userId, bookId);
+        spyLibraryController.reserveBook(userId, bookId);
 
         // Verify that the reservationService.createReservation method was called
         ArgumentCaptor<Reservation> reservationCaptor = ArgumentCaptor.forClass(Reservation.class);
         verify(reservationService).createReservation(reservationCaptor.capture());
 
         Reservation capturedReservation = reservationCaptor.getValue();
+//        capturedReservation.setReservationId(1L); // Manually set reservationId
+
         assertEquals(userId, capturedReservation.getUserId());
         assertEquals(bookId, capturedReservation.getBookId());
+        assertEquals(1L, capturedReservation.getReservationId());
 
         // Verify that the user's book count was updated
         assertEquals(4, user.getBookCount());

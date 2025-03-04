@@ -62,7 +62,7 @@ public class UserServiceTest {
             user.setEmail("newuser@example.com");
             user.setPhone("0987654321");
             user.setRole("student");
-            user.setBookCount(0);
+            user.setBookCount(3);
             user.setCreatedAt(LocalDateTime.now());
             user.setDeletedAt(null);
             userService.registerUser(user);
@@ -150,7 +150,33 @@ public class UserServiceTest {
         Long userId = 1L;
         int bookCount = userService.getUserBookCount(userId);
         System.out.println("In testGetUserBookCount");
-        assertEquals(0, bookCount);
+        assertEquals(3, bookCount);
+    }
+
+    @Test
+    public void testGetUserPhone() {
+        Long userId = 1L;
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            String userEmail = user.getEmail();
+            String phoneNumber = userService.getUserPhone(userEmail);
+            assertEquals("0987654321", phoneNumber);
+        }
+    }
+
+    @Test
+    public void testGetUserRole() {
+        Long userId = 1L;
+        String role = userService.getUserRole(userId);
+        assertEquals("student", role);
+    }
+
+    @Test
+    public void testDecreaseUserBookCount() {
+        Long userId = 1L;
+        userService.decreaseUserBookCount(userId);
+        int bookCount = userService.getUserBookCount(userId);
+        assertEquals(2, bookCount);
     }
 
         }

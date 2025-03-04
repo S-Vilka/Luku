@@ -158,5 +158,24 @@ public class BookServiceTest {
         assertNotNull(books);
         assertEquals(1, books.size());
     }
+
+    @Test
+    public void getAuthorsByBookId() {
+        assertNotNull(bookService.getAuthorsByBookId(1L));
+    }
+
+    @Test
+    public void testSetBookAvailability() {
+        bookService.setBookAvailability(1L, "Unavailable");
+        Book book = bookService.getBookById(1L);
+        assertEquals("Unavailable", book.getAvailabilityStatus());
+    }
+
+    @Test
+    public void testSearchBooks() {
+        List<Book> books = bookService.searchBooks("Sample");
+        assertNotNull(books);
+        assertEquals(1, books.size());
+    }
 }
 

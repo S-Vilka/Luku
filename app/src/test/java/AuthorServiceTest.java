@@ -24,7 +24,7 @@ public class AuthorServiceTest {
             .withPassword("test");
 
     private AuthorService authorService;
-    private AuthorDao authorDao;
+//    private AuthorDao authorDao;
 
     @BeforeEach
     public void setUp() {
@@ -33,7 +33,7 @@ public class AuthorServiceTest {
         try {
             connection = DriverManager.getConnection(mariaDBContainer.getJdbcUrl(), mariaDBContainer.getUsername(), mariaDBContainer.getPassword());
             BaseDao.setConnection(connection);
-            authorDao = new AuthorDao();
+//            authorDao = new AuthorDao();
             authorService = new AuthorService();
 
             // Create the authors table
@@ -50,8 +50,13 @@ public class AuthorServiceTest {
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
                         "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                         "title VARCHAR(255) NOT NULL, " +
-                        "genre VARCHAR(255), " +
-                        "published_date DATE" +
+                        "publication_date DATE, " +
+                        "description TEXT, " +
+                        "availability_status VARCHAR(255), " +
+                        "category VARCHAR(255), " +
+                        "language VARCHAR(255), " +
+                        "isbn VARCHAR(255), " +
+                        "location VARCHAR(255)" +
                         ")");
                 stmt.execute("CREATE TABLE IF NOT EXISTS writes (" +
                         "author_id BIGINT, " +
@@ -65,9 +70,11 @@ public class AuthorServiceTest {
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES " +
                         "('John', 'Doe', 'A famous author', '1970-01-01', 'New York')");
-                stmt.execute("INSERT INTO books (title, genre, published_date) VALUES " +
-                        "('Effective Java', 'Programming', '2008-05-08'), " +
-                        "('Clean Code', 'Programming', '2008-08-01')");
+                stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES " +
+                        "('Jane', 'Austin', 'A very famous author', '1970-01-01', 'London')");
+                stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
+                        "('Effective Java', '2008-05-08', 'A comprehensive guide to best practices in Java programming', 'Available', 'Programming', 'English', '978-0134685991', 'Aisle 3'), " +
+                        "('Clean Code', '2008-08-01', 'A handbook of agile software craftsmanship', 'Available', 'Programming', 'English', '978-0132350884', 'Aisle 4')");
                 stmt.execute("INSERT INTO writes (author_id, book_id) VALUES " +
                         "(1, 1), (1, 2)");
             }
@@ -99,7 +106,7 @@ public class AuthorServiceTest {
     public void testGetAllAuthors() {
         List<Author> authors = authorService.getAllAuthors();
         assertNotNull(authors);
-        assertEquals(1, authors.size());
+        assertEquals(2, authors.size());
     }
 
     @Test
@@ -122,11 +129,18 @@ public class AuthorServiceTest {
 
     @Test
     public void testGetBooksByAuthorName() {
-        List<Book> books = authorDao.getBooksByAuthorName("John", "Doe");
+        List<Book> books = authorService.getBooksByAuthor("John", "Doe");
         assertNotNull(books);
         assertEquals(2, books.size());
         assertEquals("Effective Java", books.get(0).getTitle());
         assertEquals("Clean Code", books.get(1).getTitle());
+    }
+
+    @Test
+    public void testGetAuthorById() {
+        Author author = authorService.getAuthorById(2L);
+        assertNotNull(author);
+        assertEquals("Jane", author.getFirstName());
     }
 
 }

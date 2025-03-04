@@ -102,10 +102,12 @@ public class Book {
     }
 
     public Set<Writes> getWrites() {
+
         return writes;
     }
 
     public void setWrites(Set<Writes> writes) {
+
         this.writes = writes;
     }
 

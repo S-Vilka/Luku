@@ -69,5 +69,4 @@ public class Notification {
         return this.reservation.getReservationId();
     }
 
-
 }
