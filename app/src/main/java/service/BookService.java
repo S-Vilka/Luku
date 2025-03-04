@@ -21,22 +21,27 @@ public class BookService {
 
 
     public List<Book> getBooksByAuthorId(Long authorId) {
+
         return bookDao.getBooksByAuthorId(authorId);
     }
 
     public List<Book> getAllBooks() {
+
         return bookDao.getAllBooks();
     }
 
     public int getBookCount() {
+
         return bookDao.getBookCount();
     }
 
     public List<Book> getBooksByTitle(String title) {
+
         return bookDao.getBooksByTitle(title);
     }
 
     public List<Book> getBooksByCategory(String genre) {
+
         return bookDao.getBooksByCategory(genre);
     }
     public Set<Author> getAuthorsByBookId(Long bookId) {
@@ -45,6 +50,7 @@ public class BookService {
     }
 
     public List<Book>  getBooksByLanguage(String language) {
+
         return bookDao.getBooksByLanguage(language);
     }
 
@@ -53,6 +59,7 @@ public class BookService {
     }
 
     public List<Book> searchBooks(String searchTerm) {
+
         return bookDao.searchBooks(searchTerm);
     }
 }

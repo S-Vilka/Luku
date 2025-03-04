@@ -10,6 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationDao extends BaseDao {
+    private UserDao userDao;
+    private ReservationDao reservationDao;
+
+    public NotificationDao() {
+        this.userDao = new UserDao();
+        this.reservationDao = new ReservationDao();
+    }
+
 
     public void saveNotification(Notification notification) {
         String query = "INSERT INTO notifications (user_id, message, created_at, reservation_id) VALUES (?, ?, ?, ?)";
@@ -47,7 +55,7 @@ public class NotificationDao extends BaseDao {
 
         // Fetch user
         Long userId = rs.getLong("user_id");
-        UserDao userDao = new UserDao();
+//        UserDao userDao = new UserDao();
         User user = userDao.getUserById(userId);
         notification.setUser(user);
 
@@ -55,7 +63,7 @@ public class NotificationDao extends BaseDao {
     }
 
     public void createNotificationForReservation(Long reservationId) {
-        ReservationDao reservationDao = new ReservationDao();
+//        ReservationDao reservationDao = new ReservationDao();
         Reservation reservation = reservationDao.getReservationById(reservationId);
         if (reservation == null) {
             throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
@@ -91,7 +99,6 @@ public class NotificationDao extends BaseDao {
         ReservationDao reservationDao = new ReservationDao();
         Reservation reservation = reservationDao.getReservationById(reservationId);
         User user = reservation.getUser();
-        System.out.println("user name" + user.getUsername());
         Book book = reservation.getBook();
         String query = "UPDATE notifications SET message = ? WHERE reservation_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

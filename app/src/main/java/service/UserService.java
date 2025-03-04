@@ -75,10 +75,12 @@ public class UserService {
 
 
     public void updateUser(User user) {
+
         userDao.updateUser(user);
     }
 
     public User getUserById(Long Id) {
+
         return userDao.getUserById(Id);
     }
 

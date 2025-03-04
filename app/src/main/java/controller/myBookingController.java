@@ -59,7 +59,6 @@ public class myBookingController extends LibraryController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookingsBookBox.fxml"));
                 AnchorPane bookBox = loader.load();
-                System.out.println("HURRAY");
 
                 javafx.scene.control.Label bookName = (javafx.scene.control.Label) bookBox.lookup("#bookName");
                 javafx.scene.control.Label author = (javafx.scene.control.Label) bookBox.lookup("#author");

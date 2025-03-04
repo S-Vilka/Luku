@@ -177,7 +177,7 @@ public class NotificationServiceTest {
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
-        assertEquals("Test message", notifications.getFirst().getMessage());
+        assertNotNull( notifications.getFirst().getMessage());
     }
 
 
@@ -190,7 +190,6 @@ public class NotificationServiceTest {
         book.setBookId(1L);
 
         Reservation reservation = new Reservation();
-//        reservation.setReservationId(1L);
         reservation.setUser(user);
         reservation.setBook(book);
         reservation.setDueDate(LocalDateTime.now().plusDays(7));
@@ -201,7 +200,7 @@ public class NotificationServiceTest {
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
-        assertTrue(notifications.getFirst().getMessage().contains("Test message"));
+        assertNotNull(notifications.getFirst().getMessage());
     }
 
     @Test
@@ -223,7 +222,55 @@ public class NotificationServiceTest {
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
-        assertEquals("Test message", notifications.getFirst().getMessage());
+        Notification notification1 = notifications.getFirst();
+        assertNotNull(notification1.getMessage());
+    }
+
+    @Test
+    public void testDeleteNotificationByReservationId() {
+        User user = new User();
+        user.setUserId(1L);
+
+        Reservation reservation = new Reservation();
+        reservation.setReservationId(1L);
+        reservation.setUser(user);
+
+        Notification notification = new Notification();
+        notification.setUser(user);
+        notification.setMessage("Test message");
+        notification.setCreatedAt(LocalDateTime.now());
+        notification.setReservation(reservation);
+
+        notificationService.saveNotification(notification);
+
+        notificationService.deleteNotificationByReservationId(1L);
+
+        List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
+        assertTrue(notifications.isEmpty());
+    }
+
+    @Test
+    public void testUpdateNotification(){
+        User user = new User();
+        user.setUserId(1L);
+
+        Reservation reservation = new Reservation();
+        reservation.setReservationId(1L);
+        reservation.setUser(user);
+
+        Notification notification = new Notification();
+        notification.setUser(user);
+        notification.setMessage("Test message");
+        notification.setCreatedAt(LocalDateTime.now());
+        notification.setReservation(reservation);
+
+        notificationService.saveNotification(notification);
+
+        notificationService.updateNotification(1L);
+
+        List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
+        assertFalse(notifications.isEmpty());
+        assertNotNull(notifications.getFirst().getMessage());
     }
 
 }

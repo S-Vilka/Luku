@@ -151,7 +151,7 @@ public class LibraryController {
         userList.setVisible(!userList.isVisible());
     }
 
-    private void chooseCategory(String category) throws Exception {
+    public void chooseCategory(String category) throws Exception {
         String fxmlFile = "/category" + category + ".fxml";
         List<Book> books = getBooksByCategory(category);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

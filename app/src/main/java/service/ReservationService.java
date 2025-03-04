@@ -18,6 +18,7 @@ public class ReservationService {
     }
 
     public List<Reservation> getAllReservations() {
+
         return reservationDao.getAllReservations();
     }
 
@@ -37,7 +38,7 @@ public class ReservationService {
 
 
     public void createReservation(Reservation reservation) {
-        Long reservationId = reservationDao.saveReservation(reservation);
+         reservationDao.saveReservation(reservation);
     }
 
     public Reservation getReservationByUserAndBook(Long userId, Long bookId) {
