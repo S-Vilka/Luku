@@ -47,7 +47,7 @@ pipeline {
 
     environment {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
-        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
+        PATH = "${MAVEN_HOME}/bin:/usr/local/bin/docker:${env.PATH}"
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub-credentials'
         DOCKERHUB_REPO = 'mahnoor95/luku'
         DOCKER_IMAGE_TAG = 'latest'
