@@ -1,10 +1,13 @@
 FROM openjdk:21
 
-# Set the working directory
+FROM maven:latest
+
 WORKDIR /app
 
-# Copy the JAR file into the container
-COPY target/LukuLibrary.jar app.jar
+COPY pom.xml /app/
 
-# Command to run the application
-CMD ["java", "-jar", "app.jar"]
+COPY . /app/
+
+RUN mvn clean package
+
+CMD ["java", "-jar", "target/LukuLibrary.jar"]
