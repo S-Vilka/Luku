@@ -51,4 +51,8 @@ public class BookService {
     public void setBookAvailability(Long bookId, String isAvailable) {
         bookDao.updateBookAvailabilityStatus(bookId, isAvailable);
     }
+
+    public List<Book> searchBooks(String searchTerm) {
+        return bookDao.searchBooks(searchTerm);
+    }
 }

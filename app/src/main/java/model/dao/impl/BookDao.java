@@ -179,4 +179,20 @@ private Set<Author> getAuthorsByBookId(Long bookId) {
             e.printStackTrace();
         }
     }
+
+    public List<Book> searchBooks(String keyword) {
+        List<Book> books = new ArrayList<>();
+        String query = "SELECT * FROM books WHERE title LIKE ? OR description LIKE ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, "%" + keyword + "%");
+            stmt.setString(2, "%" + keyword + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                books.add(mapRowToBook(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
 }

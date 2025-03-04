@@ -37,7 +37,7 @@ public class LibraryController {
     private static String savedPhoneNumber;
 
     @FXML
-    private TextField email, usernameField, emailField, teacherID, searchBar;
+    private TextField email, usernameField, emailField, teacherID, searchBar1;
     @FXML
     private PasswordField password, passwordField, repeatPassword;
     @FXML
@@ -181,6 +181,21 @@ public class LibraryController {
         updateHeader();
     }
 
+    private void goToSearchPage(String searchTerm) throws Exception {
+        List<Book> books = bookService.searchBooks(searchTerm);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/searchPage.fxml"));
+        Parent root = loader.load();
+        searchPageController controller = loader.getController();
+        controller.setSavedSearchTerm(searchTerm);
+        controller.clearBookLists();
+        controller.getAvailabilityCheckBox().setSelected(false);
+        controller.setBooks(books);
+        primaryStage.setTitle("Luku Library - Search Results");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        updateHeader();
+    }
+
     public void showAuthorBooks(Author author) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
         Parent root = loader.load();
@@ -232,6 +247,8 @@ public class LibraryController {
 
     @FXML
     private void searchAction() throws Exception {
+        String searchTerm = searchBar1.getText();
+        goToSearchPage(searchTerm);
     }
 
     @FXML
@@ -309,6 +326,20 @@ public class LibraryController {
         try {
             reserveBook(userId, bookId);
             chooseLanguage(language);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void chooseReserveSearch(Long bookId, String searchTerm) throws Exception {
+        Long userId = getSavedUserId();
+        if (userId == null) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        try {
+            reserveBook(userId, bookId);
+            goToSearchPage(searchTerm);
         } catch (Exception e) {
             e.printStackTrace();
         }
