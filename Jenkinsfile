@@ -43,7 +43,12 @@
 // }
 
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'docker:latest'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         MAVEN_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
@@ -60,6 +65,8 @@ pipeline {
                 git branch: 'jenkins', url: 'git@github.com:S-Vilka/Luku.git'
             }
         }
+
+
 
        stage('Verify Docker') {
             steps {
