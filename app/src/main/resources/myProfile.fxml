@@ -101,7 +101,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-        <AnchorPane fx:id="showState" layoutX="28.0" layoutY="261.0" prefHeight="204.0" prefWidth="791.0" visible="false">
+        <AnchorPane fx:id="showState" layoutX="28.0" layoutY="261.0" prefHeight="204.0" prefWidth="791.0">
          <children>
             <Label layoutX="290.0" layoutY="50.0" text="Name">
                <font>
@@ -187,7 +187,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="passwordChangeState" layoutX="151.0" layoutY="261.0" prefHeight="204.0" prefWidth="791.0">
+      <AnchorPane fx:id="passwordChangeState" layoutX="151.0" layoutY="261.0" prefHeight="204.0" prefWidth="791.0" visible="false">
          <children>
             <Label layoutX="228.0" layoutY="50.0" prefHeight="27.0" prefWidth="122.0" text="Old password">
                <font>
@@ -209,7 +209,7 @@
             <PasswordField fx:id="confirmNewPasswordField" layoutX="360.0" layoutY="166.0" prefHeight="32.0" prefWidth="399.0" style="-fx-background-radius: 3;" />
          </children>
       </AnchorPane>
-      <Button fx:id="changePasswordButton" layoutX="511.0" layoutY="502.0" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="32.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Change Password">
+      <Button fx:id="changePasswordButton" layoutX="316.0" layoutY="502.0" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="32.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Change Password">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
