@@ -52,6 +52,9 @@ public class LibraryController {
     private VBox notiVBox;
     @FXML
     private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox;
+    @FXML
+    private ImageView lukulogo;
+
 
     public LibraryController() {
         this.userService = new UserService();
@@ -99,6 +102,11 @@ public class LibraryController {
         if (notiBox.isVisible()) {
             loadNotifications();
         }
+    }
+
+    @FXML
+    private void goToMainPage() throws Exception {
+        loadScene("/mainpage.fxml");
     }
 
     private void loadNotifications() {
@@ -153,16 +161,22 @@ public class LibraryController {
 
     public void chooseCategory(String category) throws Exception {
         String fxmlFile = "/category" + category + ".fxml";
-        List<Book> books = getBooksByCategory(category);
+
+        // Fetch books without requiring authentication
+        List<Book> books = bookService.getBooksByCategory(category);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
         categoryPageController controller = loader.getController();
+
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
-        controller.setBooks(books);
+        controller.setBooks(books); // Ensure books are passed to UI
+
         primaryStage.setTitle("Luku Library - " + category);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
         updateHeader();
     }
 
@@ -279,10 +293,14 @@ public class LibraryController {
 
     @FXML
     private void logout() throws Exception {
+        // Clear user session data
         savedUsername = null;
         savedEmail = null;
+        savedUserId = null; // Ensure user ID is null
         AuthManager.getInstance().setToken(null);
-        loadScene("/login.fxml");
+
+        // Always reload the main page after logout
+        loadScene("/mainpage.fxml");
     }
 
     @FXML

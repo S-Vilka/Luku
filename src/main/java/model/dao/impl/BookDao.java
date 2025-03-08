@@ -80,6 +80,7 @@ public class BookDao extends BaseDao {
         book.setLanguage(rs.getString("language"));
         book.setIsbn(rs.getString("isbn"));
         book.setLocation(rs.getString("location"));
+        book.setCoverImage(rs.getString("cover_image"));
 
         // Fetch authors for the book
         book.setAuthors(getAuthorsByBookId(book.getBookId()));

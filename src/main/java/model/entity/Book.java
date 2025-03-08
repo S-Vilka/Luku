@@ -6,21 +6,40 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "book")
+@Table(name = "books") // Corrected table name
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id") // Ensure it matches the database column
     private Long bookId;
 
+    @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "publication_date")
     private LocalDate publicationDate;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "availability_status")
     private String availabilityStatus;
+
+    @Column(name = "category")
     private String category;
+
+    @Column(name = "language")
     private String language;
+
+    @Column(name = "isbn")
     private String isbn;
+
+    @Column(name = "location")
     private String location;
+
+    @Column(name = "cover_image") // Ensures column is mapped correctly
+    private String coverImage;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Writes> writes = new HashSet<>();
@@ -101,13 +120,19 @@ public class Book {
         this.location = location;
     }
 
-    public Set<Writes> getWrites() {
+    public String getCoverImage() {
+        return coverImage;
+    }
 
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public Set<Writes> getWrites() {
         return writes;
     }
 
     public void setWrites(Set<Writes> writes) {
-
         this.writes = writes;
     }
 

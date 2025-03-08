@@ -4,12 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.entity.Book;
 import model.entity.Author;
 import service.BookService;
 import service.AuthorService;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
@@ -26,19 +29,14 @@ public class booksByAuthorController extends LibraryController {
 
     @FXML
     private VBox bookVBox;
-
     @FXML
     private ScrollPane bookScrollPane;
-
     @FXML
     private CheckBox availabilityCheckBox;
-
     @FXML
     private AnchorPane noBooks, scrollBox;
-
     @FXML
     private Label selectedAuthorLabel;
-
 
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;
@@ -117,7 +115,7 @@ public class booksByAuthorController extends LibraryController {
         bookVBox.getChildren().clear();
         bookVBox.setSpacing(40);
 
-        if (books.isEmpty()) {
+        if (books == null || books.isEmpty()) {
             scrollBox.setVisible(false);
             noBooks.setVisible(true);
             return;
@@ -145,53 +143,86 @@ public class booksByAuthorController extends LibraryController {
                 Label publicationDate = (Label) bookBox.lookup("#publicationDate");
                 Label availability = (Label) bookBox.lookup("#availability");
                 Label location = (Label) bookBox.lookup("#locationTag");
+                Label bookId = (Label) bookBox.lookup("#bookId");
                 Button reserveButton = (Button) bookBox.lookup("#reserveButton");
+                ImageView bookCover = (ImageView) bookBox.lookup("#bookCover"); // Book cover
 
                 Book book = books.get(i);
                 bookName.setText(book.getTitle());
-                publicationDate.setText(book.getPublicationDate().toString());
-                availability.setText(book.getAvailabilityStatus());
-                location.setText(book.getLocation());
 
-                // Fetch and set authors
-                String authorNames = bookService.getAuthorsByBookId(book.getBookId()).stream()
+                // Fetch authors for the book
+                Set<Author> authorSet = bookService.getAuthorsByBookId(book.getBookId());
+                String authorsText = authorSet.stream()
                         .map(a -> a.getFirstName() + " " + a.getLastName())
                         .collect(Collectors.joining(", "));
-                author.setText(authorNames);
+                author.setText(authorsText.isEmpty() ? "Unknown Author" : authorsText);
 
-                // Check user role and book count
-                Long userId = getSavedUserId();
-                int userBookCount = getUserService().getUserBookCount(userId);
-                String userRole = getUserService().getUserRole(userId);
+                publicationDate.setText(book.getPublicationDate() != null ? book.getPublicationDate().toString() : "Unknown");
+                availability.setText(book.getAvailabilityStatus() != null ? book.getAvailabilityStatus() : "Unknown");
+                location.setText(book.getLocation() != null ? book.getLocation() : "Unknown");
+                bookId.setText(String.valueOf(book.getBookId()));
 
+                // ** Load book cover **
+                String imagePath = book.getCoverImage();
+                Image image;
 
-                if ("teacher".equalsIgnoreCase(userRole)) {
-                    reserveButton.setText("Reserve");
-                    reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
-                    reserveButton.setDisable(false);
-                    availability.setStyle("-fx-text-fill: green;");
-                } else if ("student".equalsIgnoreCase(userRole) && userBookCount >= 5) {
-                    reserveButton.setText("You cannot reserve anymore books");
-                    reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 13px; -fx-font-weight: bold;");
-                    reserveButton.setDisable(true);
-                } else if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
-                    reserveButton.setText("Reserve");
-                    reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
-                    reserveButton.setDisable(false);
-                    availability.setStyle("-fx-text-fill: green;");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    try {
+                        // Try to load the image
+                        image = new Image(getClass().getResourceAsStream("/" + imagePath));
+                        if (image.isError() || image.getWidth() <= 0) {
+                            throw new Exception("Image not found: " + imagePath);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Falling back to default image: bookpicture.jpg");
+                        image = new Image(getClass().getResourceAsStream("/bookpicture.jpg"));
+                    }
                 } else {
-                    reserveButton.setText("Unavailable");
-                    reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 18px; -fx-font-weight: bold;");
+                    System.out.println("No cover image found for book. Using default.");
+                    image = new Image(getClass().getResourceAsStream("/bookpicture.jpg"));
+                }
+
+                bookCover.setImage(image);
+
+                // Check login status
+                Long userId = getSavedUserId();
+                boolean isLoggedIn = userId != null;
+
+                if (!isLoggedIn) {
+                    reserveButton.setText("Login to Reserve");
+                    reserveButton.setStyle("-fx-text-fill: grey;");
                     reserveButton.setDisable(true);
-                    availability.setStyle("-fx-text-fill: red;");
+                } else {
+                    String userRole = getUserService().getUserRole(userId);
+                    int userBookCount = getUserService().getUserBookCount(userId);
+
+                    if ("teacher".equalsIgnoreCase(userRole)) {
+                        reserveButton.setText("Reserve");
+                        reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
+                        reserveButton.setDisable(false);
+                    } else if ("student".equalsIgnoreCase(userRole) && userBookCount >= 5) {
+                        reserveButton.setText("Limit Reached (5 Books)");
+                        reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 13px; -fx-font-weight: bold;");
+                        reserveButton.setDisable(true);
+                    } else if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
+                        reserveButton.setText("Reserve");
+                        reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
+                        reserveButton.setDisable(false);
+                    } else {
+                        reserveButton.setText("Unavailable");
+                        reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 18px; -fx-font-weight: bold;");
+                        reserveButton.setDisable(true);
+                    }
                 }
 
                 Long bookIdNo = book.getBookId();
                 reserveButton.setOnAction(event -> {
-                    try {
-                        chooseReserveAuthor(bookIdNo);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (isLoggedIn) {
+                        try {
+                            chooseReserveAuthor(bookIdNo);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 

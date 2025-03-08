@@ -94,6 +94,7 @@ public class AuthorDao extends BaseDao {
         author.setDescription(rs.getString("description"));
         author.setDateOfBirth(rs.getDate("date_of_birth").toLocalDate());
         author.setPlaceOfBirth(rs.getString("place_of_birth"));
+        author.setProfileImage(rs.getString("profile_image"));
         return author;
     }
 

@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import model.entity.User;
 import service.UserService;
 
@@ -19,6 +21,26 @@ public class SignUpController extends LibraryController {
     private Label wrongLogIn;
     @FXML
     private Button userProfile;
+
+    @FXML
+    public void initialize() {
+        // Set Enter key event listener for all input fields
+        usernameField.setOnKeyPressed(this::handleEnterKey);
+        emailField.setOnKeyPressed(this::handleEnterKey);
+        passwordField.setOnKeyPressed(this::handleEnterKey);
+        repeatPassword.setOnKeyPressed(this::handleEnterKey);
+    }
+
+    @FXML
+    private void handleEnterKey(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            try {
+                handleSignup();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @FXML
     private void handleSignup() throws Exception {
@@ -52,6 +74,7 @@ public class SignUpController extends LibraryController {
         setSavedUserId(userId);
         loadScene("/mainpage.fxml");
     }
+
     public void registerUserSimple(String username, String password, String email) {
         User user = new User();
         user.setUsername(username);

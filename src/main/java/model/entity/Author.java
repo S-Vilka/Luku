@@ -18,6 +18,7 @@ public class Author {
     private String description;
     private LocalDate dateOfBirth;
     private String placeOfBirth;
+    private String profileImage;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Writes> writes = new HashSet<>();
@@ -81,4 +82,8 @@ public class Author {
     public void setWrites(Set<Writes> writes) {
         this.writes = writes;
     }
+
+    public String getProfileImage() { return profileImage; }
+
+    public void setProfileImage(String profileImage) { this.profileImage = profileImage; }
 }

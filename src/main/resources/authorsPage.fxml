@@ -28,7 +28,7 @@
             <children>
                 <AnchorPane prefHeight="99.0" prefWidth="552.0">
                     <children>
-                        <ImageView fitHeight="65.0" fitWidth="153.0" layoutX="229.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="lukulogo" fitHeight="65.0" fitWidth="153.0" layoutX="229.0" layoutY="35.0" onMouseClicked="#goToMainPage" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@Luku_Logo.png" />
                             </image>
