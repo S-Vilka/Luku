@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyCode;
 import java.util.function.Consumer;
 
 public class LibraryController {
@@ -264,6 +265,7 @@ public class LibraryController {
         String searchTerm = searchBar1.getText();
         goToSearchPage(searchTerm);
     }
+
 
     @FXML
     private void chooseCategory() {

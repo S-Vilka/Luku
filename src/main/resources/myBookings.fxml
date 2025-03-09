@@ -14,16 +14,16 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane minHeight="1117.0" minWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.myBookingController">
-    <children>
-        <AnchorPane layoutX="-1.0" layoutY="796.0" prefHeight="316.0" prefWidth="1739.0">
-            <children>
-                <ImageView fitHeight="525.0" fitWidth="1739.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@Library_Backgroudn2.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </AnchorPane>
+   <children>
+      <AnchorPane layoutX="-1.0" layoutY="796.0" prefHeight="316.0" prefWidth="1739.0">
+         <children>
+            <ImageView fitHeight="525.0" fitWidth="1739.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Library_Backgroudn2.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
       <AnchorPane layoutX="20.0" layoutY="20.0">
          <children>
             <AnchorPane prefHeight="99.0" prefWidth="552.0">
@@ -101,24 +101,24 @@
          </children>
       </AnchorPane>
 
-        <Label layoutX="251.0" layoutY="176.0" text="My Bookings">
-            <font>
-                <Font name="System Bold" size="30.0" />
-            </font>
-        </Label>
-        <AnchorPane fx:id="scrollBox" layoutX="285.0" layoutY="269.0" prefHeight="490.0" prefWidth="1088.0">
-            <children>
-                <ScrollPane fx:id="bookScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">
-                    <content>
-                        <VBox fx:id="bookVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="1108.0" style="-fx-background-color: white;">
-                            <padding>
-                                <Insets bottom="30.0" left="30.0" right="30.0" />
-                            </padding>
-                        </VBox>
-                    </content>
-                </ScrollPane>
-            </children>
-        </AnchorPane>
+      <Label layoutX="251.0" layoutY="176.0" text="My Bookings">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <AnchorPane fx:id="scrollBox" layoutX="285.0" layoutY="269.0" prefHeight="490.0" prefWidth="1088.0">
+         <children>
+            <ScrollPane fx:id="bookScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">
+               <content>
+                  <VBox fx:id="bookVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="1108.0" style="-fx-background-color: white;">
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
 
 
       <AnchorPane fx:id="categoryList" layoutX="211.0" layoutY="171.0" prefHeight="157.0" prefWidth="148.0" visible="false">
@@ -250,5 +250,5 @@
             </ScrollPane>
          </children>
       </AnchorPane>
-    </children>
+   </children>
 </AnchorPane>
