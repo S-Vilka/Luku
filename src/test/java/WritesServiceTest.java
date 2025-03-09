@@ -51,7 +51,8 @@ public class WritesServiceTest {
                     "last_name VARCHAR(255), " +
                     "description TEXT, " +
                     "date_of_birth DATE, " +
-                    "place_of_birth VARCHAR(255))");
+                    "place_of_birth VARCHAR(255), " +
+                    "profile_image VARCHAR(255))");
 
             stmt.execute("CREATE TABLE books (" +
                     "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
@@ -62,7 +63,8 @@ public class WritesServiceTest {
                     "category VARCHAR(255), " +
                     "language VARCHAR(255), " +
                     "isbn VARCHAR(255), " +
-                    "location VARCHAR(255))");
+                    "location VARCHAR(255), " +
+                    "cover_image VARCHAR(255))");
 
             stmt.execute("CREATE TABLE writes (" +
                     "writes_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +

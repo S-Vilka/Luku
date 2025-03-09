@@ -1,4 +1,3 @@
-// src/main/java/model/dao/impl/AuthorDaoImpl.java
 package model.dao.impl;
 
 import model.entity.Author;
@@ -9,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorDao extends BaseDao {
-//    private Connection connection;
-
 
     public Author getAuthorById(Long authorId) {
         String query = "SELECT * FROM authors WHERE author_id = ?";
@@ -41,13 +38,14 @@ public class AuthorDao extends BaseDao {
     }
 
     public void saveAuthor(Author author) {
-        String query = "INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, profile_image) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, author.getFirstName());
             stmt.setString(2, author.getLastName());
             stmt.setString(3, author.getDescription());
-            stmt.setDate(4, Date.valueOf(author.getDateOfBirth()));
+            stmt.setDate(4, author.getDateOfBirth() != null ? Date.valueOf(author.getDateOfBirth()) : null);
             stmt.setString(5, author.getPlaceOfBirth());
+            stmt.setString(6, author.getProfileImage()); // Ensure profile_image is added
             stmt.executeUpdate();
 
             ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -61,14 +59,15 @@ public class AuthorDao extends BaseDao {
     }
 
     public void updateAuthor(Author author) {
-        String query = "UPDATE authors SET first_name = ?, last_name = ?, description = ?, date_of_birth = ?, place_of_birth = ? WHERE author_id = ?";
+        String query = "UPDATE authors SET first_name = ?, last_name = ?, description = ?, date_of_birth = ?, place_of_birth = ?, profile_image = ? WHERE author_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, author.getFirstName());
             stmt.setString(2, author.getLastName());
             stmt.setString(3, author.getDescription());
-            stmt.setDate(4, Date.valueOf(author.getDateOfBirth()));
+            stmt.setDate(4, author.getDateOfBirth() != null ? Date.valueOf(author.getDateOfBirth()) : null);
             stmt.setString(5, author.getPlaceOfBirth());
-            stmt.setLong(6, author.getAuthorId());
+            stmt.setString(6, author.getProfileImage()); // Ensure profile_image is updated
+            stmt.setLong(7, author.getAuthorId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,16 +84,15 @@ public class AuthorDao extends BaseDao {
         }
     }
 
-
     private Author mapRowToAuthor(ResultSet rs) throws SQLException {
         Author author = new Author();
         author.setAuthorId(rs.getLong("author_id"));
         author.setFirstName(rs.getString("first_name"));
         author.setLastName(rs.getString("last_name"));
         author.setDescription(rs.getString("description"));
-        author.setDateOfBirth(rs.getDate("date_of_birth").toLocalDate());
+        author.setDateOfBirth(rs.getDate("date_of_birth") != null ? rs.getDate("date_of_birth").toLocalDate() : null);
         author.setPlaceOfBirth(rs.getString("place_of_birth"));
-        author.setProfileImage(rs.getString("profile_image"));
+        author.setProfileImage(rs.getString("profile_image")); // Ensure profile_image is mapped
         return author;
     }
 
@@ -122,7 +120,7 @@ public class AuthorDao extends BaseDao {
         book.setBookId(rs.getLong("book_id"));
         book.setTitle(rs.getString("title"));
         book.setCategory(rs.getString("category"));
-        book.setPublicationDate(rs.getDate("publication_date").toLocalDate());
+        book.setPublicationDate(rs.getDate("publication_date") != null ? rs.getDate("publication_date").toLocalDate() : null);
         book.setDescription(rs.getString("description"));
         book.setAvailabilityStatus(rs.getString("availability_status"));
         book.setLanguage(rs.getString("language"));
@@ -130,4 +128,4 @@ public class AuthorDao extends BaseDao {
         book.setLocation(rs.getString("location"));
         return book;
     }
-    }
+}

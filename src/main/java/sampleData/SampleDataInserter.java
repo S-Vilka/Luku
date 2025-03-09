@@ -74,7 +74,7 @@ public class SampleDataInserter {
                         ")");
             }
 
-            // Insert sample authors with pictures
+            // Insert sample authors
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, profile_image) VALUES " +
                         "('John', 'Doe', 'Famous author', '1970-01-01', 'New York', 'john_doe.png'), " +
@@ -102,7 +102,7 @@ public class SampleDataInserter {
                         ")");
             }
 
-            // Insert sample books with cover images
+            // Insert sample books
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location, cover_image) VALUES " +
                         "('Book One', '2021-01-01', 'Description of Book One', 'Available', 'Fiction', 'English', '111-1111111111', 'Shelf A1', 'bookpicture.jpg'), " +
@@ -128,7 +128,7 @@ public class SampleDataInserter {
                         ")");
             }
 
-            // Insert sample writes (book-author relations)
+            // Insert sample writes
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO writes (book_id, author_id) VALUES " +
                         "(1, 1), (2, 2), (3, 3), (4, 4), (5, 1), (6, 2), (7, 3), (8, 4)");
@@ -136,7 +136,43 @@ public class SampleDataInserter {
 
             System.out.println("✅ Sample writes inserted successfully!");
 
-            // ✅ Tables are now populated successfully
+            // **CREATE RESERVATIONS TABLE**
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("CREATE TABLE IF NOT EXISTS reservations (" +
+                        "reservation_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
+                        "user_id BIGINT NOT NULL, " +
+                        "book_id BIGINT NOT NULL, " +
+                        "borrow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                        "due_date TIMESTAMP NOT NULL, " +
+                        "FOREIGN KEY (user_id) REFERENCES users(user_id), " +
+                        "FOREIGN KEY (book_id) REFERENCES books(book_id)" +
+                        ")");
+            }
+
+            System.out.println("✅ Reservations table created successfully!");
+
+            // Insert sample reservations
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("INSERT INTO reservations (user_id, book_id, borrow_date, due_date) VALUES " +
+                        "(1, 1, '2024-03-09 10:00:00', '2024-03-23 10:00:00')");
+            }
+
+            System.out.println("✅ Sample reservations inserted successfully!");
+
+            // **CREATE NOTIFICATIONS TABLE**
+            try (Statement stmt = connection.createStatement()) {
+                stmt.execute("CREATE TABLE IF NOT EXISTS notifications (" +
+                        "notification_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
+                        "user_id BIGINT NOT NULL, " +
+                        "message TEXT, " +
+                        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
+                        "reservation_id BIGINT NOT NULL, " +
+                        "FOREIGN KEY (user_id) REFERENCES users(user_id), " +
+                        "FOREIGN KEY (reservation_id) REFERENCES reservations(reservation_id)" +
+                        ")");
+            }
+
+            System.out.println("✅ Notifications table created successfully!");
 
         } catch (Exception e) {
             e.printStackTrace();
