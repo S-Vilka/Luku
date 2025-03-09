@@ -36,6 +36,7 @@ public class AuthorServiceTest {
 //            authorDao = new AuthorDao();
             authorService = new AuthorService();
 
+
             // Create the authors table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS authors (" +
@@ -44,7 +45,8 @@ public class AuthorServiceTest {
                         "last_name VARCHAR(255) NOT NULL, " +
                         "description TEXT, " +
                         "date_of_birth DATE, " +
-                        "place_of_birth VARCHAR(255)" +
+                        "place_of_birth VARCHAR(255), " +
+                        "profile_image VARCHAR(255)" +
                         ")");
 
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
@@ -68,10 +70,10 @@ public class AuthorServiceTest {
             }
             // Insert a test author and books
             try (Statement stmt = connection.createStatement()) {
-                stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES " +
-                        "('John', 'Doe', 'A famous author', '1970-01-01', 'New York')");
-                stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES " +
-                        "('Jane', 'Austin', 'A very famous author', '1970-01-01', 'London')");
+                stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, profile_image) VALUES " +
+                        "('John', 'Doe', 'A famous author', '1970-01-01', 'New York', 'path/to/john_doe.jpg')");
+                stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, profile_image) VALUES " +
+                        "('Jane', 'Austin', 'A very famous author', '1970-01-01', 'London', 'path/to/jane_austin.jpg')");
                 stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
                         "('Effective Java', '2008-05-08', 'A comprehensive guide to best practices in Java programming', 'Available', 'Programming', 'English', '978-0134685991', 'Aisle 3'), " +
                         "('Clean Code', '2008-08-01', 'A handbook of agile software craftsmanship', 'Available', 'Programming', 'English', '978-0132350884', 'Aisle 4')");
@@ -87,20 +89,21 @@ public class AuthorServiceTest {
 
 
 
-        @Test
-        public void testSaveAuthor() {
-            Author author = new Author();
-            author.setFirstName("Jane");
-            author.setLastName("Smith");
-            author.setDescription("Another famous author");
-            author.setDateOfBirth(LocalDate.of(1980, 2, 2));
-            author.setPlaceOfBirth("Los Angeles");
-            authorService.saveAuthor(author);
+    @Test
+    public void testSaveAuthor() {
+        Author author = new Author();
+        author.setFirstName("Jane");
+        author.setLastName("Smith");
+        author.setDescription("Another famous author");
+        author.setDateOfBirth(LocalDate.of(1980, 2, 2));
+        author.setPlaceOfBirth("Los Angeles");
+        author.setProfileImage("path/to/jane_smith.jpg");
+        authorService.saveAuthor(author);
 
-            Author fetchedAuthor = authorService.getAuthorById(author.getAuthorId());
-            assertNotNull(fetchedAuthor);
-            assertEquals("Jane", fetchedAuthor.getFirstName());
-        }
+        Author fetchedAuthor = authorService.getAuthorById(author.getAuthorId());
+        assertNotNull(fetchedAuthor);
+        assertEquals("Jane", fetchedAuthor.getFirstName());
+    }
 
     @Test
     public void testGetAllAuthors() {

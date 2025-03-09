@@ -65,10 +65,10 @@ public class BookServiceTest {
                         "category VARCHAR(50), " +
                         "language VARCHAR(50), " +
                         "isbn VARCHAR(20), " +
-                        "location VARCHAR(255)" +
+                        "location VARCHAR(255), " +
+                        "cover_image VARCHAR(255)" +  // Add this line
                         ")");
             }
-
             // Create the writes table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS writes (" +
@@ -86,10 +86,11 @@ public class BookServiceTest {
                         "('John', 'Doe', 'A famous author', '1970-01-01', 'New York')");
             }
 
+
             // Insert a sample book
             try (Statement stmt = connection.createStatement()) {
-                stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
-                        "('Sample Book', '2023-01-01', 'Sample Description', 'Available', 'Fiction', 'English', '1234567890', 'A1')");
+                stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location, cover_image) VALUES " +
+                        "('Sample Book', '2023-01-01', 'Sample Description', 'Available', 'Fiction', 'English', '1234567890', 'A1', 'path/to/sample_book.jpg')");
             }
 
             // Insert a writes table
@@ -178,4 +179,3 @@ public class BookServiceTest {
         assertEquals(1, books.size());
     }
 }
-
