@@ -70,13 +70,13 @@ public class SampleDataInserter {
                         "description TEXT, " +
                         "date_of_birth DATE, " +
                         "place_of_birth VARCHAR(255), " +
-                        "author_image VARCHAR(255)" +
+                        "profile_image VARCHAR(255)" +
                         ")");
             }
 
             // Insert sample authors with pictures
             try (Statement stmt = connection.createStatement()) {
-                stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, author_image) VALUES " +
+                stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, profile_image) VALUES " +
                         "('John', 'Doe', 'Famous author', '1970-01-01', 'New York', 'john_doe.png'), " +
                         "('Jane', 'Smith', 'Renowned writer', '1980-02-02', 'Los Angeles', 'jane_smith.png'), " +
                         "('Alice', 'Johnson', 'Science fiction author', '1965-03-03', 'Chicago', 'alice_johnson.png'), " +
