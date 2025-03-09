@@ -47,7 +47,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                      script {
-                         def image = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+                         def image = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}", "--platform linux/amd64 .")
                      }
             }
         }
