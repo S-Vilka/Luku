@@ -20,6 +20,8 @@ public class Author {
     private String placeOfBirth;
     private String profileImage;
 
+
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Writes> writes = new HashSet<>();
 

@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository
-                git branch: 'jenkins', url: 'git@github.com:S-Vilka/Luku.git'
+                git branch: 'dockerNew', url: 'git@github.com:S-Vilka/Luku.git'
             }
         }
 

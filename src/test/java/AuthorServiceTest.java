@@ -86,9 +86,6 @@ public class AuthorServiceTest {
         }
     }
 
-
-
-
     @Test
     public void testSaveAuthor() {
         Author author = new Author();
@@ -99,7 +96,6 @@ public class AuthorServiceTest {
         author.setPlaceOfBirth("Los Angeles");
         author.setProfileImage("path/to/jane_smith.jpg");
         authorService.saveAuthor(author);
-
         Author fetchedAuthor = authorService.getAuthorById(author.getAuthorId());
         assertNotNull(fetchedAuthor);
         assertEquals("Jane", fetchedAuthor.getFirstName());
