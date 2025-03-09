@@ -109,7 +109,7 @@ pipeline {
 //
 //                         // Push Docker image to Docker Hub
 //                         sh "/usr/local/bin/docker push ${imageTag}"
-//                     }
+                    }
                 }
             }
         }
