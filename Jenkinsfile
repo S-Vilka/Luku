@@ -85,15 +85,15 @@ pipeline {
                 jacoco()
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                     script {
-                         def image = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
-                     }
-
-
-            }
-        }
+//         stage('Build Docker Image') {
+//             steps {
+//                      script {
+//                          def image = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}")
+//                      }
+//
+//
+//             }
+//         }
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {

@@ -4,10 +4,11 @@ FROM maven:latest
 
 WORKDIR /app
 
-COPY pom.xml /app/
+#COPY pom.xml /app/
 
-COPY . /app/
+#COPY . /app/
 
-RUN mvn clean package
+#CMD ["java", "-jar", "target/LukuLibrary.jar"]
 
-CMD ["java", "-jar", "target/LukuLibrary.jar"]
+# Copy the JAR file into the Docker image
+COPY target/LukuLibrary.jar /app/
