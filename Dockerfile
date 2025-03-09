@@ -8,7 +8,8 @@ WORKDIR /app
 
 #COPY . /app/
 
-#CMD ["java", "-jar", "target/LukuLibrary.jar"]
 
 # Copy the JAR file into the Docker image
 COPY target/LukuLibrary.jar /app/
+
+CMD ["java", "-jar", "LukuLibrary.jar"]
