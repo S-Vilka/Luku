@@ -4,10 +4,14 @@ FROM maven:latest
 
 WORKDIR /app
 
-COPY pom.xml /app/
+# Install Xvfb and x11vnc
+RUN apt-get update && apt-get install -y xvfb x11vnc
 
-COPY . /app/
+# Copy the JAR file into the Docker image
+COPY target/LukuLibrary.jar /app/
 
-RUN mvn clean package
+# Set the DISPLAY environment variable
+ENV DISPLAY=:99
 
-CMD ["java", "-jar", "target/LukuLibrary.jar"]
+# Set up Xvfb, start the VNC server, and run the application
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 & x11vnc -display :99 -forever -usepw & java -Dprism.order=sw -Djava.awt.headless=true -jar LukuLibrary.jar"]

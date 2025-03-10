@@ -24,8 +24,7 @@ public class ReservationService {
 
     public void extendReservation(Long reservationId, LocalDateTime newDueDate) {
         reservationDao.extendReservation(reservationId, newDueDate);
-        // new updated notification
-//        notificationService.createNotificationForReservation(reservationId);
+
     }
 
     public void updateReservation(Reservation reservation) {
