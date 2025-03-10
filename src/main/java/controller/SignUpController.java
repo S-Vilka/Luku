@@ -73,6 +73,7 @@ public class SignUpController extends LibraryController {
         setSavedPhoneNumber(phoneNumber);
         setSavedUserId(userId);
         loadScene("/mainpage.fxml");
+        startDueDateChecker();
     }
 
     public void registerUserSimple(String username, String password, String email) {

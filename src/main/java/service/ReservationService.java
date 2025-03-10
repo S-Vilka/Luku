@@ -49,5 +49,9 @@ public class ReservationService {
         reservationDao.deleteReservation(reservationId);
     }
 
+    public List<Reservation> getReservationsDueSoon(Long userId) {
+        return reservationDao.getReservationsDueSoon(userId);
+    }
+
 
 }

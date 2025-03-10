@@ -13,6 +13,8 @@ import service.AuthorService;
 import util.AuthManager;
 import util.JwtUtil;
 import view.View;
+
+import java.util.Collections;
 import java.util.List;
 import java.time.LocalDateTime;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +25,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyCode;
 import java.util.function.Consumer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class LibraryController {
     private static View View;
@@ -36,6 +41,8 @@ public class LibraryController {
     private static String savedEmail;
     private static Long savedUserId;
     private static String savedPhoneNumber;
+    private static ScheduledExecutorService scheduler;
+    private static boolean notiCircleStatus;
 
     @FXML
     private TextField email, usernameField, emailField, teacherID, searchBar1;
@@ -88,6 +95,8 @@ public class LibraryController {
                 userProfileBox.setVisible(true);
                 userProfile = (Button) primaryStage.getScene().lookup("#userProfile");
                 userProfile.setText(savedUsername);
+                Circle notiCircle = (Circle) primaryStage.getScene().lookup("#notiCircle");
+                notiCircle.setVisible(notiCircleStatus);
             } else {
                 loginBox.setVisible(true);
                 userProfileBox.setVisible(false);
@@ -97,11 +106,41 @@ public class LibraryController {
         }
     }
 
+    public void startDueDateChecker() {
+        scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(this::checkDueDates, 0, 1, TimeUnit.DAYS);
+    }
+
+    private void checkDueDates() {
+        try {
+            User user = userService.getUserByEmail(savedEmail);
+            Long userId = user.getUserId();
+            List<Reservation> reservations = reservationService.getReservationsDueSoon(userId);
+            for (Reservation reservation : reservations) {
+                notificationService.createReminderNotification(reservation);
+            }
+            if (!reservations.isEmpty()) {
+                setNotiCircleStatus(true);
+                updateHeader();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopDueDateChecker() {
+        if (scheduler != null) {
+            scheduler.shutdown();
+        }
+    }
+
     @FXML
     private void toggleNotiBox() {
         notiBox.setVisible(!notiBox.isVisible());
         if (notiBox.isVisible()) {
             loadNotifications();
+            notiCircle.setVisible(false);
+            setNotiCircleStatus(false);
         }
     }
 
@@ -115,6 +154,7 @@ public class LibraryController {
         User user = userService.getUserByEmail(savedEmail);
         Long userId = user.getUserId();
         List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
+        Collections.reverse(notifications);
         for (Notification notification : notifications) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/notiBox.fxml"));
@@ -300,6 +340,7 @@ public class LibraryController {
         savedEmail = null;
         savedUserId = null; // Ensure user ID is null
         AuthManager.getInstance().setToken(null);
+        stopDueDateChecker();
 
         // Always reload the main page after logout
         loadScene("/mainpage.fxml");
@@ -406,6 +447,8 @@ public class LibraryController {
 
         reservationService.createReservation(reservation);
         notificationService.createNotificationForReservation(reservation.getReservationId());
+        notiCircle.setVisible(true);
+        setNotiCircleStatus(true);
         bookService.setBookAvailability(bookId, "Checked Out");
 
         // Update the user's book count
@@ -504,8 +547,8 @@ public class LibraryController {
         this.savedPhoneNumber = savedPhoneNumber;
     }
 
-    public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
-        return reservationService.getReservationByUserAndBook(userId, bookId);
+    public void setNotiCircleStatus(boolean notiCircleStatus) {
+        this.notiCircleStatus = notiCircleStatus;
     }
 
 //**Getters**//
@@ -557,5 +600,9 @@ public class LibraryController {
 
     public String getUserPhone(String email){
         return userService.getUserPhone(email);
+    }
+
+    public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
+        return reservationService.getReservationByUserAndBook(userId, bookId);
     }
 }

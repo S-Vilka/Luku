@@ -106,6 +106,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="250.0" layoutY="221.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
       <AnchorPane fx:id="scrollBox" layoutX="285.0" layoutY="269.0" prefHeight="490.0" prefWidth="1088.0">
          <children>
             <ScrollPane fx:id="bookScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">

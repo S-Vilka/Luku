@@ -53,6 +53,7 @@ public class LoginController extends LibraryController {
             Long userId = user.getUserId();
             setSavedUserId(userId);
             loadScene("/mainpage.fxml");
+            startDueDateChecker();
         } else {
             wrongLogIn.setText("Invalid email or password!");
             wrongLogIn.setStyle("-fx-text-fill: red;");

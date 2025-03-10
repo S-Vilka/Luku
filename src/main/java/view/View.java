@@ -19,6 +19,9 @@ public class View extends Application {
         this.controller = new LibraryController();
         controller.setMainApp(this);
         controller.loadScene("/mainpage.fxml");
+        primaryStage.setOnCloseRequest(event -> {
+            controller.stopDueDateChecker(); // Stop when app closes
+        });
     }
 
     public Stage getPrimaryStage() {

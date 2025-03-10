@@ -171,4 +171,26 @@ public class ReservationDao extends BaseDao{
             e.printStackTrace();
         }
     }
+
+    public List<Reservation> getReservationsDueSoon(Long userId) {
+        List<Reservation> reservations = new ArrayList<>();
+        String query = "SELECT r.*, u.username, b.title FROM reservations r " +
+                "JOIN users u ON r.user_id = u.user_id " +
+                "JOIN books b ON r.book_id = b.book_id " +
+                "WHERE r.user_id = ? AND r.due_date BETWEEN ? AND ?";
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime fourteenDaysLater = now.plusDays(14);
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, userId);
+            stmt.setTimestamp(2, Timestamp.valueOf(now));
+            stmt.setTimestamp(3, Timestamp.valueOf(fourteenDaysLater));
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                reservations.add(mapRowToReservation(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reservations;
+    }
 }
