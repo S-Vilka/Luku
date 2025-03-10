@@ -79,10 +79,6 @@ public class NotificationDao extends BaseDao {
         notification.setReservation(reservation);
         saveNotification(notification);
 
-        // Update reservation with notification ID
-//        reservation.setNotificationId(notification.getNotificationId());
-//        reservationDao.updateReservation(reservation);
-
     }
 
     public void deleteNotification(Long reservationId) {

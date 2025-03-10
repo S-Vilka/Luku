@@ -56,7 +56,18 @@ The plugin is configured in the `pom.xml` file to run JavaFX applications.
 
     - Run the `SampleDataInserter` file to insert sample data into the database.
 
-4. **Build the project:**
+4. **Install Xvfb (for headless environments):**
+    ```sh
+    sudo apt-get install xvfb
+    ```
+
+5. **Set up Xvfb (for headless environments):**
+    ```sh
+    Xvfb :99 -screen 0 1024x768x16 &
+    export DISPLAY=:99
+    ```
+
+5. **Build the project:**
     ```sh
     mvn clean install
     ```
