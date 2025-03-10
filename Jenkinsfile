@@ -47,7 +47,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                      script {
-                         def image = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}", "--platform linux/amd64 .")
+                         def image = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}", "--platform linux/arm64,linux/amd64 .")
                      }
             }
         }
@@ -57,9 +57,6 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS_ID, usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                         // Log in to Docker Hub
                         sh "/usr/local/bin/docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}"
-
-//                          // Push Docker image to Docker Hub
-//                         sh "/usr/local/bin/docker push ${DOCKERHUB_USER}/${DOCKERHUB_REPO}"
 
                         def imageTag = "${DOCKERHUB_USER}/${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}"
                         sh "/usr/local/bin/docker push ${imageTag}"
