@@ -108,7 +108,7 @@ public class LibraryController {
 
     public void startDueDateChecker() {
         scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::checkDueDates, 0, 1, TimeUnit.DAYS);
+        scheduler.scheduleAtFixedRate(this::checkDueDates, 0, 2, TimeUnit.MINUTES);
     }
 
     private void checkDueDates() {
