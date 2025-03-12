@@ -7,30 +7,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.entity.Book;
 import model.entity.Author;
-import service.BookService;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
-import service.UserService;
 
 public class languagePageController extends LibraryController {
     private List<Book> allBooks, availableBooks;
 
-    @FXML
-    private VBox bookVBox;
-    @FXML
-    private ScrollPane bookScrollPane;
-    @FXML
-    private CheckBox availabilityCheckBox;
-    @FXML
-    private AnchorPane noBooks, scrollBox;
+    @FXML private VBox bookVBox;
+    @FXML private ScrollPane bookScrollPane;
+    @FXML private CheckBox availabilityCheckBox;
+    @FXML private AnchorPane noBooks, scrollBox;
 
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;

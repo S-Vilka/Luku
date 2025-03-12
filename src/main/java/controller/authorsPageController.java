@@ -1,8 +1,6 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -21,14 +19,10 @@ import javafx.scene.image.ImageView;
 public class authorsPageController extends LibraryController {
     private List<Author> allAuthors;
 
-    @FXML
-    private VBox authorVBox;
-    @FXML
-    private ScrollPane authorScrollPane;
-    @FXML
-    private AnchorPane noAuthors, scrollBox;
-    @FXML
-    private ImageView lukulogo;
+    @FXML private VBox authorVBox;
+    @FXML private ScrollPane authorScrollPane;
+    @FXML private AnchorPane noAuthors, scrollBox;
+    @FXML private ImageView lukulogo;
 
     @FXML
     private void goToMainPage() throws Exception {

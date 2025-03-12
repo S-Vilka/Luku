@@ -27,16 +27,11 @@ public class booksByAuthorController extends LibraryController {
     private List<Book> allBooks, availableBooks;
     private Author selectedAuthor;
 
-    @FXML
-    private VBox bookVBox;
-    @FXML
-    private ScrollPane bookScrollPane;
-    @FXML
-    private CheckBox availabilityCheckBox;
-    @FXML
-    private AnchorPane noBooks, scrollBox;
-    @FXML
-    private Label selectedAuthorLabel;
+    @FXML private VBox bookVBox;
+    @FXML private ScrollPane bookScrollPane;
+    @FXML private CheckBox availabilityCheckBox;
+    @FXML private AnchorPane noBooks, scrollBox;
+    @FXML private Label selectedAuthorLabel;
 
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;

@@ -14,20 +14,15 @@ import javafx.scene.layout.VBox;
 import model.entity.Author;
 import model.entity.Book;
 import model.entity.Reservation;
-import service.BookService;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class myBookingController extends LibraryController {
-    @FXML
-    private Button extendReservation, returnBook;
-    @FXML
-    private VBox bookVBox;
-    @FXML
-    private javafx.scene.control.ScrollPane bookScrollPane;
-    @FXML
-    private AnchorPane scrollBox;
+    @FXML private Button extendReservation, returnBook;
+    @FXML private VBox bookVBox;
+    @FXML private javafx.scene.control.ScrollPane bookScrollPane;
+    @FXML private AnchorPane scrollBox;
 
     public void setBooksForUser(Long userId) {
         bookVBox.getChildren().clear();

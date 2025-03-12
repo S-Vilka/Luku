@@ -23,8 +23,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
-import javafx.scene.input.KeyCode;
-import java.util.function.Consumer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -44,24 +42,15 @@ public class LibraryController {
     private static ScheduledExecutorService scheduler;
     private static boolean notiCircleStatus;
 
-    @FXML
-    private TextField email, usernameField, emailField, teacherID, searchBar1;
-    @FXML
-    private PasswordField password, passwordField, repeatPassword;
-    @FXML
-    private Button enterBurron, loginButtonTop, categoryButton, languageButton, authorButtom, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton, extendButton, returnButton;
-    @FXML
-    private Label locationTag, wrongLogIn, bookName, author, publicationDate, availability, borrowDate, dueDate, bookId;
-    @FXML
-    private ImageView noti;
-    @FXML
-    private Circle notiCircle;
-    @FXML
-    private VBox notiVBox;
-    @FXML
-    private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox;
-    @FXML
-    private ImageView lukulogo;
+    @FXML private TextField email, usernameField, emailField, teacherID, searchBar1;
+    @FXML private PasswordField password, passwordField, repeatPassword;
+    @FXML private Button enterBurron, loginButtonTop, categoryButton, languageButton, authorButtom, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton, extendButton, returnButton;
+    @FXML private Label locationTag, wrongLogIn, bookName, author, publicationDate, availability, borrowDate, dueDate, bookId;
+    @FXML private ImageView noti;
+    @FXML private Circle notiCircle;
+    @FXML private VBox notiVBox;
+    @FXML private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox;
+    @FXML private ImageView lukulogo;
 
 
     public LibraryController() {
@@ -70,19 +59,6 @@ public class LibraryController {
         this.reservationService = new ReservationService();
         this.notificationService = new NotificationService();
         this.authorService = new AuthorService();
-    }
-
-    public void loadScene(String fxmlFile) throws Exception {
-        setPrimaryStage(View.getPrimaryStage());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-        if ("/mainpage.fxml".equals(fxmlFile)) {
-            fxmlLoader.setController(this);
-        }
-        Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Luku Library");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        updateHeader();
     }
 
     public void updateHeader() {
@@ -106,6 +82,54 @@ public class LibraryController {
         }
     }
 
+    public boolean validateToken() {
+        String token = AuthManager.getInstance().getToken();
+        if (token == null) {
+            return false;
+        }
+        return JwtUtil.validateToken(token);
+    }
+
+//== Notification Functions ==//
+    private void loadNotifications() {
+        notiVBox.getChildren().clear();
+        User user = userService.getUserByEmail(savedEmail);
+        Long userId = user.getUserId();
+        List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
+        Collections.reverse(notifications);
+        for (Notification notification : notifications) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/notiBox.fxml"));
+                AnchorPane notiPane = loader.load();
+                Label notiTime = (Label) notiPane.lookup("#notiTime");
+                Label notiMessage = (Label) notiPane.lookup("#notiMessage");
+
+                notiTime.setText(notification.getCreatedAt().toString());
+                notiMessage.setText(notification.getMessage());
+
+                notiVBox.getChildren().add(notiPane);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void toggleNotiBox() {
+        notiBox.setVisible(!notiBox.isVisible());
+        categoryList.setVisible(false);
+        languageList.setVisible(false);
+        searchBox.setVisible(false);
+        userList.setVisible(false);
+        if (notiBox.isVisible()) {
+            loadNotifications();
+            notiCircle.setVisible(false);
+            setNotiCircleStatus(false);
+        }
+    }
+//== Notification Functions ==//
+
+//== Check Due Dates ==//
     public void startDueDateChecker() {
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::checkDueDates, 0, 2, TimeUnit.MINUTES);
@@ -133,53 +157,25 @@ public class LibraryController {
             scheduler.shutdown();
         }
     }
+//== Check Due Dates ==//
 
-    @FXML
-    private void toggleNotiBox() {
-        notiBox.setVisible(!notiBox.isVisible());
-        if (notiBox.isVisible()) {
-            loadNotifications();
-            notiCircle.setVisible(false);
-            setNotiCircleStatus(false);
+//== Page Navigation Functions ==//
+    public void loadScene(String fxmlFile) throws Exception {
+        setPrimaryStage(View.getPrimaryStage());
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
+        if ("/mainpage.fxml".equals(fxmlFile)) {
+            fxmlLoader.setController(this);
         }
+        Parent root = fxmlLoader.load();
+        primaryStage.setTitle("Luku Library");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        updateHeader();
     }
 
     @FXML
     private void goToMainPage() throws Exception {
         loadScene("/mainpage.fxml");
-    }
-
-    private void loadNotifications() {
-        notiVBox.getChildren().clear();
-        User user = userService.getUserByEmail(savedEmail);
-        Long userId = user.getUserId();
-        List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
-        Collections.reverse(notifications);
-        for (Notification notification : notifications) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/notiBox.fxml"));
-                AnchorPane notiPane = loader.load();
-                Label notiTime = (Label) notiPane.lookup("#notiTime");
-                Label notiMessage = (Label) notiPane.lookup("#notiMessage");
-
-                notiTime.setText(notification.getCreatedAt().toString());
-                notiMessage.setText(notification.getMessage());
-
-                notiVBox.getChildren().add(notiPane);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @FXML
-    private void switchToSignUp() throws Exception {
-        loadScene("/signup.fxml");
-    }
-
-    @FXML
-    private void switchToLogin() throws Exception {
-        loadScene("/login.fxml");
     }
 
     @FXML
@@ -193,11 +189,6 @@ public class LibraryController {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         updateHeader();
-    }
-
-    @FXML
-    private void chooseUserProfile() throws Exception {
-        userList.setVisible(!userList.isVisible());
     }
 
     public void chooseCategory(String category) throws Exception {
@@ -233,35 +224,6 @@ public class LibraryController {
         primaryStage.setTitle("Luku Library - " + language);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        updateHeader();
-    }
-
-    private void goToSearchPage(String searchTerm) throws Exception {
-        List<Book> books = bookService.searchBooks(searchTerm);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/searchPage.fxml"));
-        Parent root = loader.load();
-        searchPageController controller = loader.getController();
-        controller.setSavedSearchTerm(searchTerm);
-        controller.clearBookLists();
-        controller.getAvailabilityCheckBox().setSelected(false);
-        controller.setBooks(books);
-        primaryStage.setTitle("Luku Library - Search Results");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        updateHeader();
-    }
-
-    public void showAuthorBooks(Author author) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
-        Parent root = loader.load();
-
-        booksByAuthorController controller = loader.getController();
-        controller.setSelectedAuthor(author); // Pass the selected author
-        controller.loadBooksByAuthor(); // Load books for that author
-
-        getPrimaryStage().setTitle("Luku Library - Books by " + author.getFirstName() + " " + author.getLastName());
-        getPrimaryStage().setScene(new Scene(root));
-        getPrimaryStage().show();
         updateHeader();
     }
 
@@ -301,25 +263,73 @@ public class LibraryController {
     }
 
     @FXML
-    private void searchAction() throws Exception {
-        String searchTerm = searchBar1.getText();
-        goToSearchPage(searchTerm);
-    }
-
-
-    @FXML
     private void chooseCategory() {
         categoryList.setVisible(!categoryList.isVisible());
+        languageList.setVisible(false);
+        searchBox.setVisible(false);
+        userList.setVisible(false);
+        notiBox.setVisible(false);
     }
 
     @FXML
     private void chooseLanguage() {
         languageList.setVisible(!languageList.isVisible());
+        categoryList.setVisible(false);
+        searchBox.setVisible(false);
+        userList.setVisible(false);
+        notiBox.setVisible(false);
     }
 
     @FXML
     private void chooseSearch() {
         searchBox.setVisible(!searchBox.isVisible());
+        categoryList.setVisible(false);
+        languageList.setVisible(false);
+        userList.setVisible(false);
+        notiBox.setVisible(false);
+    }
+
+    @FXML
+    private void chooseUserProfile() {
+        userList.setVisible(!userList.isVisible());
+        categoryList.setVisible(false);
+        languageList.setVisible(false);
+        searchBox.setVisible(false);
+        notiBox.setVisible(false);
+    }
+    @FXML
+    private void searchAction() throws Exception {
+        String searchTerm = searchBar1.getText();
+        goToSearchPage(searchTerm);
+    }
+
+    private void goToSearchPage(String searchTerm) throws Exception {
+        List<Book> books = bookService.searchBooks(searchTerm);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/searchPage.fxml"));
+        Parent root = loader.load();
+        searchPageController controller = loader.getController();
+        controller.setSavedSearchTerm(searchTerm);
+        controller.clearBookLists();
+        controller.getAvailabilityCheckBox().setSelected(false);
+        controller.setBooks(books);
+        primaryStage.setTitle("Luku Library - Search Results");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        updateHeader();
+    }
+
+    public void showAuthorBooks(Author author) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
+        Parent root = loader.load();
+
+        booksByAuthorController controller = loader.getController();
+        controller.setSelectedAuthor(author); // Pass the selected author
+        controller.loadBooksByAuthor(); // Load books for that author
+
+        getPrimaryStage().setTitle("Luku Library - Books by " + author.getFirstName() + " " + author.getLastName());
+        getPrimaryStage().setScene(new Scene(root));
+        getPrimaryStage().show();
+        updateHeader();
     }
 
     @FXML
@@ -330,6 +340,18 @@ public class LibraryController {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         controller.initializeProfilePage();
+        updateHeader();
+    }
+
+    @FXML
+    private void chooseBookings() throws Exception {
+        Long userId = getSavedUserId();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
+        Parent root = loader.load();
+        myBookingController controller = loader.getController();
+        controller.setBooksForUser(userId);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
         updateHeader();
     }
 
@@ -347,17 +369,17 @@ public class LibraryController {
     }
 
     @FXML
-    private void chooseBookings() throws Exception {
-        Long userId = getSavedUserId();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
-        Parent root = loader.load();
-        myBookingController controller = loader.getController();
-        controller.setBooksForUser(userId);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        updateHeader();
+    private void switchToSignUp() throws Exception {
+        loadScene("/signup.fxml");
     }
 
+    @FXML
+    private void switchToLogin() throws Exception {
+        loadScene("/login.fxml");
+    }
+//== Page Navigation Functions ==//
+
+//** Book Reservation Functions **//
     public void chooseReserveCategory(Long bookId) throws Exception {
         Long userId = getSavedUserId();
         if (userId == null) {
@@ -406,29 +428,6 @@ public class LibraryController {
         }
     }
 
-    public boolean validateToken() {
-        String token = AuthManager.getInstance().getToken();
-        if (token == null) {
-            return false;
-        }
-        return JwtUtil.validateToken(token);
-    }
-
-    public String getUserNameByEmail(String email) {
-        return userService.getUserByEmail(email).getUsername();
-    }
-
-    public User getUserByEmail(String email) {
-        return userService.getUserByEmail(email);
-    }
-
-    public List<Book> getBooksByCategory(String category) {
-        if (!validateToken()) {
-            throw new SecurityException("Invalid token");
-        }
-        return bookService.getBooksByCategory(category);
-    }
-
     public void reserveBook(Long userId, Long bookId) {
         if (!validateToken()) {
             throw new SecurityException("Invalid token");
@@ -456,16 +455,6 @@ public class LibraryController {
         userService.updateUser(user);
     }
 
-    public void extendDueDate(Long reservationId, LocalDateTime newDueDate) {
-        Reservation reservation = reservationService.getReservationById(reservationId);
-        if (reservation != null) {
-            reservation.setDueDate(newDueDate);
-            reservationService.updateReservation(reservation);
-        } else {
-            throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
-        }
-    }
-
     public void extendReservation(Long reservationId) {
         Reservation reservation = reservationService.getReservationById(reservationId);
         if (reservation != null) {
@@ -476,37 +465,9 @@ public class LibraryController {
             throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
         }
     }
+//** Book Reservation Functions **//
 
-    public List<Book> searchBooksByAuthor(String authorFirstName, String authorLastName) {
-        return authorService.getBooksByAuthor(authorFirstName, authorLastName);
-    }
-
-    public List<Book> searchBooksByTitle(String title) {
-        return bookService.getBooksByTitle(title);
-    }
-
-    public List<Book> searchBooksByCategory(String genre) {
-        return bookService.getBooksByCategory(genre);
-    }
-
-    public List<Book> searchBooksByLanguage(String language) {
-        return bookService.getBooksByLanguage(language);
-    }
-
-    public int getUserBookCount(Long userId) {
-        return userService.getUserBookCount(userId);
-    }
-
-    public List<Reservation> getMyBookings(Long userId) {
-        return reservationService.getReservationsByUserId(userId);
-    }
-
-    public void updateUserInfo(User user) {
-        userService.updateUser(user);
-    }
-
-//**Setters**//
-
+//** Setters **//
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
@@ -551,8 +512,12 @@ public class LibraryController {
         this.notiCircleStatus = notiCircleStatus;
     }
 
-//**Getters**//
+    public void updateUserInfo(User user) {
+        userService.updateUser(user);
+    }
+//** Setters **//
 
+//** Getters **//
     public UserService getUserService() {
         return userService;
     }
@@ -605,4 +570,44 @@ public class LibraryController {
     public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
         return reservationService.getReservationByUserAndBook(userId, bookId);
     }
+
+    public String getUserNameByEmail(String email) {
+        return userService.getUserByEmail(email).getUsername();
+    }
+
+    public User getUserByEmail(String email) {
+        return userService.getUserByEmail(email);
+    }
+
+    public List<Book> getBooksByCategory(String category) {
+        if (!validateToken()) {
+            throw new SecurityException("Invalid token");
+        }
+        return bookService.getBooksByCategory(category);
+    }
+
+    public List<Book> searchBooksByAuthor(String authorFirstName, String authorLastName) {
+        return authorService.getBooksByAuthor(authorFirstName, authorLastName);
+    }
+
+    public List<Book> searchBooksByTitle(String title) {
+        return bookService.getBooksByTitle(title);
+    }
+
+    public List<Book> searchBooksByCategory(String genre) {
+        return bookService.getBooksByCategory(genre);
+    }
+
+    public List<Book> searchBooksByLanguage(String language) {
+        return bookService.getBooksByLanguage(language);
+    }
+
+    public int getUserBookCount(Long userId) {
+        return userService.getUserBookCount(userId);
+    }
+
+    public List<Reservation> getMyBookings(Long userId) {
+        return reservationService.getReservationsByUserId(userId);
+    }
+//** Getters **//
 }

@@ -11,14 +11,10 @@ import model.entity.User;
 import service.UserService;
 
 public class LoginController extends LibraryController {
-    @FXML
-    private TextField email;
-    @FXML
-    private PasswordField password;
-    @FXML
-    private Label wrongLogIn;
-    @FXML
-    private Button userProfile;
+    @FXML private TextField email;
+    @FXML private PasswordField password;
+    @FXML private Label wrongLogIn;
+    @FXML private Button userProfile;
 
     @FXML
     public void initialize() {

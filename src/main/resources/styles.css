@@ -1,0 +1,7 @@
+.button {
+    -fx-transition: -fx-text-fill 1s ease-in-out;
+}
+
+.button:hover {
+    -fx-text-fill: #ff5000;
+}

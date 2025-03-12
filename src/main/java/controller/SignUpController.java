@@ -13,14 +13,10 @@ import service.UserService;
 import java.time.LocalDateTime;
 
 public class SignUpController extends LibraryController {
-    @FXML
-    private TextField usernameField, emailField, teacherID;
-    @FXML
-    private PasswordField passwordField, repeatPassword;
-    @FXML
-    private Label wrongLogIn;
-    @FXML
-    private Button userProfile;
+    @FXML private TextField usernameField, emailField, teacherID;
+    @FXML private PasswordField passwordField, repeatPassword;
+    @FXML private Label wrongLogIn;
+    @FXML private Button userProfile;
 
     @FXML
     public void initialize() {
