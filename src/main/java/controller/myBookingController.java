@@ -22,7 +22,7 @@ public class myBookingController extends LibraryController {
     @FXML private Button extendReservation, returnBook;
     @FXML private VBox bookVBox;
     @FXML private javafx.scene.control.ScrollPane bookScrollPane;
-    @FXML private AnchorPane scrollBox;
+    @FXML private AnchorPane scrollBox, noBooks;
 
     public void setBooksForUser(Long userId) {
         bookVBox.getChildren().clear();
@@ -31,9 +31,11 @@ public class myBookingController extends LibraryController {
         List<Reservation> reservations = getMyBookings(userId);
         if (reservations.isEmpty()) {
             scrollBox.setVisible(false);
+            noBooks.setVisible(true);
             return;
         } else {
             scrollBox.setVisible(true);
+            noBooks.setVisible(false);
         }
 
         List<Book> books = reservations.stream()

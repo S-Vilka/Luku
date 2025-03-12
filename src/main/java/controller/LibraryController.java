@@ -159,6 +159,94 @@ public class LibraryController {
     }
 //== Check Due Dates ==//
 
+//** Book Reservation Functions **//
+    public void chooseReserveCategory(Long bookId) throws Exception {
+        Long userId = getSavedUserId();
+        if (userId == null) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        Book book = bookService.getBookById(bookId);
+        String category = book.getCategory();
+
+        try {
+            reserveBook(userId, bookId);
+            chooseCategory(category);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void chooseReserveLanguage(Long bookId) throws Exception {
+        Long userId = getSavedUserId();
+        if (userId == null) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        Book book = bookService.getBookById(bookId);
+        String language = book.getLanguage();
+
+        try {
+            reserveBook(userId, bookId);
+            chooseLanguage(language);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void chooseReserveSearch(Long bookId, String searchTerm) throws Exception {
+        Long userId = getSavedUserId();
+        if (userId == null) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        try {
+            reserveBook(userId, bookId);
+            goToSearchPage(searchTerm);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reserveBook(Long userId, Long bookId) {
+        if (!validateToken()) {
+            throw new SecurityException("Invalid token");
+        }
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+        if ("student".equalsIgnoreCase(user.getRole()) && user.getBookCount() >= 5) {
+            throw new IllegalArgumentException("Students cannot reserve more than 5 books.");
+        }
+
+        Reservation reservation = new Reservation();
+        reservation.setUserId(userId);
+        reservation.setBookId(bookId);
+
+        reservationService.createReservation(reservation);
+        notificationService.createNotificationForReservation(reservation.getReservationId());
+        notiCircle.setVisible(true);
+        setNotiCircleStatus(true);
+        bookService.setBookAvailability(bookId, "Checked Out");
+
+        // Update the user's book count
+        user.setBookCount(user.getBookCount() + 1);
+        userService.updateUser(user);
+    }
+
+    public void extendReservation(Long reservationId) {
+        Reservation reservation = reservationService.getReservationById(reservationId);
+        if (reservation != null) {
+            LocalDateTime newDueDate = reservation.getDueDate().plusDays(7);
+            reservation.setDueDate(newDueDate);
+            reservationService.updateReservation(reservation);
+        } else {
+            throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
+        }
+    }
+//** Book Reservation Functions **//
+
 //== Page Navigation Functions ==//
     public void loadScene(String fxmlFile) throws Exception {
         setPrimaryStage(View.getPrimaryStage());
@@ -378,94 +466,6 @@ public class LibraryController {
         loadScene("/login.fxml");
     }
 //== Page Navigation Functions ==//
-
-//** Book Reservation Functions **//
-    public void chooseReserveCategory(Long bookId) throws Exception {
-        Long userId = getSavedUserId();
-        if (userId == null) {
-            throw new IllegalStateException("User is not logged in.");
-        }
-
-        Book book = bookService.getBookById(bookId);
-        String category = book.getCategory();
-
-        try {
-            reserveBook(userId, bookId);
-            chooseCategory(category);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void chooseReserveLanguage(Long bookId) throws Exception {
-        Long userId = getSavedUserId();
-        if (userId == null) {
-            throw new IllegalStateException("User is not logged in.");
-        }
-
-        Book book = bookService.getBookById(bookId);
-        String language = book.getLanguage();
-
-        try {
-            reserveBook(userId, bookId);
-            chooseLanguage(language);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void chooseReserveSearch(Long bookId, String searchTerm) throws Exception {
-        Long userId = getSavedUserId();
-        if (userId == null) {
-            throw new IllegalStateException("User is not logged in.");
-        }
-
-        try {
-            reserveBook(userId, bookId);
-            goToSearchPage(searchTerm);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void reserveBook(Long userId, Long bookId) {
-        if (!validateToken()) {
-            throw new SecurityException("Invalid token");
-        }
-        User user = userService.getUserById(userId);
-        if (user == null) {
-            throw new IllegalArgumentException("User not found.");
-        }
-        if ("student".equalsIgnoreCase(user.getRole()) && user.getBookCount() >= 5) {
-            throw new IllegalArgumentException("Students cannot reserve more than 5 books.");
-        }
-
-        Reservation reservation = new Reservation();
-        reservation.setUserId(userId);
-        reservation.setBookId(bookId);
-
-        reservationService.createReservation(reservation);
-        notificationService.createNotificationForReservation(reservation.getReservationId());
-        notiCircle.setVisible(true);
-        setNotiCircleStatus(true);
-        bookService.setBookAvailability(bookId, "Checked Out");
-
-        // Update the user's book count
-        user.setBookCount(user.getBookCount() + 1);
-        userService.updateUser(user);
-    }
-
-    public void extendReservation(Long reservationId) {
-        Reservation reservation = reservationService.getReservationById(reservationId);
-        if (reservation != null) {
-            LocalDateTime newDueDate = reservation.getDueDate().plusDays(7);
-            reservation.setDueDate(newDueDate);
-            reservationService.updateReservation(reservation);
-        } else {
-            throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
-        }
-    }
-//** Book Reservation Functions **//
 
 //** Setters **//
     public void setUserService(UserService userService) {
