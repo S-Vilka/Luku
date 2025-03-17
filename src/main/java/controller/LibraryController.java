@@ -132,7 +132,7 @@ public class LibraryController {
 //== Check Due Dates ==//
     public void startDueDateChecker() {
         scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::checkDueDates, 0, 2, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this::checkDueDates, 0, 1, TimeUnit.MINUTES);
     }
 
     private void checkDueDates() {
