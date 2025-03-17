@@ -16,7 +16,6 @@
     </properties>
 
     <build>
-
         <finalName>LukuLibrary</finalName>
         <plugins>
 
@@ -214,6 +213,13 @@
             <artifactId>javafx-controls</artifactId>
             <version>21</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>java-dotenv</artifactId>
+            <version>5.2.2</version>
+        </dependency>
+
     </dependencies>
     <repositories>
         <repository>

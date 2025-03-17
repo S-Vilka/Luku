@@ -1,0 +1,42 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container000
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: library_db
+      MYSQL_USER: library_user
+      MYSQL_PASSWORD: library_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
+    networks:
+      - mynetwork
+
+  app:
+#    build: .
+    container_name: luku
+    image: mahnoor95/luku:v2
+    env_file:
+      - ../.env.docker
+    environment:
+      DISPLAY: host.docker.internal:0
+      ENV_FILE: docker
+    volumes:
+      - ../.env.docker:/app/.env
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    depends_on:
+      - mariadb
+    networks:
+      - mynetwork
+    ports:
+      - "8080:8080"
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mariadb_data:
