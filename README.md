@@ -178,11 +178,6 @@ If you want to push your image to docker hub locally, you can use the following 
 
 ## Running the Application with Docker Compose for macOS
 
-**Install Xvfb (for macOS):**
-
-```sh
-    sudo apt-get install xvfb
-  ```
 
 **Set up XQuartz:**
 
