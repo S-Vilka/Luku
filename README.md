@@ -16,13 +16,6 @@ This project is a Library Management System implemented in Java using Maven. It 
 - User can view the list of books they have borrowed.
 - Notification is sent to the user when the due date is near.
 
-## Use Case Diagram
-![Screenshot 2025-03-19 at 20 30 10](https://github.com/user-attachments/assets/0e5b8b43-27ef-4387-b4ca-8f5a2032cb64)
-
-## Class Diagram
-![Screenshot 2025-03-19 at 20 29 14](https://github.com/user-attachments/assets/b770566f-6b6d-4fa3-a1ea-b74dc86c6090)
-
-
 ## Technologies Used
 - Java
 - Maven
@@ -39,6 +32,15 @@ This project is a Library Management System implemented in Java using Maven. It 
 - MariaDB
 - Docker
 - XQuartz (for macOS)
+
+
+## Use Case Diagram
+![Screenshot 2025-03-19 at 20 30 10](https://github.com/user-attachments/assets/0e5b8b43-27ef-4387-b4ca-8f5a2032cb64)
+
+## Class Diagram
+![Screenshot 2025-03-19 at 20 29 14](https://github.com/user-attachments/assets/b770566f-6b6d-4fa3-a1ea-b74dc86c6090)
+
+
 
 ## Shade Plugin
 The project uses the Maven Shade Plugin to create an executable JAR file with all dependencies included. 
