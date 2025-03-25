@@ -261,6 +261,7 @@ public class LibraryController {
 
     @FXML
     private void goToMainPage() throws Exception {
+        disablePanelVisibility();
         loadScene("/mainpage2.fxml");
     }
 
@@ -472,11 +473,13 @@ public class LibraryController {
 
     @FXML
     private void switchToSignUp() throws Exception {
+        disablePanelVisibility();
         loadScene("/signup.fxml");
     }
 
     @FXML
     private void switchToLogin() throws Exception {
+        disablePanelVisibility();
         loadScene("/login.fxml");
     }
 //== Page Navigation Functions ==//
