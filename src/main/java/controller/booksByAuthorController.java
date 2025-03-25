@@ -30,7 +30,7 @@ public class booksByAuthorController extends LibraryController {
     @FXML private VBox bookVBox;
     @FXML private ScrollPane bookScrollPane;
     @FXML private CheckBox availabilityCheckBox;
-    @FXML private AnchorPane noBooks, scrollBox;
+    @FXML private AnchorPane noBooks, scrollBox, bodyBox;
     @FXML private Label selectedAuthorLabel;
 
     public void setAllBooks(List<Book> allBooks) {
@@ -74,9 +74,10 @@ public class booksByAuthorController extends LibraryController {
         Parent root = loader.load();
         authorsPageController controller = loader.getController();
         controller.setAuthors(authorService.getAllAuthors());
-        getPrimaryStage().setTitle("Luku Library - Authors");
-        getPrimaryStage().setScene(new Scene(root));
-        getPrimaryStage().show();
+//        getPrimaryStage().setTitle("Luku Library - Authors");
+//        getPrimaryStage().setScene(new Scene(root));
+//        getPrimaryStage().show();
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 

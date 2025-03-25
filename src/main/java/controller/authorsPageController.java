@@ -21,13 +21,8 @@ public class authorsPageController extends LibraryController {
 
     @FXML private VBox authorVBox;
     @FXML private ScrollPane authorScrollPane;
-    @FXML private AnchorPane noAuthors, scrollBox;
+    @FXML private AnchorPane noAuthors, scrollBox, bodyBox;
     @FXML private ImageView lukulogo;
-
-    @FXML
-    private void goToMainPage() throws Exception {
-        loadScene("/mainpage.fxml");
-    }
 
     public void setAllAuthors(List<Author> allAuthors) {
         this.allAuthors = allAuthors;

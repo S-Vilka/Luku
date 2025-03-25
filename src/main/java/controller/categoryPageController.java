@@ -23,7 +23,12 @@ public class categoryPageController extends LibraryController {
     @FXML private VBox bookVBox;
     @FXML private ScrollPane bookScrollPane;
     @FXML private CheckBox availabilityCheckBox;
-    @FXML private AnchorPane noBooks, scrollBox;
+    @FXML private AnchorPane noBooks, scrollBox, bodyBox;
+    @FXML private Label categoryTag;
+
+    public void setCategoryTag(String category) {
+        categoryTag.setText(category);
+    }
 
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;

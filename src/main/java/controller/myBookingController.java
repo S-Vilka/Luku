@@ -22,7 +22,7 @@ public class myBookingController extends LibraryController {
     @FXML private Button extendReservation, returnBook;
     @FXML private VBox bookVBox;
     @FXML private javafx.scene.control.ScrollPane bookScrollPane;
-    @FXML private AnchorPane scrollBox, noBooks;
+    @FXML private AnchorPane scrollBox, noBooks, bodyBox;
 
     public void setBooksForUser(Long userId) {
         bookVBox.getChildren().clear();
@@ -102,8 +102,9 @@ public class myBookingController extends LibraryController {
                             Parent root = loader2.load();
                             myBookingController controller = loader2.getController();
                             controller.setBooksForUser(userId);
-                            getPrimaryStage().setScene(new Scene(root));
-                            getPrimaryStage().show();
+//                            getPrimaryStage().setScene(new Scene(root));
+//                            getPrimaryStage().show();
+                            bodyBox.getChildren().setAll(root);
                             updateHeader();
                         }
                     } catch (Exception e) {

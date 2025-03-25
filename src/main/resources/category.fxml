@@ -11,9 +11,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="bodyBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="953.0" prefWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.searchPageController">
+<AnchorPane fx:id="bodyBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="953.0" prefWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.categoryPageController">
    <children>
-      <AnchorPane layoutX="-5.0" layoutY="632.0" prefHeight="316.0" prefWidth="1739.0">
+      <AnchorPane layoutX="-6.0" layoutY="632.0" prefHeight="316.0" prefWidth="1739.0">
          <children>
             <ImageView fitHeight="525.0" fitWidth="1739.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -22,13 +22,13 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="246.0" layoutY="57.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-      <Label layoutX="247.0" layoutY="12.0" text="Search Books">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="245.0" layoutY="57.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
+      <Label layoutX="246.0" layoutY="12.0" text="Category:">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="scrollBox" layoutX="281.0" layoutY="105.0" prefHeight="490.0" prefWidth="1088.0">
+      <AnchorPane fx:id="scrollBox" layoutX="280.0" layoutY="105.0" prefHeight="490.0" prefWidth="1088.0">
          <children>
             <ScrollPane fx:id="bookScrollPane" fitToHeight="true" fitToWidth="true" layoutX="4.0" layoutY="3.0" prefHeight="487.0" prefWidth="1126.0" style="-fx-background-color: transparent;">
                <content>
@@ -41,7 +41,7 @@
             </ScrollPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="noBooks" layoutX="646.0" layoutY="136.0" prefHeight="172.0" prefWidth="324.0">
+      <AnchorPane fx:id="noBooks" layoutX="645.0" layoutY="136.0" prefHeight="172.0" prefWidth="324.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="400.0" text="Oops! No books found :(">
                <font>
@@ -50,10 +50,15 @@
             </Label>
          </children>
       </AnchorPane>
-      <CheckBox fx:id="availabilityCheckBox" layoutX="1184.0" layoutY="26.0" mnemonicParsing="false" onAction="#chooseOnlyAvailable" prefHeight="30.0" prefWidth="277.0" text="Show only available books">
+      <CheckBox fx:id="availabilityCheckBox" layoutX="1183.0" layoutY="26.0" mnemonicParsing="false" onAction="#chooseOnlyAvailable" prefHeight="30.0" prefWidth="277.0" text="Show only available books">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </CheckBox>
+      <Label fx:id="categoryTag" layoutX="389.0" layoutY="12.0" prefHeight="45.0" prefWidth="257.0" text="CategoryName">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

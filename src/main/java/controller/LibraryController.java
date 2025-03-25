@@ -49,7 +49,7 @@ public class LibraryController {
     @FXML private ImageView noti;
     @FXML private Circle notiCircle;
     @FXML private VBox notiVBox;
-    @FXML private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox;
+    @FXML private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox, bodyBox;
     @FXML private ImageView lukulogo;
 
 
@@ -226,7 +226,11 @@ public class LibraryController {
 
         reservationService.createReservation(reservation);
         notificationService.createNotificationForReservation(reservation.getReservationId());
-        notiCircle.setVisible(true);
+//        notiCircle.setVisible(true);
+        Circle notiCircle = (Circle) primaryStage.getScene().lookup("#notiCircle");
+        if (notiCircle != null) {
+            notiCircle.setVisible(true);
+        }
         setNotiCircleStatus(true);
         bookService.setBookAvailability(bookId, "Checked Out");
 
@@ -249,69 +253,63 @@ public class LibraryController {
 
 //== Page Navigation Functions ==//
     public void loadScene(String fxmlFile) throws Exception {
-        setPrimaryStage(View.getPrimaryStage());
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-        if ("/mainpage.fxml".equals(fxmlFile)) {
-            fxmlLoader.setController(this);
-        }
-        Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Luku Library");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent component = loader.load();
+        bodyBox.getChildren().setAll(component);
         updateHeader();
     }
 
     @FXML
     private void goToMainPage() throws Exception {
-        loadScene("/mainpage.fxml");
+        loadScene("/mainpage2.fxml");
     }
 
     @FXML
     private void chooseAuthor() throws Exception {
+        disablePanelVisibility();
         List<Author> authors = authorService.getAllAuthors();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/authorsPage.fxml"));
         Parent root = loader.load();
         authorsPageController controller = loader.getController();
         controller.setAuthors(authors);
-        primaryStage.setTitle("Luku Library - Authors");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 
     public void chooseCategory(String category) throws Exception {
-        String fxmlFile = "/category" + category + ".fxml";
+        disablePanelVisibility();
 
         // Fetch books without requiring authentication
         List<Book> books = bookService.getBooksByCategory(category);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/category.fxml"));
         Parent root = loader.load();
-        categoryPageController controller = loader.getController();
 
+        categoryPageController controller = loader.getController();
+        controller.setCategoryTag(category);
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books); // Ensure books are passed to UI
 
-        primaryStage.setTitle("Luku Library - " + category);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 
     private void chooseLanguage(String language) throws Exception {
-        String fxmlFile = "/language" + language + ".fxml";
+        disablePanelVisibility();
+
         List<Book> books = searchBooksByLanguage(language);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/language.fxml"));
         Parent root = loader.load();
+
         languagePageController controller = loader.getController();
+        controller.setLanguageTag(language);
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books);
-        primaryStage.setTitle("Luku Library - " + language);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 
@@ -348,6 +346,20 @@ public class LibraryController {
     @FXML
     private void chooseSwedish() throws Exception {
         chooseLanguage("Swedish");
+    }
+
+    private void disablePanelVisibility() {
+        AnchorPane categoryList = (AnchorPane) primaryStage.getScene().lookup("#categoryList");
+        AnchorPane languageList = (AnchorPane) primaryStage.getScene().lookup("#languageList");
+        AnchorPane searchBox = (AnchorPane) primaryStage.getScene().lookup("#searchBox");
+        AnchorPane userList = (AnchorPane) primaryStage.getScene().lookup("#userList");
+        AnchorPane notiBox = (AnchorPane) primaryStage.getScene().lookup("#notiBox");
+
+        if (categoryList != null) categoryList.setVisible(false);
+        if (languageList != null) languageList.setVisible(false);
+        if (searchBox != null) searchBox.setVisible(false);
+        if (userList != null) userList.setVisible(false);
+        if (notiBox != null) notiBox.setVisible(false);
     }
 
     @FXML
@@ -392,6 +404,7 @@ public class LibraryController {
     }
 
     private void goToSearchPage(String searchTerm) throws Exception {
+        disablePanelVisibility();
         List<Book> books = bookService.searchBooks(searchTerm);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/searchPage.fxml"));
         Parent root = loader.load();
@@ -400,13 +413,13 @@ public class LibraryController {
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books);
-        primaryStage.setTitle("Luku Library - Search Results");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 
     public void showAuthorBooks(Author author) throws Exception {
+        disablePanelVisibility();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
         Parent root = loader.load();
 
@@ -414,37 +427,38 @@ public class LibraryController {
         controller.setSelectedAuthor(author); // Pass the selected author
         controller.loadBooksByAuthor(); // Load books for that author
 
-        getPrimaryStage().setTitle("Luku Library - Books by " + author.getFirstName() + " " + author.getLastName());
-        getPrimaryStage().setScene(new Scene(root));
-        getPrimaryStage().show();
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 
     @FXML
     private void chooseProfile() throws Exception {
+        disablePanelVisibility();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/myProfile.fxml"));
         Parent root = loader.load();
         myProfileController controller = loader.getController();
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
         controller.initializeProfilePage();
+
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 
     @FXML
     private void chooseBookings() throws Exception {
+        disablePanelVisibility();
         Long userId = getSavedUserId();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
         Parent root = loader.load();
         myBookingController controller = loader.getController();
         controller.setBooksForUser(userId);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+
+        bodyBox.getChildren().setAll(root);
         updateHeader();
     }
 
     @FXML
     private void logout() throws Exception {
+        disablePanelVisibility();
         // Clear user session data
         savedUsername = null;
         savedEmail = null;
@@ -453,7 +467,7 @@ public class LibraryController {
         stopDueDateChecker();
 
         // Always reload the main page after logout
-        loadScene("/mainpage.fxml");
+        loadScene("/mainpage2.fxml");
     }
 
     @FXML

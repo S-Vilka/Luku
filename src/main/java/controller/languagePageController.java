@@ -23,7 +23,13 @@ public class languagePageController extends LibraryController {
     @FXML private VBox bookVBox;
     @FXML private ScrollPane bookScrollPane;
     @FXML private CheckBox availabilityCheckBox;
-    @FXML private AnchorPane noBooks, scrollBox;
+    @FXML private AnchorPane noBooks, scrollBox, bodyBox;
+    @FXML private Label languageTag;
+
+
+    public void setLanguageTag(String language) {
+        languageTag.setText(language);
+    }
 
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;

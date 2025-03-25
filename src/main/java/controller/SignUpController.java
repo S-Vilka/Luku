@@ -68,7 +68,7 @@ public class SignUpController extends LibraryController {
         String phoneNumber = getUserPhone(email);
         setSavedPhoneNumber(phoneNumber);
         setSavedUserId(userId);
-        loadScene("/mainpage.fxml");
+        loadScene("/mainpage2.fxml");
         startDueDateChecker();
     }
 
