@@ -30,7 +30,7 @@ public class booksByAuthorController extends LibraryController {
     @FXML private VBox bookVBox;
     @FXML private ScrollPane bookScrollPane;
     @FXML private CheckBox availabilityCheckBox;
-    @FXML private AnchorPane noBooks, scrollBox, bodyBox;
+    @FXML private AnchorPane noBooks, scrollBox;
     @FXML private Label selectedAuthorLabel;
 
     public void setAllBooks(List<Book> allBooks) {
@@ -70,15 +70,17 @@ public class booksByAuthorController extends LibraryController {
 
     @FXML
     public void backToAuthors() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/authorsPage.fxml"));
-        Parent root = loader.load();
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/authorsPage.fxml"));
+//        Parent root = loader.load();
+        FXMLLoader loader = loadScene("/authorsPage.fxml");
         authorsPageController controller = loader.getController();
         controller.setAuthors(authorService.getAllAuthors());
 //        getPrimaryStage().setTitle("Luku Library - Authors");
 //        getPrimaryStage().setScene(new Scene(root));
 //        getPrimaryStage().show();
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
+//        AnchorPane bodyBox = (AnchorPane) getPrimaryStage().getScene().lookup("#bodyBox");
+//        bodyBox.getChildren().setAll(root);
+//        updateHeader();
     }
 
     @FXML

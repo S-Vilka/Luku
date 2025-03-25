@@ -25,7 +25,7 @@ public class searchPageController extends LibraryController {
     @FXML private VBox bookVBox;
     @FXML private ScrollPane bookScrollPane;
     @FXML private CheckBox availabilityCheckBox;
-    @FXML private AnchorPane noBooks, scrollBox, bodyBox;
+    @FXML private AnchorPane noBooks, scrollBox;
 
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;

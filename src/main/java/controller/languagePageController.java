@@ -23,7 +23,7 @@ public class languagePageController extends LibraryController {
     @FXML private VBox bookVBox;
     @FXML private ScrollPane bookScrollPane;
     @FXML private CheckBox availabilityCheckBox;
-    @FXML private AnchorPane noBooks, scrollBox, bodyBox;
+    @FXML private AnchorPane noBooks, scrollBox;
     @FXML private Label languageTag;
 
 

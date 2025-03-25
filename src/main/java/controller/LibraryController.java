@@ -13,6 +13,8 @@ import service.AuthorService;
 import util.AuthManager;
 import util.JwtUtil;
 import view.View;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,15 +43,16 @@ public class LibraryController {
     private static String savedPhoneNumber;
     private static ScheduledExecutorService scheduler;
     private static boolean notiCircleStatus;
+    private static String currentLanguage = "English";
 
     @FXML private TextField email, usernameField, emailField, teacherID, searchBar1;
     @FXML private PasswordField password, passwordField, repeatPassword;
-    @FXML private Button enterBurron, loginButtonTop, categoryButton, languageButton, authorButtom, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton, extendButton, returnButton;
-    @FXML private Label locationTag, wrongLogIn, bookName, author, publicationDate, availability, borrowDate, dueDate, bookId;
-    @FXML private ImageView noti;
+    @FXML private Button searchButton21, logoutButton, myBookingsButton, enterBurron, loginButtonTop, categoryButton, languageButton, authorButton, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton, extendButton, returnButton, appLanguage, languageEnglish, languageRussian, languageUrdu, profileButton;
+    @FXML private Label locationTag, wrongLogIn, bookName, author, publicationDate, availability, borrowDate, dueDate, bookId, slogan;
+    @FXML private ImageView noti, languageBall;
     @FXML private Circle notiCircle;
     @FXML private VBox notiVBox;
-    @FXML private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox, bodyBox;
+    @FXML private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox, bodyBox, appLanguageBox;
     @FXML private ImageView lukulogo;
 
 
@@ -61,9 +64,93 @@ public class LibraryController {
         this.authorService = new AuthorService();
     }
 
+    public void setLanguageText() {
+        Locale locale = null;
+        if (currentLanguage.equals("English")) {
+            locale = new Locale("en", "US");
+        } else if (currentLanguage.equals("Русский")) {
+            locale = new Locale("ru", "RUS");
+        } else if (currentLanguage.equals("اردو")) {
+            locale = new Locale("ur", "Pak");
+        }
+        ResourceBundle bundle = ResourceBundle.getBundle("resource_bundle", locale);
+        Label slogan = (Label) primaryStage.getScene().lookup("#slogan");
+        slogan.setText(bundle.getString("welcome"));
+        Button loginButtonTop = (Button) primaryStage.getScene().lookup("#loginButtonTop");
+        loginButtonTop.setText(bundle.getString("login"));
+        Button profileButton = (Button) primaryStage.getScene().lookup("#profileButton");
+        profileButton.setText(bundle.getString("profile.button"));
+        Button myBookingsButton = (Button) primaryStage.getScene().lookup("#myBookingsButton");
+        myBookingsButton.setText(bundle.getString("myBookings.button"));
+        Button logoutButton = (Button) primaryStage.getScene().lookup("#logoutButton");
+        logoutButton.setText(bundle.getString("logout"));
+        Button categoryButton = (Button) primaryStage.getScene().lookup("#categoryButton");
+        categoryButton.setText(bundle.getString("category"));
+        Button fictionButton = (Button) primaryStage.getScene().lookup("#fictionButton");
+        fictionButton.setText(bundle.getString("fiction.button"));
+        Button nonFictionButton = (Button) primaryStage.getScene().lookup("#nonFictionButton");
+        nonFictionButton.setText(bundle.getString("nonFiction.button"));
+        Button scienceButton = (Button) primaryStage.getScene().lookup("#scienceButton");
+        scienceButton.setText(bundle.getString("science.button"));
+        Button historyButton = (Button) primaryStage.getScene().lookup("#historyButton");
+        historyButton.setText(bundle.getString("history.button"));
+        Button languageButton = (Button) primaryStage.getScene().lookup("#languageButton");
+        languageButton.setText(bundle.getString("language"));
+        Button authorButton = (Button) primaryStage.getScene().lookup("#authorButton");
+        authorButton.setText(bundle.getString("author"));
+        Button englishButton = (Button) primaryStage.getScene().lookup("#englishButton");
+        englishButton.setText(bundle.getString("english.button"));
+        Button finnishButton = (Button) primaryStage.getScene().lookup("#finnishButton");
+        finnishButton.setText(bundle.getString("finnish.button"));
+        Button swedishButton = (Button) primaryStage.getScene().lookup("#swedishButton");
+        swedishButton.setText(bundle.getString("swedish.button"));
+        Button searchButton = (Button) primaryStage.getScene().lookup("#searchButton");
+        searchButton.setText(bundle.getString("searchBar"));
+        Button searchButton21 = (Button) primaryStage.getScene().lookup("#searchButton21");
+        searchButton21.setText(bundle.getString("searchBar"));
+        TextField searchBar1 = (TextField) primaryStage.getScene().lookup("#searchBar1");
+        searchBar1.setPromptText(bundle.getString("searchBar"));
+        Button loginButton = (Button) primaryStage.getScene().lookup("#loginButton");
+        if (loginButton != null) {
+            loginButton.setText(bundle.getString("login"));
+        }
+        Button signupButton = (Button) primaryStage.getScene().lookup("#signupButton");
+        if (signupButton != null) {
+            signupButton.setText(bundle.getString("signup"));
+        }
+        Label emailLabel = (Label) primaryStage.getScene().lookup("#emailLabel");
+        if (emailLabel != null) {
+            emailLabel.setText(bundle.getString("email"));
+        }
+        Label passwordLabel = (Label) primaryStage.getScene().lookup("#passwordLabel");
+        if (passwordLabel != null) {
+            passwordLabel.setText(bundle.getString("password"));
+        }
+        TextField email = (TextField) primaryStage.getScene().lookup("#email");
+        if (email != null) {
+            email.setPromptText(bundle.getString("email"));
+        }
+        PasswordField password = (PasswordField) primaryStage.getScene().lookup("#password");
+        if (password != null) {
+            password.setPromptText(bundle.getString("password"));
+        }
+        Button enterBurron = (Button) primaryStage.getScene().lookup("#enterBurron");
+        if (enterBurron != null) {
+            enterBurron.setText(bundle.getString("enter.button"));
+        }
+        Label wrongLogIn = (Label) primaryStage.getScene().lookup("#wrongLogIn");
+        if (wrongLogIn != null) {
+            wrongLogIn.setText(bundle.getString("wrongLogIn.Label"));
+        }
+    }
+
     public void updateHeader() {
+        disablePanelVisibility();
         AnchorPane loginBox = (AnchorPane) primaryStage.getScene().lookup("#loginBox");
         AnchorPane userProfileBox = (AnchorPane) primaryStage.getScene().lookup("#userProfileBox");
+        Button appLanguage = (Button) primaryStage.getScene().lookup("#appLanguage");
+        appLanguage.setText(currentLanguage);
+        setLanguageText();
 
         if (loginBox != null && userProfileBox != null) {
             if (validateToken()) {
@@ -89,6 +176,26 @@ public class LibraryController {
         }
         return JwtUtil.validateToken(token);
     }
+
+//== App Language Change Functions ==//
+    @FXML
+    private void chooseLanguageEnglish() throws Exception {
+        currentLanguage = "English";
+        updateHeader();
+    }
+
+    @FXML
+    private void chooseLanguageRussian() throws Exception {
+        currentLanguage = "Русский";
+        updateHeader();
+    }
+
+    @FXML
+    private void chooseLanguageUrdu() throws Exception {
+        currentLanguage = "اردو";
+        updateHeader();
+    }
+//== App Language Change Functions ==//
 
 //== Notification Functions ==//
     private void loadNotifications() {
@@ -252,66 +359,49 @@ public class LibraryController {
 //** Book Reservation Functions **//
 
 //== Page Navigation Functions ==//
-    public void loadScene(String fxmlFile) throws Exception {
+    public FXMLLoader loadScene(String fxmlFile) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent component = loader.load();
+        AnchorPane bodyBox = (AnchorPane) primaryStage.getScene().lookup("#bodyBox");
         bodyBox.getChildren().setAll(component);
         updateHeader();
+        return loader;
     }
 
     @FXML
     private void goToMainPage() throws Exception {
-        disablePanelVisibility();
         loadScene("/mainpage2.fxml");
     }
 
     @FXML
     private void chooseAuthor() throws Exception {
-        disablePanelVisibility();
         List<Author> authors = authorService.getAllAuthors();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/authorsPage.fxml"));
-        Parent root = loader.load();
+        FXMLLoader loader = loadScene("/authorsPage.fxml");
         authorsPageController controller = loader.getController();
         controller.setAuthors(authors);
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
     }
 
     public void chooseCategory(String category) throws Exception {
-        disablePanelVisibility();
-
         // Fetch books without requiring authentication
         List<Book> books = bookService.getBooksByCategory(category);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/category.fxml"));
-        Parent root = loader.load();
-
+        FXMLLoader loader = loadScene("/category.fxml");
         categoryPageController controller = loader.getController();
         controller.setCategoryTag(category);
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books); // Ensure books are passed to UI
-
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
     }
 
     private void chooseLanguage(String language) throws Exception {
-        disablePanelVisibility();
-
         List<Book> books = searchBooksByLanguage(language);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/language.fxml"));
-        Parent root = loader.load();
-
+        FXMLLoader loader = loadScene("/language.fxml");
         languagePageController controller = loader.getController();
         controller.setLanguageTag(language);
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books);
-
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
     }
 
     @FXML
@@ -355,12 +445,14 @@ public class LibraryController {
         AnchorPane searchBox = (AnchorPane) primaryStage.getScene().lookup("#searchBox");
         AnchorPane userList = (AnchorPane) primaryStage.getScene().lookup("#userList");
         AnchorPane notiBox = (AnchorPane) primaryStage.getScene().lookup("#notiBox");
+        AnchorPane appLanguageBox = (AnchorPane) primaryStage.getScene().lookup("#appLanguageBox");
 
         if (categoryList != null) categoryList.setVisible(false);
         if (languageList != null) languageList.setVisible(false);
         if (searchBox != null) searchBox.setVisible(false);
         if (userList != null) userList.setVisible(false);
         if (notiBox != null) notiBox.setVisible(false);
+        if (appLanguageBox != null) appLanguageBox.setVisible(false);
     }
 
     @FXML
@@ -370,6 +462,7 @@ public class LibraryController {
         searchBox.setVisible(false);
         userList.setVisible(false);
         notiBox.setVisible(false);
+        appLanguageBox.setVisible(false);
     }
 
     @FXML
@@ -379,6 +472,7 @@ public class LibraryController {
         searchBox.setVisible(false);
         userList.setVisible(false);
         notiBox.setVisible(false);
+        appLanguageBox.setVisible(false);
     }
 
     @FXML
@@ -388,6 +482,7 @@ public class LibraryController {
         languageList.setVisible(false);
         userList.setVisible(false);
         notiBox.setVisible(false);
+        appLanguageBox.setVisible(false);
     }
 
     @FXML
@@ -397,7 +492,19 @@ public class LibraryController {
         languageList.setVisible(false);
         searchBox.setVisible(false);
         notiBox.setVisible(false);
+        appLanguageBox.setVisible(false);
     }
+
+    @FXML
+    private void chooseAppLanguage() {
+        appLanguageBox.setVisible(!appLanguageBox.isVisible());
+        categoryList.setVisible(false);
+        languageList.setVisible(false);
+        searchBox.setVisible(false);
+        userList.setVisible(false);
+        notiBox.setVisible(false);
+    }
+
     @FXML
     private void searchAction() throws Exception {
         String searchTerm = searchBar1.getText();
@@ -405,61 +512,40 @@ public class LibraryController {
     }
 
     private void goToSearchPage(String searchTerm) throws Exception {
-        disablePanelVisibility();
         List<Book> books = bookService.searchBooks(searchTerm);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/searchPage.fxml"));
-        Parent root = loader.load();
+
+        FXMLLoader loader = loadScene("/searchPage.fxml");
         searchPageController controller = loader.getController();
         controller.setSavedSearchTerm(searchTerm);
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books);
-
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
     }
 
     public void showAuthorBooks(Author author) throws Exception {
-        disablePanelVisibility();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("booksByAuthor.fxml"));
-        Parent root = loader.load();
-
+        FXMLLoader loader = loadScene("/booksByAuthor.fxml");
         booksByAuthorController controller = loader.getController();
         controller.setSelectedAuthor(author); // Pass the selected author
         controller.loadBooksByAuthor(); // Load books for that author
-
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
     }
 
     @FXML
     private void chooseProfile() throws Exception {
-        disablePanelVisibility();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/myProfile.fxml"));
-        Parent root = loader.load();
+        FXMLLoader loader = loadScene("/myProfile.fxml");
         myProfileController controller = loader.getController();
         controller.initializeProfilePage();
-
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
     }
 
     @FXML
     private void chooseBookings() throws Exception {
-        disablePanelVisibility();
         Long userId = getSavedUserId();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
-        Parent root = loader.load();
+        FXMLLoader loader = loadScene("/myBookings.fxml");
         myBookingController controller = loader.getController();
         controller.setBooksForUser(userId);
-
-        bodyBox.getChildren().setAll(root);
-        updateHeader();
     }
 
     @FXML
     private void logout() throws Exception {
-        disablePanelVisibility();
         // Clear user session data
         savedUsername = null;
         savedEmail = null;
@@ -473,13 +559,11 @@ public class LibraryController {
 
     @FXML
     private void switchToSignUp() throws Exception {
-        disablePanelVisibility();
         loadScene("/signup.fxml");
     }
 
     @FXML
     private void switchToLogin() throws Exception {
-        disablePanelVisibility();
         loadScene("/login.fxml");
     }
 //== Page Navigation Functions ==//
@@ -531,6 +615,10 @@ public class LibraryController {
 
     public void updateUserInfo(User user) {
         userService.updateUser(user);
+    }
+
+    public void setCurrentLanguage(String language) {
+        currentLanguage = language;
     }
 //** Setters **//
 
@@ -625,6 +713,10 @@ public class LibraryController {
 
     public List<Reservation> getMyBookings(Long userId) {
         return reservationService.getReservationsByUserId(userId);
+    }
+
+    public String getCurrentLanguage() {
+        return currentLanguage;
     }
 //** Getters **//
 }

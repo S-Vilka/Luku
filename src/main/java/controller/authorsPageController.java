@@ -21,7 +21,7 @@ public class authorsPageController extends LibraryController {
 
     @FXML private VBox authorVBox;
     @FXML private ScrollPane authorScrollPane;
-    @FXML private AnchorPane noAuthors, scrollBox, bodyBox;
+    @FXML private AnchorPane noAuthors, scrollBox;
     @FXML private ImageView lukulogo;
 
     public void setAllAuthors(List<Author> allAuthors) {

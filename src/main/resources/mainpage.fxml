@@ -31,7 +31,7 @@
                   <Image url="@Luku_Logo.png" />
                </image>
             </ImageView>
-            <Label layoutX="462.0" layoutY="53.0" prefHeight="21.0" prefWidth="290.0" text=" Library for Students and Teachers">
+            <Label fx:id="slogan" layoutX="462.0" layoutY="53.0" prefHeight="21.0" prefWidth="290.0" text=" Library for Students and Teachers">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -74,6 +74,20 @@
                </image>
             </ImageView>
             <Circle fx:id="notiCircle" fill="#f54f03" layoutX="32.0" layoutY="10.0" radius="7.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="1102.0" layoutY="64.0" prefHeight="44.0" prefWidth="171.0">
+         <children>
+            <ImageView fx:id="languageBall" fitHeight="32.0" fitWidth="39.0" layoutY="4.0" onMouseClicked="#chooseAppLanguage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@languageIcon.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="appLanguage" alignment="TOP_LEFT" layoutX="31.0" mnemonicParsing="false" onAction="#chooseAppLanguage" prefHeight="44.0" prefWidth="155.0" style="-fx-background-color: #ffffff;" text="LanguageTag">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="loginBox" layoutX="1319.0" layoutY="62.0" visible="false">
@@ -205,6 +219,38 @@
                      </VBox.margin>
                   </Button>
                   <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Logout">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="appLanguageBox" layoutX="1107.0" layoutY="120.0" prefHeight="117.0" prefWidth="148.0" visible="false">
+         <children>
+            <VBox prefHeight="133.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
+               <children>
+                  <Button fx:id="languageEnglish" mnemonicParsing="false" onAction="#chooseLanguageEnglish" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="English">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="languageRussian" mnemonicParsing="false" onAction="#chooseLanguageRussian" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Русский">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="languageUrdu" mnemonicParsing="false" onAction="#chooseLanguageUrdu" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="اردو">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
