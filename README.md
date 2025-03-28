@@ -1,7 +1,9 @@
 # Library Management System
 
 ## Overview
-This project is a Library Management System implemented in Java using Maven. It provides functionalities to manage books, authors, reservations, and users in a library.
+Luku is a Library Management System developed for students and teachers, offering intuitive features to browse, search, and reserve books. Users can search by category, author, or title, and manage their reservations with ease.
+The project is implemented in Java using Maven and supports localization in English, Russian, and Urdu.
+Luku was developed as part of a second-year Software Engineering course at Metropolia University of Applied Sciences.
 
 ## Features
 - Manage reservations (create, update)
@@ -15,6 +17,7 @@ This project is a Library Management System implemented in Java using Maven. It 
 - User can view the list of books they have reserved.
 - User can view the list of books they have borrowed.
 - Notification is sent to the user when the due date is near.
+- User can choose from three user interface languages: English, Russian, and Urdu.
 
 ## Technologies Used
 - Java
@@ -23,7 +26,7 @@ This project is a Library Management System implemented in Java using Maven. It 
 - JUnit 5
 - Mockito
 - Testcontainers
--  Docker
+- Docker
 - Jenkins
 
 ## Prerequisites
