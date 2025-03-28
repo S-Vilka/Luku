@@ -23,7 +23,7 @@
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="245.0" layoutY="57.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-      <Label layoutX="246.0" layoutY="12.0" text="Category:">
+      <Label layoutX="246.0" layoutY="12.0" prefHeight="45.0" prefWidth="187.0" text="%category">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -43,19 +43,19 @@
       </AnchorPane>
       <AnchorPane fx:id="noBooks" layoutX="645.0" layoutY="136.0" prefHeight="172.0" prefWidth="324.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="400.0" text="Oops! No books found :(">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="400.0" text="%noBook.text">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <CheckBox fx:id="availabilityCheckBox" layoutX="1183.0" layoutY="26.0" mnemonicParsing="false" onAction="#chooseOnlyAvailable" prefHeight="30.0" prefWidth="277.0" text="Show only available books">
+      <CheckBox fx:id="availabilityCheckBox" layoutX="1100.0" layoutY="26.0" mnemonicParsing="false" onAction="#chooseOnlyAvailable" prefHeight="30.0" prefWidth="360.0" text="%availability.checkBox">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </CheckBox>
-      <Label fx:id="categoryTag" layoutX="389.0" layoutY="12.0" prefHeight="45.0" prefWidth="257.0" text="CategoryName">
+      <Label fx:id="categoryTag" alignment="CENTER_RIGHT" layoutX="406.0" layoutY="12.0" prefHeight="45.0" prefWidth="240.0" text="CategoryName">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>

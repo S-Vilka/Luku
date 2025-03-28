@@ -50,6 +50,7 @@ public class myBookingController extends LibraryController {
             }
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookingsBookBox.fxml"));
+                loader.setResources(getResourceBundle());
                 AnchorPane bookBox = loader.load();
 
                 Label bookName = (Label) bookBox.lookup("#bookName");
@@ -71,7 +72,7 @@ public class myBookingController extends LibraryController {
                 String authorsText = authorSet.stream()
                         .map(a -> a.getFirstName() + " " + a.getLastName())
                         .collect(Collectors.joining(", "));
-                author.setText(authorsText.isEmpty() ? "Unknown Author" : authorsText);
+                author.setText(authorsText.isEmpty() ? getResourceBundle().getString("unknownAuthor") : authorsText);
 
                 publicationDate.setText(book.getPublicationDate() != null ? book.getPublicationDate().toString() : "Unknown");
                 borrowDate.setText(reservation.getBorrowDate().toString());
@@ -101,6 +102,7 @@ public class myBookingController extends LibraryController {
 //                            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
 //                            Parent root = loader2.load();
                             FXMLLoader loader2 = loadScene("/myBookings.fxml");
+                            loader2.setResources(getResourceBundle());
                             myBookingController controller = loader2.getController();
                             controller.setBooksForUser(userId);
 //                            getPrimaryStage().setScene(new Scene(root));

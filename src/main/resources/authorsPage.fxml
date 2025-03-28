@@ -22,7 +22,7 @@
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="246.0" layoutY="57.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-      <Label layoutX="247.0" layoutY="12.0" text="Authors">
+      <Label layoutX="247.0" layoutY="12.0" prefHeight="45.0" prefWidth="396.0" text="%authors">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -42,7 +42,7 @@
       </AnchorPane>
       <AnchorPane fx:id="noAuthors" layoutX="249.0" layoutY="128.0" prefHeight="172.0" prefWidth="712.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="1060.0" text="Oops! No authors found :(">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="1060.0" text="\%noAuthorError">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>

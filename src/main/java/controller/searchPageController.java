@@ -89,6 +89,7 @@ public class searchPageController extends LibraryController {
             }
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookBox.fxml"));
+                loader.setResources(getResourceBundle());
                 AnchorPane bookBox = loader.load();
 
                 Label bookName = (Label) bookBox.lookup("#bookName");
@@ -108,11 +109,11 @@ public class searchPageController extends LibraryController {
                 String authorsText = authorSet.stream()
                         .map(a -> a.getFirstName() + " " + a.getLastName())
                         .collect(Collectors.joining(", "));
-                author.setText(authorsText.isEmpty() ? "Unknown Author" : authorsText);
+                author.setText(authorsText.isEmpty() ? getResourceBundle().getString("unknownAuthor") : authorsText);
 
-                publicationDate.setText(book.getPublicationDate() != null ? book.getPublicationDate().toString() : "Unknown");
-                availability.setText(book.getAvailabilityStatus() != null ? book.getAvailabilityStatus() : "Unknown");
-                location.setText(book.getLocation() != null ? book.getLocation() : "Unknown");
+                publicationDate.setText(book.getPublicationDate() != null ? book.getPublicationDate().toString() : getResourceBundle().getString("unknown"));
+                availability.setText("Available".equals(book.getAvailabilityStatus()) ? getResourceBundle().getString("available") : getResourceBundle().getString("checkedout"));
+                location.setText(book.getLocation() != null ? book.getLocation() : getResourceBundle().getString("unknown"));
                 bookId.setText(String.valueOf(book.getBookId()));
 
                 // ** Load book cover **
@@ -144,7 +145,7 @@ public class searchPageController extends LibraryController {
                 boolean isLoggedIn = userId != null;
 
                 if (!isLoggedIn) {
-                    reserveButton.setText("Login to Reserve");
+                    reserveButton.setText(getResourceBundle().getString("loginToReserve"));
                     reserveButton.setStyle("-fx-text-fill: grey;");
                     reserveButton.setDisable(true);
                 } else {
@@ -152,21 +153,21 @@ public class searchPageController extends LibraryController {
                     int userBookCount = getUserService().getUserBookCount(userId);
 
                     if ("teacher".equalsIgnoreCase(userRole)) {
-                        reserveButton.setText("Reserve");
+                        reserveButton.setText(getResourceBundle().getString("reserve"));
                         reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
                         reserveButton.setDisable(false);
                         availability.setStyle("-fx-text-fill: green;");
                     } else if ("student".equalsIgnoreCase(userRole) && userBookCount >= 5) {
-                        reserveButton.setText("Limit Reached (5 Books)");
+                        reserveButton.setText(getResourceBundle().getString("limitReached"));
                         reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 13px; -fx-font-weight: bold;");
                         reserveButton.setDisable(true);
                     } else if ("Available".equalsIgnoreCase(book.getAvailabilityStatus())) {
-                        reserveButton.setText("Reserve");
+                        reserveButton.setText(getResourceBundle().getString("reserve"));
                         reserveButton.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
                         reserveButton.setDisable(false);
                         availability.setStyle("-fx-text-fill: green;");
                     } else {
-                        reserveButton.setText("Unavailable");
+                        reserveButton.setText(getResourceBundle().getString("unavailable"));
                         reserveButton.setStyle("-fx-text-fill: red; -fx-font-size: 18px; -fx-font-weight: bold;");
                         reserveButton.setDisable(true);
                         availability.setStyle("-fx-text-fill: red;");

@@ -47,14 +47,14 @@ public class SignUpController extends LibraryController {
 
         // Check if email already exists
         if (getUserByEmail(email) != null) {
-            wrongLogIn.setText("Email already exists!");
+            wrongLogIn.setText(getResourceBundle().getString("email.exists"));
             wrongLogIn.setStyle("-fx-text-fill: red;");
             return;
         }
 
         // Check if passwords match
         if (!password.equals(repeat)) {
-            wrongLogIn.setText("Passwords do not match!");
+            wrongLogIn.setText(getResourceBundle().getString("passwords.mismatch"));
             wrongLogIn.setStyle("-fx-text-fill: red;");
             return;
         }

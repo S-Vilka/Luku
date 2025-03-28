@@ -53,7 +53,8 @@ public class LoginController extends LibraryController {
             loadScene("/mainpage2.fxml");
             startDueDateChecker();
         } else {
-            wrongLogIn.setText("Invalid email or password!");
+            wrongLogIn.setVisible(true);
+            wrongLogIn.setText(getResourceBundle().getString("wrongLogIn.label"));
             wrongLogIn.setStyle("-fx-text-fill: red;");
         }
     }

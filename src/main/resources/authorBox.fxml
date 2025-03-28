@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@styles.css" fx:id="authorBox" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authorsPageController">
+<AnchorPane fx:id="authorBox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authorsPageController">
     <children>
         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#eeeeee" height="328.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
         <ImageView fx:id="authorImage" fitHeight="225.0" fitWidth="202.0" layoutX="44.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
@@ -16,7 +16,7 @@
                 <Image url="@bookpicture.jpg" />
             </image>
         </ImageView>
-        <Button fx:id="checkAuthorBooks" layoutX="238.0" layoutY="246.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="203.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="Check their books">
+        <Button fx:id="checkAuthorBooks" layoutX="226.0" layoutY="246.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="240.0" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-radius: 10; -fx-background-radius: 10;" text="%checkAuthorBooks.button">
             <font>
                 <Font name="System Bold Italic" size="18.0" />
             </font>
@@ -36,7 +36,7 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <Label layoutX="236.0" layoutY="117.0" prefHeight="32.0" prefWidth="249.0" text="Known for">
+        <Label layoutX="236.0" layoutY="117.0" prefHeight="32.0" prefWidth="249.0" text="%famousFor">
             <font>
                 <Font name="System Bold" size="20.0" />
             </font>

@@ -10,7 +10,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="953.0" prefWidth="1728.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.myProfileController">
    <children>
       <AnchorPane layoutX="-5.0" layoutY="454.0">
@@ -24,32 +23,32 @@
       </AnchorPane>
       <AnchorPane fx:id="showState" layoutX="23.0" layoutY="97.0" prefHeight="204.0" prefWidth="791.0">
          <children>
-            <Label layoutX="290.0" layoutY="50.0" text="Name">
+            <Label alignment="CENTER_RIGHT" layoutX="225.0" layoutY="50.0" prefHeight="27.0" prefWidth="128.0" text="%name">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="290.0" layoutY="110.0" text="Email">
+            <Label alignment="CENTER_RIGHT" layoutX="223.0" layoutY="110.0" prefHeight="27.0" prefWidth="129.0" text="%email">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="290.0" layoutY="170.0" text="Phone">
+            <Label alignment="CENTER_RIGHT" layoutX="219.0" layoutY="170.0" prefHeight="27.0" prefWidth="135.0" text="%phone">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="editNameButton" layoutX="790.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
+            <Button fx:id="editNameButton" layoutX="790.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%editDetails.button">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="editEmailButton" layoutX="790.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
+            <Button fx:id="editEmailButton" layoutX="790.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%editDetails.button">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="editPhoneButton" layoutX="790.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Edit">
+            <Button fx:id="editPhoneButton" layoutX="790.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%editDetails.button">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
@@ -73,35 +72,35 @@
       </AnchorPane>
       <AnchorPane fx:id="editState" layoutX="23.0" layoutY="97.0" prefHeight="204.0" prefWidth="791.0" visible="false">
          <children>
-            <Label layoutX="290.0" layoutY="50.0" text="Name">
+            <Label alignment="CENTER_RIGHT" layoutX="205.0" layoutY="50.0" prefHeight="27.0" prefWidth="146.0" text="%name">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <TextField fx:id="changeNameField" layoutX="360.0" layoutY="46.0" prefHeight="32.0" prefWidth="399.0" />
-            <Label layoutX="290.0" layoutY="110.0" text="Email">
+            <Label alignment="CENTER_RIGHT" layoutX="207.0" layoutY="110.0" prefHeight="27.0" prefWidth="143.0" text="%email">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="290.0" layoutY="170.0" text="Phone">
+            <Label alignment="CENTER_RIGHT" layoutX="197.0" layoutY="170.0" prefHeight="27.0" prefWidth="154.0" text="%phone">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <TextField fx:id="changeEmailField" layoutX="360.0" layoutY="106.0" prefHeight="32.0" prefWidth="399.0" />
             <TextField fx:id="changePhoneField" layoutX="360.0" layoutY="166.0" prefHeight="32.0" prefWidth="399.0" />
-            <Button fx:id="doneNameButton" layoutX="790.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done">
+            <Button fx:id="doneNameButton" layoutX="790.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%submitChanges.button">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="editEmailButtondon1" layoutX="790.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done">
+            <Button fx:id="editEmailButtondon1" layoutX="790.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%submitChanges.button">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="donePhoneButton" layoutX="790.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done">
+            <Button fx:id="donePhoneButton" layoutX="790.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleDoneUser" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%submitChanges.button">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
@@ -110,17 +109,17 @@
       </AnchorPane>
       <AnchorPane fx:id="passwordChangeState" layoutX="146.0" layoutY="97.0" prefHeight="204.0" prefWidth="791.0" visible="false">
          <children>
-            <Label layoutX="228.0" layoutY="50.0" prefHeight="27.0" prefWidth="122.0" text="Old password">
+            <Label alignment="CENTER_RIGHT" layoutX="141.0" layoutY="50.0" prefHeight="27.0" prefWidth="209.0" text="%oldPassword.label">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="221.0" layoutY="110.0" prefHeight="27.0" prefWidth="129.0" text="New password">
+            <Label alignment="CENTER_RIGHT" layoutX="145.0" layoutY="110.0" prefHeight="27.0" prefWidth="205.0" text="%newPassword.label">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="151.0" layoutY="170.0" prefHeight="27.0" prefWidth="200.0" text="Confirm new password">
+            <Label alignment="CENTER_RIGHT" layoutX="120.0" layoutY="170.0" prefHeight="27.0" prefWidth="231.0" text="%confirmPassword">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -130,23 +129,23 @@
             <PasswordField fx:id="confirmNewPasswordField" layoutX="360.0" layoutY="166.0" prefHeight="32.0" prefWidth="399.0" style="-fx-background-radius: 3;" />
          </children>
       </AnchorPane>
-      <Button fx:id="changePasswordButton" layoutX="311.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="32.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Change Password">
+      <Button fx:id="changePasswordButton" layoutX="311.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="32.0" prefWidth="180.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%changePassword.button">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="donePasswordButton" layoutX="546.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleDonePassword" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Done" visible="false">
+      <Button fx:id="donePasswordButton" layoutX="546.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleDonePassword" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%submitChanges.button" visible="false">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff5000" height="9.0" layoutX="255.0" layoutY="67.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="402.0" />
-      <Label layoutX="256.0" layoutY="22.0" text="My Information">
+      <Label layoutX="256.0" layoutY="22.0" prefHeight="45.0" prefWidth="402.0" text="%information.label">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="errorMessage" layoutX="734.0" layoutY="345.0" prefHeight="27.0" prefWidth="461.0" textFill="RED">
+      <Label fx:id="errorMessage" layoutX="734.0" layoutY="345.0" prefHeight="27.0" prefWidth="609.0" textFill="RED">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

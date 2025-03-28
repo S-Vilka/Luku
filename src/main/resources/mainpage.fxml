@@ -24,14 +24,14 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="99.0" prefWidth="552.0">
+      <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="148.0" prefWidth="880.0">
          <children>
             <ImageView fx:id="lukulogo" fitHeight="65.0" fitWidth="153.0" layoutX="229.0" layoutY="35.0" onMouseClicked="#goToMainPage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Luku_Logo.png" />
                </image>
             </ImageView>
-            <Label fx:id="slogan" layoutX="462.0" layoutY="53.0" prefHeight="21.0" prefWidth="290.0" text=" Library for Students and Teachers">
+            <Label fx:id="slogan" layoutX="470.0" layoutY="53.0" prefHeight="21.0" prefWidth="406.0" text="%welcome">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -41,24 +41,24 @@
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="categoryButton" layoutX="230.0" layoutY="105.0" mnemonicParsing="false" onAction="#chooseCategory" prefHeight="43.0" prefWidth="103.0" style="-fx-background-color: #ffffff;" text="Category">
+            <Button fx:id="categoryButton" alignment="TOP_RIGHT" layoutX="194.0" layoutY="105.0" mnemonicParsing="false" onAction="#chooseCategory" prefHeight="43.0" prefWidth="139.0" style="-fx-background-color: #ffffff;" text="%category" textAlignment="CENTER">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="languageButton" layoutX="410.0" layoutY="105.0" mnemonicParsing="false" onAction="#chooseLanguage" prefHeight="43.0" prefWidth="115.0" style="-fx-background-color: #ffffff;" text="Language">
+            <Button fx:id="languageButton" alignment="TOP_RIGHT" layoutX="361.0" layoutY="105.0" mnemonicParsing="false" onAction="#chooseLanguage" prefHeight="43.0" prefWidth="155.0" style="-fx-background-color: #ffffff;" text="%language">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="authorButton" layoutX="590.0" layoutY="105.0" mnemonicParsing="false" onAction="#chooseAuthor" prefHeight="43.0" prefWidth="95.0" style="-fx-background-color: #ffffff;" text="Author">
+            <Button fx:id="authorButton" alignment="TOP_RIGHT" layoutX="551.0" layoutY="105.0" mnemonicParsing="false" onAction="#chooseAuthor" prefHeight="43.0" prefWidth="125.0" style="-fx-background-color: #ffffff;" text="%author">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
             <Circle fill="#f54f03" layoutX="341.0" layoutY="125.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-            <Circle fill="#f54f03" layoutX="532.0" layoutY="125.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-            <Circle fill="#f54f03" layoutX="690.0" layoutY="125.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Circle fill="#f54f03" layoutX="523.0" layoutY="125.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Circle fill="#f54f03" layoutX="681.0" layoutY="125.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="userProfileBox" layoutX="1304.0" layoutY="61.0">
@@ -92,29 +92,29 @@
       </AnchorPane>
       <AnchorPane fx:id="loginBox" layoutX="1319.0" layoutY="62.0" visible="false">
          <children>
-            <Button fx:id="loginButtonTop" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="Log In">
+            <Button fx:id="loginButtonTop" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3; -fx-border-radius: 10;" text="%login">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="1308.0" layoutY="127.0" prefHeight="45.0" prefWidth="155.0">
+      <AnchorPane layoutX="1264.0" layoutY="127.0" prefHeight="45.0" prefWidth="199.0">
          <children>
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#chooseSearch" prefHeight="43.0" prefWidth="129.0" style="-fx-background-color: #ffffff;" text="Search">
+            <Button fx:id="searchButton" alignment="TOP_RIGHT" layoutX="-1.0" layoutY="1.0" mnemonicParsing="false" onAction="#chooseSearch" prefHeight="43.0" prefWidth="160.0" style="-fx-background-color: #ffffff;" text="%search.Button">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Circle fill="#f54f03" layoutX="118.0" layoutY="19.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="13.0" layoutX="126.0" layoutY="26.0" rotate="-45.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+            <Circle fill="#f54f03" layoutX="173.0" layoutY="20.0" radius="13.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="13.0" layoutX="181.0" layoutY="27.0" rotate="-45.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="categoryList" layoutX="231.0" layoutY="191.0" prefHeight="157.0" prefWidth="148.0" visible="false">
          <children>
             <VBox prefHeight="177.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
                <children>
-                  <Button fx:id="fictionButton" mnemonicParsing="false" onAction="#chooseFiction" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Fiction">
+                  <Button fx:id="fictionButton" mnemonicParsing="false" onAction="#chooseFiction" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="%fiction.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -122,7 +122,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="nonFictionButton" mnemonicParsing="false" onAction="#chooseNonFiction" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Non-Fiction">
+                  <Button fx:id="nonFictionButton" mnemonicParsing="false" onAction="#chooseNonFiction" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="%nonFiction.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -130,7 +130,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="scienceButton" mnemonicParsing="false" onAction="#chooseScience" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Science">
+                  <Button fx:id="scienceButton" mnemonicParsing="false" onAction="#chooseScience" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="%science.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -138,7 +138,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="historyButton" mnemonicParsing="false" onAction="#chooseHistory" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="History">
+                  <Button fx:id="historyButton" mnemonicParsing="false" onAction="#chooseHistory" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="%history.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -150,11 +150,11 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="languageList" layoutX="420.0" layoutY="190.0" prefHeight="114.0" prefWidth="148.0" visible="false">
+      <AnchorPane fx:id="languageList" layoutX="415.0" layoutY="190.0" prefHeight="114.0" prefWidth="148.0" visible="false">
          <children>
             <VBox prefHeight="114.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
                <children>
-                  <Button fx:id="englishButton" mnemonicParsing="false" onAction="#chooseEnglish" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="English">
+                  <Button fx:id="englishButton" mnemonicParsing="false" onAction="#chooseEnglish" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="%english.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -162,7 +162,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="finnishButton" mnemonicParsing="false" onAction="#chooseFinnish" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Finnish">
+                  <Button fx:id="finnishButton" mnemonicParsing="false" onAction="#chooseFinnish" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="%finnish.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -170,7 +170,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="swedishButton" mnemonicParsing="false" onAction="#chooseSwedish" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Swedish">
+                  <Button fx:id="swedishButton" mnemonicParsing="false" onAction="#chooseSwedish" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="%swedish.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -185,8 +185,8 @@
       <AnchorPane fx:id="searchBox" layoutX="882.0" layoutY="205.0" visible="false">
          <children>
             <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="76.0" stroke="#979797" strokeType="INSIDE" strokeWidth="2.0" width="572.0" />
-            <TextField fx:id="searchBar1" layoutX="26.0" layoutY="21.0" prefHeight="32.0" prefWidth="347.0" promptText="Search" />
-            <Button fx:id="searchButton21" graphicTextGap="2.0" layoutX="399.0" layoutY="20.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3;" text="Search">
+            <TextField fx:id="searchBar1" layoutX="26.0" layoutY="21.0" prefHeight="32.0" prefWidth="347.0" promptText="%searchBar" />
+            <Button fx:id="searchButton21" graphicTextGap="2.0" layoutX="399.0" layoutY="20.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: #ffffff; -fx-border-color: #D3D3D3;" text="%searchBar">
                <font>
                   <Font name="System Bold Italic" size="15.0" />
                </font>
@@ -202,7 +202,7 @@
          <children>
             <VBox prefHeight="133.0" prefWidth="148.0" style="-fx-border-color: #d3d3d3; -fx-border-width: 2px; -fx-border-style: solid;">
                <children>
-                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="Profile">
+                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#chooseProfile" prefHeight="43.0" prefWidth="166.0" style="-fx-background-color: #ffffff;" text="%profile.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -210,7 +210,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="myBookingsButton" mnemonicParsing="false" onAction="#chooseBookings" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Bookings">
+                  <Button fx:id="myBookingsButton" mnemonicParsing="false" onAction="#chooseBookings" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="%myBookings.button">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -218,7 +218,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="Logout">
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" prefHeight="43.0" prefWidth="159.0" style="-fx-background-color: #ffffff;" text="%logout">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>

@@ -53,6 +53,7 @@ public class authorsPageController extends LibraryController {
             }
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/authorBox.fxml"));
+                loader.setResources(getResourceBundle());
                 AnchorPane authorBox = loader.load();
 
                 Label authorName = (Label) authorBox.lookup("#authorName");

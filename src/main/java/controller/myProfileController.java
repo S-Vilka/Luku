@@ -104,12 +104,12 @@ public class myProfileController extends LibraryController {
             if (user != null) {
                 String hashedOldPassword = getUserService().hashPassword(oldPassword);
                 if (!hashedOldPassword.equals(user.getPassword())) {
-                    errorMessage.setText("Old password is incorrect.");
+                    errorMessage.setText(getResourceBundle().getString("error.oldPasswordIncorrect"));
                     return;
                 }
 
                 if (!newPassword.equals(confirmNewPassword)) {
-                    errorMessage.setText("New passwords do not match.");
+                    errorMessage.setText(getResourceBundle().getString("error.newPasswordsDoNotMatch"));
                     return;
                 }
 
@@ -127,11 +127,11 @@ public class myProfileController extends LibraryController {
                 changePasswordButton.setVisible(true);
                 donePasswordButton.setVisible(false);
             } else {
-                errorMessage.setText("User not found.");
+                errorMessage.setText(getResourceBundle().getString("error.userNotFound"));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            errorMessage.setText("An error occurred while changing the password.");
+            errorMessage.setText(getResourceBundle().getString("error.passwordChangeError"));
         }
     }
 }

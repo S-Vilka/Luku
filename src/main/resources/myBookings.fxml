@@ -21,7 +21,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Label layoutX="247.0" layoutY="12.0" text="My Bookings">
+      <Label layoutX="247.0" layoutY="12.0" prefHeight="45.0" prefWidth="397.0" text="%myBookings.label">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -42,7 +42,7 @@
       </AnchorPane>
       <AnchorPane fx:id="noBooks" layoutX="656.0" layoutY="146.0" prefHeight="172.0" prefWidth="324.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="400.0" text="Oho! There is no book here.">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="400.0" text="%noBooks.alert">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>

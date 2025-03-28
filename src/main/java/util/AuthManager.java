@@ -25,4 +25,12 @@ public class AuthManager {
         return jwtToken != null;
     }
 
+    public boolean validateToken() {
+        String token = this.getInstance().getToken();
+        if (token == null) {
+            return false;
+        }
+        return JwtUtil.validateToken(token);
+    }
+
 }

@@ -26,6 +26,7 @@ public class View extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mainpage.fxml"));
         fxmlLoader.setController(controller);
+        fxmlLoader.setResources(controller.getResourceBundle());
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("Luku Library");
         primaryStage.setScene(new Scene(root));
