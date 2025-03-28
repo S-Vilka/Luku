@@ -174,7 +174,6 @@ public class LibraryController {
 
                 notiTime.setText(notification.getCreatedAt().toString());
                 notiMessage.setText(notification.getMessage(currentLanguage));
-
                 notiVBox.getChildren().add(notiPane);
             } catch (Exception e) {
                 e.printStackTrace();

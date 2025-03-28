@@ -3,6 +3,7 @@ package service;
 import model.dao.impl.BookDao;
 import model.entity.Author;
 import model.entity.Book;
+import model.entity.Reservation;
 
 import java.util.List;
 import java.util.Set;
@@ -62,4 +63,5 @@ public class BookService {
 
         return bookDao.searchBooks(searchTerm, currentLanguage);
     }
+
 }
