@@ -61,7 +61,9 @@ public class ReservationServiceTest {
                 stmt.execute("CREATE TABLE IF NOT EXISTS notifications (" +
                         "notification_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                         "user_id BIGINT NOT NULL, " +
-                        "message TEXT NOT NULL, " +
+                        "message_en TEXT, " +
+                        "message_ur TEXT, " +
+                        "message_ru TEXT, " +
                         "created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
                         "reservation_id BIGINT, " +
                         "FOREIGN KEY (user_id) REFERENCES users(user_id), " +
@@ -99,7 +101,7 @@ public class ReservationServiceTest {
 
     @Test
     public void testGetReservationById() {
-        Reservation reservation = reservationService.getReservationById(1L);
+        Reservation reservation = reservationService.getReservationById(1L, "English");
         assertNotNull(reservation);
         assertEquals(1L, reservation.getReservationId());
     }
@@ -107,7 +109,7 @@ public class ReservationServiceTest {
 
     @Test
     public void testGetAllReservations() {
-        List<Reservation> reservations = reservationService.getAllReservations();
+        List<Reservation> reservations = reservationService.getAllReservations("English");
         assertNotNull(reservations);
         assertFalse(reservations.isEmpty());
     }
@@ -118,20 +120,20 @@ public class ReservationServiceTest {
         LocalDateTime newDueDate = LocalDateTime.now().plusDays(7).withNano(0);
         reservationService.extendReservation(1L, newDueDate);
 
-        Reservation reservation = reservationService.getReservationById(1L);
+        Reservation reservation = reservationService.getReservationById(1L, "English");
         assertEquals(newDueDate, reservation.getDueDate().withNano(0));
     }
 
     @Test
     public void testGetReservationsByUserId() {
-        List<Reservation> reservations = reservationService.getReservationsByUserId(1L);
+        List<Reservation> reservations = reservationService.getReservationsByUserId(1L, "English");
         assertNotNull(reservations);
         assertFalse(reservations.isEmpty());
     }
 
     @Test
     public void testGetReservationByUserAndBook() {
-        Reservation reservation = reservationService.getReservationByUserAndBook(1L, 1L);
+        Reservation reservation = reservationService.getReservationByUserAndBook(1L, 1L, "English");
         assertNotNull(reservation);
         assertEquals(1L, reservation.getUser().getUserId());
         assertEquals(1L, reservation.getBook().getBookId());
@@ -139,11 +141,11 @@ public class ReservationServiceTest {
 
     @Test
     public void testUpdateReservation() {
-        Reservation reservation = reservationService.getReservationById(1L);
+        Reservation reservation = reservationService.getReservationById(1L, "English");
         reservation.setDueDate(LocalDateTime.now().plusDays(7).withNano(0));
         reservationService.updateReservation(reservation);
 
-        Reservation updatedReservation = reservationService.getReservationById(1L);
+        Reservation updatedReservation = reservationService.getReservationById(1L, "English");
         assertEquals(reservation.getDueDate().withNano(0), updatedReservation.getDueDate().withNano(0));
     }
 
@@ -168,7 +170,7 @@ public class ReservationServiceTest {
         reservationService.deleteReservation(reservation.getReservationId());
 
         // Verify the reservation has been deleted
-        Reservation deletedReservation = reservationService.getReservationById(reservation.getReservationId());
+        Reservation deletedReservation = reservationService.getReservationById(reservation.getReservationId(), "English");
         assertNull(deletedReservation);
     }
 

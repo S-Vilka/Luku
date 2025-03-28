@@ -63,7 +63,7 @@ public class BookDaoTest {
         assertNotNull(book);
 
         assertEquals(1L, book.getBookId());
-        assertEquals("Title", book.getTitle());
+        assertEquals("Title", book.getTitle("English"));
         assertEquals("Language", book.getLanguage());
         assertEquals("category", book.getCategory());
         assertEquals("Available", book.getAvailabilityStatus());
@@ -138,11 +138,12 @@ public class BookDaoTest {
         mockAuthors.add(author);
         BookDao bookDaoSpy = spy(bookDao);
         doReturn(mockAuthors).when(bookDaoSpy).getAuthorsByBookId(1L);
+        String currentLanguage = "English";
 
-            List<Book> books = bookDaoSpy.getBooksByTitle("Title");
+            List<Book> books = bookDaoSpy.getBooksByTitle("Title", currentLanguage);
             assertNotNull(books);
             assertEquals(1, books.size());
-            assertEquals("Title", books.getFirst().getTitle());
+            assertEquals("Title", books.getFirst().getTitle(currentLanguage));
 
     }
 
@@ -244,11 +245,12 @@ public class BookDaoTest {
         mockAuthors.add(author);
         BookDao bookDaoSpy = spy(bookDao);
         doReturn(mockAuthors).when(bookDaoSpy).getAuthorsByBookId(1L);
+        String currentLanguage = "English";
 
-        List<Book> books = bookDaoSpy.searchBooks("Title");
+        List<Book> books = bookDaoSpy.searchBooks("Title", currentLanguage);
         assertNotNull(books);
         assertEquals(1, books.size());
-        assertEquals("Title", books.getFirst().getTitle());
+        assertEquals("Title", books.getFirst().getTitle(currentLanguage));
     }
 
     @Test
@@ -300,7 +302,7 @@ public class BookDaoTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockPreparedStatement.executeQuery()).thenThrow(new SQLException("Test SQL Exception"));
 
-        bookDao.getBooksByTitle("title");
+        bookDao.getBooksByTitle("title", "English");
 
         verify(mockConnection).prepareStatement(anyString());
         verify(mockPreparedStatement).executeQuery();

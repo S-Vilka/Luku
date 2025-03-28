@@ -25,8 +25,8 @@ public class NotificationService {
         notificationDao.saveNotification(notification);
     }
 
-    public void createNotificationForReservation(Long reservation) {
-         notificationDao.createNotificationForReservation(reservation);
+    public void createNotificationForReservation(Long reservation, String currentLanguage) {
+         notificationDao.createNotificationForReservation(reservation, currentLanguage);
 
 
     }
@@ -39,18 +39,24 @@ public class NotificationService {
         notificationDao.deleteNotification(reservation);
     }
 
-    public void updateNotification(Long reservationId) {
+    public void updateNotification(Long reservationId, String currentLanguage) {
 
-        notificationDao.updateNotification(reservationId);
+        notificationDao.updateNotification(reservationId, currentLanguage);
     }
 
-    public void createReminderNotification(Reservation reservation) {
+    public void createReminderNotification(Reservation reservation, String currentLanguage) {
         User user = reservation.getUser();
         Book book = reservation.getBook();
-        String message = "Reminder: Dear " + user.getUsername() + ", the book '" + book.getTitle() + "' is due tomorrow. Please return it on time.";
+
+        String messageEn = "Reminder: Dear " + user.getUsername() + ", the book '" + book.getTitle(currentLanguage) + "' is due tomorrow. Please return it on time.";
+        String messageUr = "یاد دہانی: محترم " + user.getUsername() + ", کتاب '" + book.getTitle(currentLanguage) + "' کل واپس کرنی ہے۔ براہ کرم وقت پر واپس کریں۔";
+        String messageRu = "Напоминание: Уважаемый " + user.getUsername() + ", книга '" + book.getTitle(currentLanguage) + "' должна быть возвращена завтра. Пожалуйста, верните её вовремя.";
+
         Notification notification = new Notification();
         notification.setUser(user);
-        notification.setMessage(message);
+        notification.setMessageEnglish(messageEn);
+        notification.setMessageUrdu(messageUr);
+        notification.setMessageRussian(messageRu);
         notification.setCreatedAt(java.time.LocalDateTime.now());
         notification.setReservation(reservation);
         saveNotification(notification);

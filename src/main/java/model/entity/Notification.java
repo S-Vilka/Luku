@@ -1,6 +1,7 @@
 package model.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +21,10 @@ public class Notification {
     private Reservation reservation;
 
 
-    private String message;
+    private String message_en;
+    private String message_ur;
+    private String message_ru;
+
     private LocalDateTime createdAt;
 
     // Getters and Setters
@@ -40,12 +44,42 @@ public class Notification {
         this.user = user;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMessageEnglish() {
+        return message_en;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessageEnglish(String message) {
+        this.message_en = message;
+    }
+
+
+    public String getMessageUrdu() {
+        return message_ur;
+    }
+
+    public void setMessageUrdu(String message) {
+        this.message_ur = message;
+    }
+
+    public String getMessageRussian() {
+        return message_ru;
+    }
+
+    public void setMessageRussian(String message) {
+        this.message_ru = message;
+    }
+
+    // New method to get message based on current language
+    public String getMessage(String currentLanguage) {
+        switch (currentLanguage) {
+            case "Русский":
+                return getMessageRussian();
+            case "اردو":
+                return getMessageUrdu();
+            case "English":
+            default:
+                return getMessageEnglish();
+        }
     }
 
     public LocalDateTime getCreatedAt() {

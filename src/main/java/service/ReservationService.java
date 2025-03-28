@@ -13,13 +13,13 @@ public class ReservationService {
         reservationDao = new ReservationDao();
     }
 
-    public Reservation getReservationById(Long reservationId) {
-        return reservationDao.getReservationById(reservationId);
+    public Reservation getReservationById(Long reservationId, String currentLanguage) {
+        return reservationDao.getReservationById(reservationId, currentLanguage);
     }
 
-    public List<Reservation> getAllReservations() {
+    public List<Reservation> getAllReservations(String currentLanguage) {
 
-        return reservationDao.getAllReservations();
+        return reservationDao.getAllReservations(currentLanguage);
     }
 
     public void extendReservation(Long reservationId, LocalDateTime newDueDate) {
@@ -31,8 +31,8 @@ public class ReservationService {
         reservationDao.updateReservation(reservation);
     }
 
-    public List<Reservation> getReservationsByUserId(Long userId) {
-        return reservationDao.getReservationsByUserId(userId);
+    public List<Reservation> getReservationsByUserId(Long userId, String currentLanguage) {
+        return reservationDao.getReservationsByUserId(userId, currentLanguage);
     }
 
 
@@ -40,16 +40,16 @@ public class ReservationService {
          reservationDao.saveReservation(reservation);
     }
 
-    public Reservation getReservationByUserAndBook(Long userId, Long bookId) {
-        return reservationDao.getReservationByUserAndBook(userId, bookId);
+    public Reservation getReservationByUserAndBook(Long userId, Long bookId, String currentLanguage) {
+        return reservationDao.getReservationByUserAndBook(userId, bookId, currentLanguage);
     }
 
     public void deleteReservation(Long reservationId) {
         reservationDao.deleteReservation(reservationId);
     }
 
-    public List<Reservation> getReservationsDueSoon(Long userId) {
-        return reservationDao.getReservationsDueSoon(userId);
+    public List<Reservation> getReservationsDueSoon(Long userId, String currentLanguage) {
+        return reservationDao.getReservationsDueSoon(userId, currentLanguage);
     }
 
 

@@ -18,7 +18,12 @@ public class SampleDataInserter {
 
             // Drop existing tables
             try (Statement stmt = connection.createStatement()) {
+
+
+                // Drop
                 stmt.execute("DROP TABLE IF EXISTS notifications, reservations, writes, books, authors, users");
+
+
             }
 
             // Create the users table
@@ -90,7 +95,9 @@ public class SampleDataInserter {
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
                         "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                        "title VARCHAR(255) NOT NULL, " +
+                        "title_en VARCHAR(255) NOT NULL, " +
+                        "title_ur VARCHAR(255) NOT NULL, " +
+                        "title_ru VARCHAR(255) NOT NULL, " +
                         "publication_date DATE, " +
                         "description TEXT, " +
                         "availability_status VARCHAR(50), " +
@@ -104,15 +111,15 @@ public class SampleDataInserter {
 
             // Insert sample books
             try (Statement stmt = connection.createStatement()) {
-                stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location, cover_image) VALUES " +
-                        "('Book One', '2021-01-01', 'Description of Book One', 'Available', 'Fiction', 'English', '111-1111111111', 'Shelf A1', 'bookpicture.jpg'), " +
-                        "('Book Two', '2022-02-02', 'Description of Book Two', 'Checked Out', 'Non-Fiction', 'English', '222-2222222', 'Shelf B2', 'book_two.jpg'), " +
-                        "('Science Book', '2020-03-03', 'Description of Science Book', 'Available', 'Fiction', 'Finnish', '333-3333333', 'Shelf C3', 'science.png'), " +
-                        "('History Book', '2019-04-04', 'Description of History Book', 'Available', 'Fiction', 'Swedish', '444-4444444', 'Shelf D4', 'history.jpg'), " +
-                        "('Fictional Tales', '2018-05-05', 'Description of Fictional Tales', 'Available', 'Fiction', 'English', '555-5555555', 'Shelf E5', 'fictional.jpg'), " +
-                        "('Non-Fictional Stories', '2017-06-06', 'Description of Non-Fictional Stories', 'Available', 'Non-Fiction', 'Swedish', '666-6666666', 'Shelf F6', 'non_fictional.webp'), " +
-                        "('Advanced Science', '2016-07-07', 'Description of Advanced Science', 'Available', 'Science', 'Finnish', '777-7777777', 'Shelf G7', 'advanced_science.jpg'), " +
-                        "('World History', '2015-08-08', 'Description of World History', 'Available', 'History', 'English', '888-8888888', 'Shelf H8', 'world_history.png')");
+                stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, publication_date, description, availability_status, category, language, isbn, location, cover_image) VALUES " +
+                        "('Book One', 'کتاب ایک', 'Книга Один', '2021-01-01', 'Description of Book One', 'Available', 'Fiction', 'English', '111-1111111111', 'Shelf A1', 'bookpicture.jpg'), " +
+                        "('Book Two', 'کتاب دو', 'Книга Два', '2022-02-02', 'Description of Book Two', 'Checked Out', 'Non-Fiction', 'English', '222-2222222', 'Shelf B2', 'book_two.jpg'), " +
+                        "('Science Book', 'سائنس کی کتاب', 'Научная книга', '2020-03-03', 'Description of Science Book', 'Available', 'Fiction', 'Finnish', '333-3333333', 'Shelf C3', 'science.png'), " +
+                        "('History Book', 'تاریخ کی کتاب', 'Историческая книга', '2019-04-04', 'Description of History Book', 'Available', 'Fiction', 'Swedish', '444-4444444', 'Shelf D4', 'history.jpg'), " +
+                        "('Fictional Tales', 'افسانوی کہانیاں', 'Вымышленные рассказы', '2018-05-05', 'Description of Fictional Tales', 'Available', 'Fiction', 'English', '555-5555555', 'Shelf E5', 'fictional.jpg'), " +
+                        "('Non-Fictional Stories', 'غیر افسانوی کہانیاں', 'Документальные истории', '2017-06-06', 'Description of Non-Fictional Stories', 'Available', 'Non-Fiction', 'Swedish', '666-6666666', 'Shelf F6', 'non_fictional.webp'), " +
+                        "('Advanced Science', 'اعلی سائنس', 'Продвинутая наука', '2016-07-07', 'Description of Advanced Science', 'Available', 'Science', 'Finnish', '777-7777777', 'Shelf G7', 'advanced_science.jpg'), " +
+                        "('World History', 'عالمی تاریخ', 'Всемирная история', '2015-08-08', 'Description of World History', 'Available', 'History', 'English', '888-8888888', 'Shelf H8', 'world_history.png')");
             }
 
             System.out.println("✅ Sample books inserted successfully!");
@@ -164,7 +171,9 @@ public class SampleDataInserter {
                 stmt.execute("CREATE TABLE IF NOT EXISTS notifications (" +
                         "notification_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                         "user_id BIGINT NOT NULL, " +
-                        "message TEXT, " +
+                        "message_en TEXT, " +
+                        "message_ur TEXT, " +
+                        "message_ru TEXT, " +
                         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                         "reservation_id BIGINT NOT NULL, " +
                         "FOREIGN KEY (user_id) REFERENCES users(user_id), " +

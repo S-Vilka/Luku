@@ -96,7 +96,7 @@ public class AuthorDao extends BaseDao {
         return author;
     }
 
-    public List<Book> getBooksByAuthorName(String authorFirstName, String authorLastName) {
+    public List<Book> getBooksByAuthorName(String authorFirstName, String authorLastName, String currentLanguage) {
         List<Book> books = new ArrayList<>();
         String query = "SELECT b.* FROM books b " +
                 "JOIN writes w ON b.book_id = w.book_id " +
@@ -107,7 +107,7 @@ public class AuthorDao extends BaseDao {
             stmt.setString(2, "%" + authorLastName + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                books.add(mapRowToBook(rs));
+                books.add(mapRowToBook(rs, currentLanguage));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,10 +115,13 @@ public class AuthorDao extends BaseDao {
         return books;
     }
 
-    private Book mapRowToBook(ResultSet rs) throws SQLException {
+    private Book mapRowToBook(ResultSet rs, String currentLanguage) throws SQLException {
         Book book = new Book();
         book.setBookId(rs.getLong("book_id"));
-        book.setTitle(rs.getString("title"));
+        book.setTitleEn(rs.getString("title_en"));
+        book.setTitleUr(rs.getString("title_ur"));
+        book.setTitleRu(rs.getString("title_ru"));
+        book.setTitle(book.getTitle(currentLanguage), currentLanguage);
         book.setCategory(rs.getString("category"));
         book.setPublicationDate(rs.getDate("publication_date") != null ? rs.getDate("publication_date").toLocalDate() : null);
         book.setDescription(rs.getString("description"));

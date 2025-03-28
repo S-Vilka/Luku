@@ -24,7 +24,7 @@ public class myBookingController extends LibraryController {
     @FXML private javafx.scene.control.ScrollPane bookScrollPane;
     @FXML private AnchorPane scrollBox, noBooks;
 
-    public void setBooksForUser(Long userId) {
+    public void setBooksForUser(Long userId, String currentLanguage) {
         bookVBox.getChildren().clear();
         bookVBox.setSpacing(40);
 
@@ -65,7 +65,7 @@ public class myBookingController extends LibraryController {
 
                 Book book = books.get(i);
                 Reservation reservation = reservations.get(i);
-                bookName.setText(book.getTitle());
+                bookName.setText(book.getTitle(getCurrentLanguage()));
 
                 // Fetch and concatenate author names
                 Set<Author> authorSet = getBookService().getAuthorsByBookId(book.getBookId());
@@ -98,13 +98,13 @@ public class myBookingController extends LibraryController {
                         Reservation res = getReservationByUserAndBook(userId, bookIdNo);
                         if (res != null) {
                             extendReservation(reservation.getReservationId());
-                            getNotificationService().updateNotification(res.getReservationId());
+                            getNotificationService().updateNotification(res.getReservationId(), getCurrentLanguage());
 //                            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
 //                            Parent root = loader2.load();
                             FXMLLoader loader2 = loadScene("/myBookings.fxml");
                             loader2.setResources(getResourceBundle());
                             myBookingController controller = loader2.getController();
-                            controller.setBooksForUser(userId);
+                            controller.setBooksForUser(userId, currentLanguage);
 //                            getPrimaryStage().setScene(new Scene(root));
 //                            getPrimaryStage().show();
 //                            AnchorPane bodyBox = (AnchorPane) getPrimaryStage().getScene().lookup("#bodyBox");
@@ -124,7 +124,7 @@ public class myBookingController extends LibraryController {
                             getUserService().decreaseUserBookCount(userId);
                             getNotificationService().deleteNotificationByReservationId(reservation.getReservationId());
                             getReservationService().deleteReservation(reservation.getReservationId());
-                            setBooksForUser(userId);
+                            setBooksForUser(userId, currentLanguage);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

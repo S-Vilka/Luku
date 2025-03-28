@@ -103,7 +103,7 @@ public class languagePageController extends LibraryController {
 
 
                 Book book = books.get(i);
-                bookName.setText(book.getTitle());
+                bookName.setText(book.getTitle(getCurrentLanguage()));
 
                 // Fetch authors for the book
                 Set<Author> authorSet = getBookService().getAuthorsByBookId(book.getBookId());
