@@ -72,7 +72,9 @@ public class BookDao extends BaseDao {
     private Book mapRowToBook(ResultSet rs) throws SQLException {
         Book book = new Book();
         book.setBookId(rs.getLong("book_id"));
-        book.setTitle(rs.getString("title"));
+        book.setTitleEn(rs.getString("title_en"));
+        book.setTitleUr(rs.getString("title_ur"));
+        book.setTitleRu(rs.getString("title_ru"));
         book.setPublicationDate(rs.getDate("publication_date").toLocalDate());
         book.setDescription(rs.getString("description"));
         book.setAvailabilityStatus(rs.getString("availability_status"));
@@ -108,9 +110,23 @@ public Set<Author> getAuthorsByBookId(Long bookId) {
     return authors;
 }
 
-    public List<Book> getBooksByTitle(String title) {
+    public List<Book> getBooksByTitle(String title, String currentLanguage) {
         List<Book> books = new ArrayList<>();
-        String query = "SELECT * FROM books WHERE title LIKE ?";
+        String query = "SELECT * FROM books WHERE ";
+
+        switch (currentLanguage) {
+            case "Русский":
+                query += "title_ru LIKE ?";
+                break;
+            case "اردو":
+                query += "title_ur LIKE ?";
+                break;
+            case "English":
+            default:
+                query += "title_en LIKE ?";
+                break;
+        }
+
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, "%" + title + "%");
             ResultSet rs = stmt.executeQuery();
@@ -164,12 +180,33 @@ public Set<Author> getAuthorsByBookId(Long bookId) {
         }
     }
 
-    public List<Book> searchBooks(String keyword) {
+    public List<Book> searchBooks(String keyword, String currentLanguage) {
         List<Book> books = new ArrayList<>();
-        String query = "SELECT * FROM books WHERE title LIKE ? OR description LIKE ?";
+        String query = "SELECT * FROM books WHERE ";
+
+        switch (currentLanguage) {
+            case "Русский":
+                query += "title_ru LIKE ? OR description LIKE ?";
+                break;
+            case "اردو":
+                query += "title_ur LIKE ? OR description LIKE ?";
+                break;
+            case "English":
+            default:
+                query += "title_en LIKE ? OR description LIKE ?";
+                break;
+        }
+
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, "%" + keyword + "%");
-            stmt.setString(2, "%" + keyword + "%");
+//            stmt.setString(1, "%" + keyword + "%");
+//            stmt.setString(2, "%" + keyword + "%");
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                books.add(mapRowToBook(rs));
+//            }
+            String searchKeyword = "%" + keyword + "%";
+            stmt.setString(1, searchKeyword);
+            stmt.setString(2, searchKeyword);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 books.add(mapRowToBook(rs));

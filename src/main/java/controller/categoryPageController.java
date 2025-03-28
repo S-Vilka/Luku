@@ -30,6 +30,10 @@ public class categoryPageController extends LibraryController {
         categoryTag.setText(category);
     }
 
+    public String getCategoryTag() {
+        return categoryTag.getText();
+    }
+
     public void setAllBooks(List<Book> allBooks) {
         this.allBooks = allBooks;
     }
@@ -101,7 +105,7 @@ public class categoryPageController extends LibraryController {
                 ImageView bookCover = (ImageView) bookBox.lookup("#bookCover"); // Load book cover
 
                 Book book = books.get(i);
-                bookName.setText(book.getTitle());
+                bookName.setText(book.getTitle(getCurrentLanguage()));
 
                 // Fetch authors for the book
                 Set<Author> authorSet = getBookService().getAuthorsByBookId(book.getBookId());

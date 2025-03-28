@@ -91,7 +91,7 @@ public class WritesServiceTest {
         assertEquals("AuthorDescription", writes.getAuthor().getDescription());
         assertEquals("1970-01-01", writes.getAuthor().getDateOfBirth().toString());
         assertEquals("AuthorPlaceOfBirth", writes.getAuthor().getPlaceOfBirth());
-        assertEquals("BookTitle", writes.getBook().getTitle());
+        assertEquals("BookTitle", writes.getBook().getTitle("English"));
         assertEquals("2000-01-01", writes.getBook().getPublicationDate().toString());
         assertEquals("BookDescription", writes.getBook().getDescription());
         assertEquals("Available", writes.getBook().getAvailabilityStatus());
@@ -113,7 +113,7 @@ public class WritesServiceTest {
         assertEquals("AuthorDescription", writes.getAuthor().getDescription());
         assertEquals("1970-01-01", writes.getAuthor().getDateOfBirth().toString());
         assertEquals("AuthorPlaceOfBirth", writes.getAuthor().getPlaceOfBirth());
-        assertEquals("BookTitle", writes.getBook().getTitle());
+        assertEquals("BookTitle", writes.getBook().getTitle("English"));
         assertEquals("2000-01-01", writes.getBook().getPublicationDate().toString());
         assertEquals("BookDescription", writes.getBook().getDescription());
         assertEquals("Available", writes.getBook().getAvailabilityStatus());
@@ -135,7 +135,7 @@ public class WritesServiceTest {
         assertEquals("AuthorDescription", writes.getAuthor().getDescription());
         assertEquals("1970-01-01", writes.getAuthor().getDateOfBirth().toString());
         assertEquals("AuthorPlaceOfBirth", writes.getAuthor().getPlaceOfBirth());
-        assertEquals("BookTitle", writes.getBook().getTitle());
+        assertEquals("BookTitle", writes.getBook().getTitle("English"));
         assertEquals("2000-01-01", writes.getBook().getPublicationDate().toString());
         assertEquals("BookDescription", writes.getBook().getDescription());
         assertEquals("Available", writes.getBook().getAvailabilityStatus());

@@ -34,7 +34,7 @@ public class AuthorService {
         authorDao.deleteAuthor(authorId);
     }
 
-    public List<Book> getBooksByAuthor(String authorFirstName, String authorLastName) {
-        return authorDao.getBooksByAuthorName(authorFirstName,authorLastName );
+    public List<Book> getBooksByAuthor(String authorFirstName, String authorLastName, String currentLanguage) {
+        return authorDao.getBooksByAuthorName(authorFirstName,authorLastName, currentLanguage);
     }
 }

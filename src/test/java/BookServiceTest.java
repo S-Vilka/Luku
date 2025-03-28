@@ -58,7 +58,9 @@ public class BookServiceTest {
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
                         "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                        "title VARCHAR(255) NOT NULL, " +
+                        "title_en VARCHAR(255) NOT NULL, " +
+                        "title_ur VARCHAR(255) NOT NULL, " +
+                        "title_ru VARCHAR(255) NOT NULL, " +
                         "publication_date DATE, " +
                         "description TEXT, " +
                         "availability_status VARCHAR(50), " +
@@ -89,8 +91,8 @@ public class BookServiceTest {
 
             // Insert a sample book
             try (Statement stmt = connection.createStatement()) {
-                stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location, cover_image) VALUES " +
-                        "('Sample Book', '2023-01-01', 'Sample Description', 'Available', 'Fiction', 'English', '1234567890', 'A1', 'path/to/sample_book.jpg')");
+                stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, publication_date, description, availability_status, category, language, isbn, location, cover_image) VALUES " +
+                        "('Sample Book', 'Urdu', 'Russian','2023-01-01', 'Sample Description', 'Available', 'Fiction', 'English', '1234567890', 'A1', 'path/to/sample_book.jpg')");
             }
 
             // Insert a writes table
@@ -108,7 +110,7 @@ public class BookServiceTest {
     public void testGetBookById() {
         Book book = bookService.getBookById(1L);
         assertNotNull(book);
-        assertEquals("Sample Book", book.getTitle());
+        assertEquals("Sample Book", book.getTitle("English"));
     }
 
     @Test
@@ -133,7 +135,7 @@ public class BookServiceTest {
 
     @Test
     public void testGetBooksByTitle() {
-        List<Book> books = bookService.getBooksByTitle("Sample");
+        List<Book> books = bookService.getBooksByTitle("Sample", "English");
         assertNotNull(books);
         assertEquals(1, books.size());
     }
@@ -174,7 +176,7 @@ public class BookServiceTest {
 
     @Test
     public void testSearchBooks() {
-        List<Book> books = bookService.searchBooks("Sample");
+        List<Book> books = bookService.searchBooks("Sample", "English");
         assertNotNull(books);
         assertEquals(1, books.size());
     }

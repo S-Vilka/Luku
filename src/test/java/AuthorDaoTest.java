@@ -133,12 +133,12 @@ public class AuthorDaoTest {
         when(mockResultSet.getString("isbn")).thenReturn("978-0134685991", "978-0132350884");
         when(mockResultSet.getString("location")).thenReturn("Aisle 3", "Aisle 4");
 
-        List<Book> books = authorDao.getBooksByAuthorName("John", "Doe");
+        List<Book> books = authorDao.getBooksByAuthorName("John", "Doe", "English");
 
         assertNotNull(books);
         assertEquals(2, books.size());
-        assertEquals("Effective Java", books.get(0).getTitle());
-        assertEquals("Clean Code", books.get(1).getTitle());
+        assertEquals("Effective Java", books.get(0).getTitle("English"));
+        assertEquals("Clean Code", books.get(1).getTitle("English"));
     }
 
 
@@ -206,7 +206,7 @@ public class AuthorDaoTest {
     public void testGetBooksByAuthorNameSQLException() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenThrow(new SQLException("Database error"));
 
-        List<Book> books = authorDao.getBooksByAuthorName("John", "Doe");
+        List<Book> books = authorDao.getBooksByAuthorName("John", "Doe", "English");
 
         assertTrue(books.isEmpty());
     }

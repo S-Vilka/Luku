@@ -45,7 +45,9 @@ public class NotificationDaoTest {
         user.setUserId(1L); // Set the userId
         notification.setUser(user);
 
-        notification.setMessage("Test message");
+        notification.setMessageEnglish("Test message in English");
+        notification.setMessageUrdu("ٹیسٹ پیغام اردو میں");
+        notification.setMessageRussian("Тестовое сообщение на русском");
         notification.setCreatedAt(LocalDateTime.now());
 
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
@@ -54,7 +56,7 @@ public class NotificationDaoTest {
 
         verify(mockConnection).prepareStatement(anyString());
         verify(mockPreparedStatement).setLong(1, notification.getUser().getUserId());
-        verify(mockPreparedStatement).setString(2, notification.getMessage());
+        verify(mockPreparedStatement).setString(2, notification.getMessageEnglish());
         verify(mockPreparedStatement).setTimestamp(3, java.sql.Timestamp.valueOf(notification.getCreatedAt()));
         verify(mockPreparedStatement).setLong(4, notification.getReservationId());
         verify(mockPreparedStatement).executeUpdate();
@@ -106,10 +108,10 @@ public class NotificationDaoTest {
         user.setUserId(1L);
         reservation.setUser(user);
         Book book = new Book();
-        book.setTitle("title");
+        book.setTitleEn("title_en");
         reservation.setBook(book);
         reservation.setDueDate(LocalDateTime.now().plusDays(7));
-        when(mockReservationDao.getReservationById(1L)).thenReturn(reservation);
+        when(mockReservationDao.getReservationById(1L, "English")).thenReturn(reservation);
 
         // Use reflection to set the reservationDao field in NotificationDao
         Field reservationDaoField = NotificationDao.class.getDeclaredField("reservationDao");
@@ -119,9 +121,9 @@ public class NotificationDaoTest {
         // Mock the PreparedStatement
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
 
-        notificationDao.createNotificationForReservation(1L);
+        notificationDao.createNotificationForReservation(1L, "English");
 
-        verify(mockReservationDao).getReservationById(1L);
+        verify(mockReservationDao).getReservationById(1L, "English");
         verify(mockConnection).prepareStatement(anyString());
         verify(mockPreparedStatement).setLong(eq(1), eq(user.getUserId()));
         verify(mockPreparedStatement).setString(eq(2), eq("Dear username, you have borrowed the book 'title'. Please return it by " + reservation.getDueDate() + "."));
@@ -150,11 +152,11 @@ public class NotificationDaoTest {
         user.setUserId(1L);
         reservation.setUser(user);
         Book book = new Book();
-        book.setTitle("title");
+        book.setTitleEn("title");
         reservation.setBook(book);
         reservation.setDueDate(LocalDateTime.now().plusDays(7));
         reservation.setBorrowDate(LocalDateTime.now().minusDays(3));
-        when(mockReservationDao.getReservationById(1L)).thenReturn(reservation);
+        when(mockReservationDao.getReservationById(1L, "English")).thenReturn(reservation);
 
         // Use reflection to set the reservationDao field in NotificationDao
         Field reservationDaoField = NotificationDao.class.getDeclaredField("reservationDao");
@@ -172,7 +174,7 @@ public class NotificationDaoTest {
         when(mockResultSet.getTimestamp("due_date")).thenReturn(Timestamp.valueOf(reservation.getDueDate()));
         when(mockResultSet.getTimestamp("borrow_date")).thenReturn(Timestamp.valueOf(reservation.getBorrowDate()));
 
-        notificationDao.updateNotification(1L);
+        notificationDao.updateNotification(1L, "English");
 
         verify(mockConnection, times(2)).prepareStatement(anyString());
         verify(mockPreparedStatement).setString(eq(1), eq("Reservation extended. Dear username, you have borrowed the book 'title'. Please return it by " + reservation.getDueDate() + "."));
@@ -204,11 +206,11 @@ public class NotificationDaoTest {
         user.setUsername("username");
         reservation.setUser(user);
         Book book = new Book();
-        book.setTitle("title");
+        book.setTitleEn("title");
         reservation.setBook(book);
         reservation.setDueDate(LocalDateTime.now().plusDays(7));
         reservation.setBorrowDate(LocalDateTime.now().minusDays(3));
-        when(mockReservationDao.getReservationById(1L)).thenReturn(reservation);
+        when(mockReservationDao.getReservationById(1L, "English")).thenReturn(reservation);
 
         // Use reflection to set the reservationDao field in NotificationDao
         Field reservationDaoField = NotificationDao.class.getDeclaredField("reservationDao");
@@ -230,7 +232,7 @@ public class NotificationDaoTest {
         when(mockPreparedStatement.executeUpdate()).thenThrow(new SQLException("Test SQL Exception"));
 
         // Call the method under test
-        notificationDao.updateNotification(1L);
+        notificationDao.updateNotification(1L, "English");
 
         // Verify interactions
         verify(mockConnection, times(2)).prepareStatement(anyString());

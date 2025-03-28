@@ -49,6 +49,7 @@ public class LibraryController {
     private static Author currentAuthor = null;
     private static String currentSearchTerm = null;
 
+
     @FXML private TextField email, usernameField, emailField, teacherID, searchBar1;
     @FXML private PasswordField password, passwordField, repeatPassword;
     @FXML private Button searchButton21, logoutButton, myBookingsButton, enterBurron, loginButtonTop, categoryButton, languageButton, authorButton, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton, extendButton, returnButton, appLanguage, languageEnglish, languageRussian, languageUrdu, profileButton;
@@ -172,7 +173,7 @@ public class LibraryController {
                 Label notiMessage = (Label) notiPane.lookup("#notiMessage");
 
                 notiTime.setText(notification.getCreatedAt().toString());
-                notiMessage.setText(notification.getMessage());
+                notiMessage.setText(notification.getMessage(currentLanguage));
 
                 notiVBox.getChildren().add(notiPane);
             } catch (Exception e) {
@@ -206,9 +207,9 @@ public class LibraryController {
         try {
             User user = userService.getUserByEmail(savedEmail);
             Long userId = user.getUserId();
-            List<Reservation> reservations = reservationService.getReservationsDueSoon(userId);
+            List<Reservation> reservations = reservationService.getReservationsDueSoon(userId, currentLanguage);
             for (Reservation reservation : reservations) {
-                notificationService.createReminderNotification(reservation);
+                notificationService.createReminderNotification(reservation, currentLanguage);
             }
             if (!reservations.isEmpty()) {
                 setNotiCircleStatus(true);
@@ -292,7 +293,7 @@ public class LibraryController {
         reservation.setBookId(bookId);
 
         reservationService.createReservation(reservation);
-        notificationService.createNotificationForReservation(reservation.getReservationId());
+        notificationService.createNotificationForReservation(reservation.getReservationId(), currentLanguage);
 //        notiCircle.setVisible(true);
         Circle notiCircle = (Circle) primaryStage.getScene().lookup("#notiCircle");
         if (notiCircle != null) {
@@ -307,7 +308,7 @@ public class LibraryController {
     }
 
     public void extendReservation(Long reservationId) {
-        Reservation reservation = reservationService.getReservationById(reservationId);
+        Reservation reservation = reservationService.getReservationById(reservationId, currentLanguage);
         if (reservation != null) {
             LocalDateTime newDueDate = reservation.getDueDate().plusDays(7);
             reservation.setDueDate(newDueDate);
@@ -330,6 +331,7 @@ public class LibraryController {
         return loader;
     }
 
+
     @FXML
     private void goToMainPage() throws Exception {
         loadScene("/mainpage2.fxml");
@@ -346,6 +348,7 @@ public class LibraryController {
     public void chooseCategory(String category) throws Exception {
         // Fetch books without requiring authentication
         List<Book> books = bookService.getBooksByCategory(category);
+        System.out.println("Books fetched for category: " + category + " - " + books.size() + " books found.");
 
         FXMLLoader loader = loadScene("/category.fxml");
         categoryPageController controller = loader.getController();
@@ -374,6 +377,7 @@ public class LibraryController {
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books); // Ensure books are passed to UI
+        System.out.println("Books set in categoryPageController: " + books.size() + " books.");
     }
 
     private void chooseLanguage(String language) throws Exception {
@@ -522,7 +526,7 @@ public class LibraryController {
     }
 
     private void goToSearchPage(String searchTerm) throws Exception {
-        List<Book> books = bookService.searchBooks(searchTerm);
+        List<Book> books = bookService.searchBooks(searchTerm, currentLanguage);
 
         FXMLLoader loader = loadScene("/searchPage.fxml");
         searchPageController controller = loader.getController();
@@ -552,7 +556,7 @@ public class LibraryController {
         Long userId = getSavedUserId();
         FXMLLoader loader = loadScene("/myBookings.fxml");
         myBookingController controller = loader.getController();
-        controller.setBooksForUser(userId);
+        controller.setBooksForUser(userId, currentLanguage);
     }
 
     @FXML
@@ -692,7 +696,7 @@ public class LibraryController {
     }
 
     public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
-        return reservationService.getReservationByUserAndBook(userId, bookId);
+        return reservationService.getReservationByUserAndBook(userId, bookId, currentLanguage);
     }
 
     public String getUserNameByEmail(String email) {
@@ -711,11 +715,11 @@ public class LibraryController {
     }
 
     public List<Book> searchBooksByAuthor(String authorFirstName, String authorLastName) {
-        return authorService.getBooksByAuthor(authorFirstName, authorLastName);
+        return authorService.getBooksByAuthor(authorFirstName, authorLastName, currentLanguage);
     }
 
-    public List<Book> searchBooksByTitle(String title) {
-        return bookService.getBooksByTitle(title);
+    public List<Book> searchBooksByTitle(String title, String currentLanguage) {
+        return bookService.getBooksByTitle(title, currentLanguage);
     }
 
     public List<Book> searchBooksByCategory(String genre) {
@@ -731,7 +735,7 @@ public class LibraryController {
     }
 
     public List<Reservation> getMyBookings(Long userId) {
-        return reservationService.getReservationsByUserId(userId);
+        return reservationService.getReservationsByUserId(userId, currentLanguage);
     }
 
     public String getCurrentLanguage() {

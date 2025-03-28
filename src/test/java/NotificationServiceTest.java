@@ -117,7 +117,9 @@ public class NotificationServiceTest {
                 stmt.execute("CREATE TABLE IF NOT EXISTS notifications (" +
                         "notification_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                         "user_id BIGINT, " +
-                        "message TEXT, " +
+                        "message_en TEXT, " +
+                        "message_ur TEXT, " +
+                        "message_ru TEXT, " +
                         "created_at TIMESTAMP, " +
                         "reservation_id BIGINT, " +
                         "FOREIGN KEY (user_id) REFERENCES users(user_id), " +
@@ -137,7 +139,7 @@ public class NotificationServiceTest {
 
             // Insert a test book
             try (Statement stmt = connection.createStatement()) {
-                stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
+                stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
                         "('Test Book', '2021-01-01', 'Description of Test Book', 'Available', 'Fiction', 'English', '1234567890', 'Aisle3')");
             }
 
@@ -169,7 +171,9 @@ public class NotificationServiceTest {
 
         Notification notification = new Notification();
         notification.setUser(user);
-        notification.setMessage("Test message");
+        notification.setMessageEnglish("Test message in English");
+        notification.setMessageUrdu("ٹیسٹ پیغام اردو میں");
+        notification.setMessageRussian("Тестовое сообщение на русском");
         notification.setCreatedAt(LocalDateTime.now());
         notification.setReservation(reservation);
 
@@ -177,7 +181,8 @@ public class NotificationServiceTest {
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
-        assertNotNull( notifications.getFirst().getMessage());
+        assertNotNull( notifications.getFirst().getMessageEnglish()
+        );
     }
 
 
@@ -196,11 +201,11 @@ public class NotificationServiceTest {
 
         reservationDao.saveReservation(reservation);
 
-        notificationService.createNotificationForReservation(reservation.getReservationId());
+        notificationService.createNotificationForReservation(reservation.getReservationId(), "English");
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
-        assertNotNull(notifications.getFirst().getMessage());
+        assertNotNull(notifications.getFirst().getMessageEnglish());
     }
 
     @Test
@@ -214,7 +219,9 @@ public class NotificationServiceTest {
 
         Notification notification = new Notification();
         notification.setUser(user);
-        notification.setMessage("Test message");
+        notification.setMessageEnglish("Test message in English");
+        notification.setMessageUrdu("ٹیسٹ پیغام اردو میں");
+        notification.setMessageRussian("Тестовое сообщение на русском");
         notification.setCreatedAt(LocalDateTime.now());
         notification.setReservation(reservation);
 
@@ -223,7 +230,7 @@ public class NotificationServiceTest {
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
         Notification notification1 = notifications.getFirst();
-        assertNotNull(notification1.getMessage());
+        assertNotNull(notification1.getMessageEnglish());
     }
 
     @Test
@@ -237,7 +244,9 @@ public class NotificationServiceTest {
 
         Notification notification = new Notification();
         notification.setUser(user);
-        notification.setMessage("Test message");
+        notification.setMessageEnglish("Test message in English");
+        notification.setMessageUrdu("ٹیسٹ پیغام اردو میں");
+        notification.setMessageRussian("Тестовое сообщение на русском");
         notification.setCreatedAt(LocalDateTime.now());
         notification.setReservation(reservation);
 
@@ -260,17 +269,19 @@ public class NotificationServiceTest {
 
         Notification notification = new Notification();
         notification.setUser(user);
-        notification.setMessage("Test message");
+        notification.setMessageEnglish("Test message in English");
+        notification.setMessageUrdu("ٹیسٹ پیغام اردو میں");
+        notification.setMessageRussian("Тестовое сообщение на русском");
         notification.setCreatedAt(LocalDateTime.now());
         notification.setReservation(reservation);
 
         notificationService.saveNotification(notification);
 
-        notificationService.updateNotification(1L);
+        notificationService.updateNotification(1L, "English");
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
-        assertNotNull(notifications.getFirst().getMessage());
+        assertNotNull(notifications.getFirst().getMessageEnglish());
     }
 
 }

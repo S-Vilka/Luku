@@ -14,8 +14,14 @@ public class Book {
     @Column(name = "book_id") // Ensure it matches the database column
     private Long bookId;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "title_en", nullable = false)
+    private String title_en;
+
+    @Column(name = "title_ur", nullable = false)
+    private String title_ur;
+
+    @Column(name = "title_ru", nullable = false)
+    private String title_ru;
 
     @Column(name = "publication_date")
     private LocalDate publicationDate;
@@ -56,13 +62,61 @@ public class Book {
         this.bookId = bookId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitleEn() {
+        return title_en;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitleEn(String title) {
+        this.title_en = title;
     }
+
+
+    public String getTitleUr() {
+        return title_ur;
+    }
+
+    public void setTitleUr(String title) {
+        this.title_ur = title;
+    }
+
+
+    public String getTitleRu() {
+        return title_ru;
+    }
+
+    public void setTitleRu(String title) {
+        this.title_ru = title;
+    }
+
+    // New method to get message based on current language
+    public String getTitle(String currentLanguage) {
+        switch (currentLanguage) {
+            case "Русский":
+                return getTitleRu();
+            case "اردو":
+                return getTitleUr();
+            case "english":
+            default:
+                return getTitleEn();
+        }
+    }
+
+    public void setTitle(String title, String currentLanguage) {
+        switch (currentLanguage) {
+            case "Русский":
+                setTitleRu(title);
+                break;
+            case "اردو":
+                setTitleUr(title);
+                break;
+            case "english":
+            default:
+                setTitleEn(title);
+                break;
+        }
+    }
+
+
 
     public LocalDate getPublicationDate() {
         return publicationDate;

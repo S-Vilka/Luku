@@ -35,9 +35,9 @@ public class BookService {
         return bookDao.getBookCount();
     }
 
-    public List<Book> getBooksByTitle(String title) {
+    public List<Book> getBooksByTitle(String title, String currentLanguage) {
 
-        return bookDao.getBooksByTitle(title);
+        return bookDao.getBooksByTitle(title, currentLanguage);
     }
 
     public List<Book> getBooksByCategory(String genre) {
@@ -58,8 +58,8 @@ public class BookService {
         bookDao.updateBookAvailabilityStatus(bookId, isAvailable);
     }
 
-    public List<Book> searchBooks(String searchTerm) {
+    public List<Book> searchBooks(String searchTerm, String currentLanguage) {
 
-        return bookDao.searchBooks(searchTerm);
+        return bookDao.searchBooks(searchTerm, currentLanguage);
     }
 }

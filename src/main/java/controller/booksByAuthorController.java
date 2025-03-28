@@ -147,7 +147,7 @@ public class booksByAuthorController extends LibraryController {
                 ImageView bookCover = (ImageView) bookBox.lookup("#bookCover"); // Book cover
 
                 Book book = books.get(i);
-                bookName.setText(book.getTitle());
+                bookName.setText(book.getTitle(getCurrentLanguage()));
 
                 // Fetch authors for the book
                 Set<Author> authorSet = bookService.getAuthorsByBookId(book.getBookId());

@@ -82,8 +82,8 @@ public class authorsPageController extends LibraryController {
                 authorImage.setImage(image);
 
                 // Fetch books by author
-                List<Book> books = getAuthorService().getBooksByAuthor(author.getFirstName(), author.getLastName());
-                String bookTitles = books.stream().map(Book::getTitle).collect(Collectors.joining(", "));
+                List<Book> books = getAuthorService().getBooksByAuthor(author.getFirstName(), author.getLastName(), getCurrentLanguage());
+                String bookTitles = books.stream().map(book -> book.getTitle(getCurrentLanguage())).collect(Collectors.joining(", "));
                 authorBooks.setText(bookTitles.isEmpty() ? "No books available" : bookTitles);
 
                 // Set event handler for "Check their books" button

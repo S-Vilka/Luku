@@ -128,11 +128,11 @@ public class AuthorServiceTest {
 
     @Test
     public void testGetBooksByAuthorName() {
-        List<Book> books = authorService.getBooksByAuthor("John", "Doe");
+        List<Book> books = authorService.getBooksByAuthor("John", "Doe", "English");
         assertNotNull(books);
         assertEquals(2, books.size());
-        assertEquals("Effective Java", books.get(0).getTitle());
-        assertEquals("Clean Code", books.get(1).getTitle());
+        assertEquals("Effective Java", books.get(0).getTitle("English"));
+        assertEquals("Clean Code", books.get(1).getTitle("English"));
     }
 
     @Test
