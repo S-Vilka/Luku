@@ -95,9 +95,9 @@ public class SampleDataInserter {
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
                         "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                        "title_en VARCHAR(255) NOT NULL, " +
-                        "title_ur VARCHAR(255) NOT NULL, " +
-                        "title_ru VARCHAR(255) NOT NULL, " +
+                        "title_en VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL, " +
+                        "title_ur VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL, " +
+                        "title_ru VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL, " +
                         "publication_date DATE, " +
                         "description TEXT, " +
                         "availability_status VARCHAR(50), " +
@@ -106,7 +106,7 @@ public class SampleDataInserter {
                         "isbn VARCHAR(20) NOT NULL, " +
                         "location VARCHAR(255), " +
                         "cover_image VARCHAR(255)" +
-                        ")");
+                        ") CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
             }
 
             // Insert sample books
@@ -171,14 +171,14 @@ public class SampleDataInserter {
                 stmt.execute("CREATE TABLE IF NOT EXISTS notifications (" +
                         "notification_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                         "user_id BIGINT NOT NULL, " +
-                        "message_en TEXT, " +
-                        "message_ur TEXT, " +
-                        "message_ru TEXT, " +
+                        "message_en TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci, " +
+                        "message_ur TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci, " +
+                        "message_ru TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci, " +
                         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, " +
                         "reservation_id BIGINT NOT NULL, " +
                         "FOREIGN KEY (user_id) REFERENCES users(user_id), " +
                         "FOREIGN KEY (reservation_id) REFERENCES reservations(reservation_id)" +
-                        ")");
+                        ") CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
             }
 
             System.out.println("✅ Notifications table created successfully!");

@@ -48,9 +48,12 @@ public class NotificationService {
         User user = reservation.getUser();
         Book book = reservation.getBook();
 
-        String messageEn = "Reminder: Dear " + user.getUsername() + ", the book '" + book.getTitle(currentLanguage) + "' is due tomorrow. Please return it on time.";
-        String messageUr = "یاد دہانی: محترم " + user.getUsername() + ", کتاب '" + book.getTitle(currentLanguage) + "' کل واپس کرنی ہے۔ براہ کرم وقت پر واپس کریں۔";
-        String messageRu = "Напоминание: Уважаемый " + user.getUsername() + ", книга '" + book.getTitle(currentLanguage) + "' должна быть возвращена завтра. Пожалуйста, верните её вовремя.";
+//        String messageEn = "Reminder: Dear " + user.getUsername() + ", the book '" + book.getTitle(currentLanguage) + "' is due tomorrow. Please return it on time.";
+//        String messageUr = "یاد دہانی: محترم " + user.getUsername() + ", کتاب '" + book.getTitle(currentLanguage) + "' کل واپس کرنی ہے۔ براہ کرم وقت پر واپس کریں۔";
+//        String messageRu = "Напоминание: Уважаемый " + user.getUsername() + ", книга '" + book.getTitle(currentLanguage) + "' должна быть возвращена завтра. Пожалуйста, верните её вовремя.";
+        String messageEn = "Reminder: Dear " + user.getUsername() + ", the book '" + book.getTitleEn() + "' is due tomorrow. Please return it on time.";
+        String messageUr = "یاد دہانی: محترم " + user.getUsername() + ", کتاب '" + book.getTitleUr() + "' کل واپس کرنی ہے۔ براہ کرم وقت پر واپس کریں۔";
+        String messageRu = "Напоминание: Уважаемый " + user.getUsername() + ", книга '" + book.getTitleRu() + "' должна быть возвращена завтра. Пожалуйста, верните её вовремя.";
 
         Notification notification = new Notification();
         notification.setUser(user);

@@ -74,12 +74,21 @@ public class NotificationDao extends BaseDao {
         }
         User user = reservation.getUser();
         Book book = reservation.getBook();
-        String bookTitle = book.getTitle(currentLanguage);
-        String message_en = "Dear " + user.getUsername() + ", you have borrowed the book '" + bookTitle +
+//        String bookTitle = book.getTitle(currentLanguage);
+//        String message_en = "Dear " + user.getUsername() + ", you have borrowed the book '" + bookTitle +
+//                "'. Please return it by " + reservation.getDueDate() + ".";
+//        String message_ur = "محترم " + user.getUsername() + ", آپ نے کتاب '" + bookTitle +
+//                "' ادھار لی ہے۔ براہ کرم اسے " + reservation.getDueDate() + " تک واپس کریں۔";
+//        String message_ru = "Уважаемый " + user.getUsername() + ", вы взяли книгу '" + bookTitle +
+//                "'. Пожалуйста, верните её до " + reservation.getDueDate() + ".";
+        String bookTitleEn = book.getTitleEn();
+        String bookTitleUr = book.getTitleUr();
+        String bookTitleRu = book.getTitleRu();
+        String message_en = "Dear " + user.getUsername() + ", you have borrowed the book '" + bookTitleEn +
                 "'. Please return it by " + reservation.getDueDate() + ".";
-        String message_ur = "محترم " + user.getUsername() + ", آپ نے کتاب '" + bookTitle +
+        String message_ur = "محترم " + user.getUsername() + ", آپ نے کتاب '" + bookTitleUr +
                 "' ادھار لی ہے۔ براہ کرم اسے " + reservation.getDueDate() + " تک واپس کریں۔";
-        String message_ru = "Уважаемый " + user.getUsername() + ", вы взяли книгу '" + bookTitle +
+        String message_ru = "Уважаемый " + user.getUsername() + ", вы взяли книгу '" + bookTitleRu +
                 "'. Пожалуйста, верните её до " + reservation.getDueDate() + ".";
 
         Notification notification = new Notification();
