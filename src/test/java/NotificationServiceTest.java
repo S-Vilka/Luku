@@ -77,7 +77,9 @@ public class NotificationServiceTest {
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
                         "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                        "title VARCHAR(255) NOT NULL, " +
+                        "title_en VARCHAR(255) NOT NULL, " +
+                        "title_ur VARCHAR(255), " +
+                        "title_ru VARCHAR(255), " +
                         "publication_date DATE, " +
                         "description TEXT, " +
                         "availability_status VARCHAR(50), " +
@@ -85,7 +87,7 @@ public class NotificationServiceTest {
                         "language VARCHAR(50), " +
                         "isbn VARCHAR(20), " +
                         "location VARCHAR(255)" +
-                                ")");
+                        ")");
             }
 
             // Create the writes table
@@ -98,7 +100,6 @@ public class NotificationServiceTest {
                         "FOREIGN KEY (author_id) REFERENCES authors(author_id) ON DELETE CASCADE" +
                         ")");
             }
-
 
             // Create the reservations table
             try (Statement stmt = connection.createStatement()) {
@@ -131,6 +132,7 @@ public class NotificationServiceTest {
                 stmt.execute("INSERT INTO users (username, password, email, phone, role, book_count, created_at, deleted_at) VALUES " +
                         "('testuser', 'testPass', 'test@test.com', '1234567890', 'user', 5, NOW(), NULL)");
             }
+
             // Insert a test author
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES " +
@@ -140,7 +142,7 @@ public class NotificationServiceTest {
             // Insert a test book
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
-                        "('Test Book', '2021-01-01', 'Description of Test Book', 'Available', 'Fiction', 'English', '1234567890', 'Aisle3')");
+                        "('Test Book', 'Urdu Book', 'Russian Book', '2021-01-01', 'Description of Test Book', 'Available', 'Fiction', 'English', '1234567890', 'Aisle3')");
             }
 
             // Insert a test writes entry
@@ -153,7 +155,6 @@ public class NotificationServiceTest {
                 stmt.execute("INSERT INTO reservations (user_id, book_id, borrow_date, due_date) VALUES " +
                         "(1, 1, NOW(), NOW() + INTERVAL 7 DAY)");
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -201,7 +202,7 @@ public class NotificationServiceTest {
 
         reservationDao.saveReservation(reservation);
 
-        notificationService.createNotificationForReservation(reservation.getReservationId(), "English");
+        notificationService.createNotificationForReservation(reservation.getReservationId());
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());
@@ -277,7 +278,7 @@ public class NotificationServiceTest {
 
         notificationService.saveNotification(notification);
 
-        notificationService.updateNotification(1L, "English");
+        notificationService.updateNotification(1L);
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
         assertFalse(notifications.isEmpty());

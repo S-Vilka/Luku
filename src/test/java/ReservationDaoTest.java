@@ -40,7 +40,7 @@ public class ReservationDaoTest {
             when(mockResultSet.getTimestamp("borrow_date")).thenReturn(java.sql.Timestamp.valueOf(LocalDateTime.now()));
             when(mockResultSet.getTimestamp("due_date")).thenReturn(java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
-            Reservation reservation = reservationDao.getReservationById(1L, "English");
+            Reservation reservation = reservationDao.getReservationById(1L);
 
             assertNotNull(reservation);
             assertEquals(1L, reservation.getReservationId());
@@ -65,7 +65,7 @@ public class ReservationDaoTest {
         when(mockResultSet.getTimestamp("borrow_date")).thenReturn(java.sql.Timestamp.valueOf(LocalDateTime.now()));
         when(mockResultSet.getTimestamp("due_date")).thenReturn(java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
-        List<Reservation> reservations = reservationDao.getAllReservations("English");
+        List<Reservation> reservations = reservationDao.getAllReservations();
 
         assertNotNull(reservations);
         assertEquals(1, reservations.size());
@@ -101,7 +101,7 @@ public class ReservationDaoTest {
         when(mockResultSet.getTimestamp("borrow_date")).thenReturn(java.sql.Timestamp.valueOf(LocalDateTime.now()));
         when(mockResultSet.getTimestamp("due_date")).thenReturn(java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
-        List<Reservation> reservations = reservationDao.getReservationsByUserId(1L, "English");
+        List<Reservation> reservations = reservationDao.getReservationsByUserId(1L);
 
         assertNotNull(reservations);
         assertEquals(1, reservations.size());
@@ -112,7 +112,7 @@ public class ReservationDaoTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockPreparedStatement.executeQuery()).thenThrow(new SQLException("Test SQL Exception"));
 
-        reservationDao.getReservationById(1L, "English");
+        reservationDao.getReservationById(1L);
 
         verify(mockConnection).prepareStatement(anyString());
         verify(mockPreparedStatement).executeQuery();
@@ -203,7 +203,7 @@ public class ReservationDaoTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockPreparedStatement.executeQuery()).thenThrow(new SQLException("Test SQL Exception"));
 
-        reservationDao.getReservationsByUserId(1L, "English");
+        reservationDao.getReservationsByUserId(1L);
 
         verify(mockConnection).prepareStatement(anyString());
         verify(mockPreparedStatement).executeQuery();
@@ -214,7 +214,7 @@ public class ReservationDaoTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockPreparedStatement);
         when(mockPreparedStatement.executeQuery()).thenThrow(new SQLException("Test SQL Exception"));
 
-        reservationDao.getReservationByUserAndBook(1L, 1L, "English");
+        reservationDao.getReservationByUserAndBook(1L, 1L);
 
         verify(mockConnection).prepareStatement(anyString());
         verify(mockPreparedStatement).executeQuery();

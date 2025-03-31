@@ -1,6 +1,7 @@
 package model.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -92,8 +93,4 @@ public class Reservation {
         this.book.setBookId(bookId);
     }
 
-
-//    public void setNotificationId(Long notificationId) {
-//        this.notification.setNotificationId(notificationId);
-//    }
 }

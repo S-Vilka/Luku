@@ -56,7 +56,9 @@ public class WritesServiceTest {
 
             stmt.execute("CREATE TABLE books (" +
                     "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                    "title VARCHAR(255), " +
+                    "title_en VARCHAR(255), " +
+                    "title_ur VARCHAR(255), " +
+                    "title_ru VARCHAR(255), " +
                     "publication_date DATE, " +
                     "description TEXT, " +
                     "availability_status VARCHAR(255), " +
@@ -77,7 +79,8 @@ public class WritesServiceTest {
         // Insert test data
         try (Statement stmt = connection.createStatement()) {
             stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth) VALUES ('AuthorFirstName', 'AuthorLastName', 'AuthorDescription', '1970-01-01', 'AuthorPlaceOfBirth')");
-            stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location) VALUES ('BookTitle', '2000-01-01', 'BookDescription', 'Available', 'Category', 'Language', 'ISBN', 'Location')");
+            stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
+                    "('BookTitle in English', 'BookTitle in Urdu', 'BookTitle in Russian', '2000-01-01', 'BookDescription', 'Available', 'Category', 'Language', 'ISBN', 'Location')");
             stmt.execute("INSERT INTO writes (author_id, book_id) VALUES (1, 1)");
         }
     }
@@ -91,7 +94,7 @@ public class WritesServiceTest {
         assertEquals("AuthorDescription", writes.getAuthor().getDescription());
         assertEquals("1970-01-01", writes.getAuthor().getDateOfBirth().toString());
         assertEquals("AuthorPlaceOfBirth", writes.getAuthor().getPlaceOfBirth());
-        assertEquals("BookTitle", writes.getBook().getTitle("English"));
+        assertEquals("BookTitle in English", writes.getBook().getTitle("English"));
         assertEquals("2000-01-01", writes.getBook().getPublicationDate().toString());
         assertEquals("BookDescription", writes.getBook().getDescription());
         assertEquals("Available", writes.getBook().getAvailabilityStatus());
@@ -113,7 +116,7 @@ public class WritesServiceTest {
         assertEquals("AuthorDescription", writes.getAuthor().getDescription());
         assertEquals("1970-01-01", writes.getAuthor().getDateOfBirth().toString());
         assertEquals("AuthorPlaceOfBirth", writes.getAuthor().getPlaceOfBirth());
-        assertEquals("BookTitle", writes.getBook().getTitle("English"));
+        assertEquals("BookTitle in English", writes.getBook().getTitle("English"));
         assertEquals("2000-01-01", writes.getBook().getPublicationDate().toString());
         assertEquals("BookDescription", writes.getBook().getDescription());
         assertEquals("Available", writes.getBook().getAvailabilityStatus());
@@ -135,7 +138,7 @@ public class WritesServiceTest {
         assertEquals("AuthorDescription", writes.getAuthor().getDescription());
         assertEquals("1970-01-01", writes.getAuthor().getDateOfBirth().toString());
         assertEquals("AuthorPlaceOfBirth", writes.getAuthor().getPlaceOfBirth());
-        assertEquals("BookTitle", writes.getBook().getTitle("English"));
+        assertEquals("BookTitle in English", writes.getBook().getTitle("English"));
         assertEquals("2000-01-01", writes.getBook().getPublicationDate().toString());
         assertEquals("BookDescription", writes.getBook().getDescription());
         assertEquals("Available", writes.getBook().getAvailabilityStatus());

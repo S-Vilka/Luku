@@ -206,9 +206,9 @@ public class LibraryController {
         try {
             User user = userService.getUserByEmail(savedEmail);
             Long userId = user.getUserId();
-            List<Reservation> reservations = reservationService.getReservationsDueSoon(userId, currentLanguage);
+            List<Reservation> reservations = reservationService.getReservationsDueSoon(userId);
             for (Reservation reservation : reservations) {
-                notificationService.createReminderNotification(reservation, currentLanguage);
+                notificationService.createReminderNotification(reservation);
             }
             if (!reservations.isEmpty()) {
                 setNotiCircleStatus(true);
@@ -292,8 +292,7 @@ public class LibraryController {
         reservation.setBookId(bookId);
 
         reservationService.createReservation(reservation);
-        notificationService.createNotificationForReservation(reservation.getReservationId(), currentLanguage);
-//        notiCircle.setVisible(true);
+        notificationService.createNotificationForReservation(reservation.getReservationId());
         Circle notiCircle = (Circle) primaryStage.getScene().lookup("#notiCircle");
         if (notiCircle != null) {
             notiCircle.setVisible(true);
@@ -307,7 +306,7 @@ public class LibraryController {
     }
 
     public void extendReservation(Long reservationId) {
-        Reservation reservation = reservationService.getReservationById(reservationId, currentLanguage);
+        Reservation reservation = reservationService.getReservationById(reservationId);
         if (reservation != null) {
             LocalDateTime newDueDate = reservation.getDueDate().plusDays(7);
             reservation.setDueDate(newDueDate);
@@ -695,7 +694,7 @@ public class LibraryController {
     }
 
     public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
-        return reservationService.getReservationByUserAndBook(userId, bookId, currentLanguage);
+        return reservationService.getReservationByUserAndBook(userId, bookId);
     }
 
     public String getUserNameByEmail(String email) {
@@ -734,7 +733,7 @@ public class LibraryController {
     }
 
     public List<Reservation> getMyBookings(Long userId) {
-        return reservationService.getReservationsByUserId(userId, currentLanguage);
+        return reservationService.getReservationsByUserId(userId);
     }
 
     public String getCurrentLanguage() {

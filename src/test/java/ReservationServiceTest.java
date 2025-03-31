@@ -37,7 +37,7 @@ public class ReservationServiceTest {
             reservationDao = new ReservationDao();
             reservationService = new ReservationService();
 
-            // Create the reservations table
+            // Create the tables
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS users (" +
                         "user_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
@@ -46,8 +46,17 @@ public class ReservationServiceTest {
 
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
                         "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                        "title VARCHAR(255) NOT NULL)");
-
+                        "title_en VARCHAR(255) NOT NULL, " +
+                        "title_ur VARCHAR(255), " +
+                        "title_ru VARCHAR(255), " +
+                        "publication_date DATE, " +
+                        "description TEXT, " +
+                        "availability_status VARCHAR(50), " +
+                        "category VARCHAR(50), " +
+                        "language VARCHAR(50), " +
+                        "isbn VARCHAR(20), " +
+                        "location VARCHAR(255)" +
+                        ")");
 
                 stmt.execute("CREATE TABLE IF NOT EXISTS reservations (" +
                         "reservation_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
@@ -73,8 +82,17 @@ public class ReservationServiceTest {
             // Insert sample data
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO users (username, email) VALUES ('testuser', 'testuser@example.com')");
-                stmt.execute("INSERT INTO books (title) VALUES ('Sample Book')");
+                stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
+                        "('Sample Book in English', 'Sample Book in Urdu', 'Sample Book in Russian', '2021-01-01', 'Description of Sample Book', 'Available', 'Fiction', 'English', '1234567890', 'Aisle3')");
                 stmt.execute("INSERT INTO reservations (user_id, book_id, borrow_date, due_date) VALUES (1, 1, NOW(), NOW() + INTERVAL 14 DAY)");
+            }
+
+            // Verify sample data insertion
+            try (Statement stmt = connection.createStatement()) {
+                var rs = stmt.executeQuery("SELECT COUNT(*) FROM reservations");
+                if (rs.next()) {
+                    System.out.println("Number of reservations: " + rs.getInt(1));
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -101,7 +119,7 @@ public class ReservationServiceTest {
 
     @Test
     public void testGetReservationById() {
-        Reservation reservation = reservationService.getReservationById(1L, "English");
+        Reservation reservation = reservationService.getReservationById(1L);
         assertNotNull(reservation);
         assertEquals(1L, reservation.getReservationId());
     }
@@ -109,7 +127,7 @@ public class ReservationServiceTest {
 
     @Test
     public void testGetAllReservations() {
-        List<Reservation> reservations = reservationService.getAllReservations("English");
+        List<Reservation> reservations = reservationService.getAllReservations();
         assertNotNull(reservations);
         assertFalse(reservations.isEmpty());
     }
@@ -120,20 +138,20 @@ public class ReservationServiceTest {
         LocalDateTime newDueDate = LocalDateTime.now().plusDays(7).withNano(0);
         reservationService.extendReservation(1L, newDueDate);
 
-        Reservation reservation = reservationService.getReservationById(1L, "English");
+        Reservation reservation = reservationService.getReservationById(1L);
         assertEquals(newDueDate, reservation.getDueDate().withNano(0));
     }
 
     @Test
     public void testGetReservationsByUserId() {
-        List<Reservation> reservations = reservationService.getReservationsByUserId(1L, "English");
+        List<Reservation> reservations = reservationService.getReservationsByUserId(1L);
         assertNotNull(reservations);
         assertFalse(reservations.isEmpty());
     }
 
     @Test
     public void testGetReservationByUserAndBook() {
-        Reservation reservation = reservationService.getReservationByUserAndBook(1L, 1L, "English");
+        Reservation reservation = reservationService.getReservationByUserAndBook(1L, 1L);
         assertNotNull(reservation);
         assertEquals(1L, reservation.getUser().getUserId());
         assertEquals(1L, reservation.getBook().getBookId());
@@ -141,11 +159,11 @@ public class ReservationServiceTest {
 
     @Test
     public void testUpdateReservation() {
-        Reservation reservation = reservationService.getReservationById(1L, "English");
+        Reservation reservation = reservationService.getReservationById(1L);
         reservation.setDueDate(LocalDateTime.now().plusDays(7).withNano(0));
         reservationService.updateReservation(reservation);
 
-        Reservation updatedReservation = reservationService.getReservationById(1L, "English");
+        Reservation updatedReservation = reservationService.getReservationById(1L);
         assertEquals(reservation.getDueDate().withNano(0), updatedReservation.getDueDate().withNano(0));
     }
 
@@ -170,7 +188,7 @@ public class ReservationServiceTest {
         reservationService.deleteReservation(reservation.getReservationId());
 
         // Verify the reservation has been deleted
-        Reservation deletedReservation = reservationService.getReservationById(reservation.getReservationId(), "English");
+        Reservation deletedReservation = reservationService.getReservationById(reservation.getReservationId());
         assertNull(deletedReservation);
     }
 

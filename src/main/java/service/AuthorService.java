@@ -35,6 +35,6 @@ public class AuthorService {
     }
 
     public List<Book> getBooksByAuthor(String authorFirstName, String authorLastName, String currentLanguage) {
-        return authorDao.getBooksByAuthorName(authorFirstName,authorLastName, currentLanguage);
+        return authorDao.getBooksByAuthorName(authorFirstName, authorLastName, currentLanguage);
     }
 }

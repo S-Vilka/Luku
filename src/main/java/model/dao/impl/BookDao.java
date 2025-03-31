@@ -1,4 +1,5 @@
 package model.dao.impl;
+
 import model.entity.Author;
 import model.entity.Book;
 
@@ -90,25 +91,25 @@ public class BookDao extends BaseDao {
         return book;
     }
 
-public Set<Author> getAuthorsByBookId(Long bookId) {
-    Set<Author> authors = new HashSet<>();
-    String query = "SELECT a.* FROM authors a JOIN writes w ON a.author_id = w.author_id WHERE w.book_id = ?";
-    try (PreparedStatement stmt = connection.prepareStatement(query)) {
-        stmt.setLong(1, bookId);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            Author author = new Author();
-            author.setAuthorId(rs.getLong("author_id"));
-            author.setFirstName(rs.getString("first_name"));
-            author.setLastName(rs.getString("last_name"));
-            // Set other fields of Author as needed
-            authors.add(author);
+    public Set<Author> getAuthorsByBookId(Long bookId) {
+        Set<Author> authors = new HashSet<>();
+        String query = "SELECT a.* FROM authors a JOIN writes w ON a.author_id = w.author_id WHERE w.book_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setLong(1, bookId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setAuthorId(rs.getLong("author_id"));
+                author.setFirstName(rs.getString("first_name"));
+                author.setLastName(rs.getString("last_name"));
+                // Set other fields of Author as needed
+                authors.add(author);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return authors;
     }
-    return authors;
-}
 
     public List<Book> getBooksByTitle(String title, String currentLanguage) {
         List<Book> books = new ArrayList<>();
@@ -154,7 +155,7 @@ public Set<Author> getAuthorsByBookId(Long bookId) {
         return books;
     }
 
-    public List<Book>  getBooksByLanguage(String language) {
+    public List<Book> getBooksByLanguage(String language) {
         List<Book> books = new ArrayList<>();
         String query = "SELECT * FROM books WHERE language LIKE ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -198,12 +199,6 @@ public Set<Author> getAuthorsByBookId(Long bookId) {
         }
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-//            stmt.setString(1, "%" + keyword + "%");
-//            stmt.setString(2, "%" + keyword + "%");
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                books.add(mapRowToBook(rs));
-//            }
             String searchKeyword = "%" + keyword + "%";
             stmt.setString(1, searchKeyword);
             stmt.setString(2, searchKeyword);

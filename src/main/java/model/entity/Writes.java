@@ -19,7 +19,8 @@ public class Writes {
     private Author author;
 
     // Default constructor
-    public Writes() {}
+    public Writes() {
+    }
 
     // Constructor with parameters
     public Writes(Book book, Author author) {

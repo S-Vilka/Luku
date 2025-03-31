@@ -1,6 +1,7 @@
 package model.dao.impl;
 
 import model.entity.User;
+
 import java.sql.*;
 
 public class UserDao extends BaseDao {
@@ -129,7 +130,7 @@ public class UserDao extends BaseDao {
         return role;
     }
 
-    public String getUserPhone(String email){
+    public String getUserPhone(String email) {
         String query = "SELECT phone FROM users WHERE email = ?";
         String phone = null;
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

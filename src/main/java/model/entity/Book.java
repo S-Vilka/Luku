@@ -1,6 +1,7 @@
 package model.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,7 +52,8 @@ public class Book {
     private Set<Writes> writes = new HashSet<>();
 
     // Default constructor
-    public Book() {}
+    public Book() {
+    }
 
     // Getters and Setters
     public Long getBookId() {
@@ -115,7 +117,6 @@ public class Book {
                 break;
         }
     }
-
 
 
     public LocalDate getPublicationDate() {

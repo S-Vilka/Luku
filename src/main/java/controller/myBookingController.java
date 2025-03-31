@@ -98,18 +98,11 @@ public class myBookingController extends LibraryController {
                         Reservation res = getReservationByUserAndBook(userId, bookIdNo);
                         if (res != null) {
                             extendReservation(reservation.getReservationId());
-                            getNotificationService().updateNotification(res.getReservationId(), getCurrentLanguage());
-//                            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/myBookings.fxml"));
-//                            Parent root = loader2.load();
+                            getNotificationService().updateNotification(res.getReservationId());
                             FXMLLoader loader2 = loadScene("/myBookings.fxml");
                             loader2.setResources(getResourceBundle());
                             myBookingController controller = loader2.getController();
                             controller.setBooksForUser(userId, currentLanguage);
-//                            getPrimaryStage().setScene(new Scene(root));
-//                            getPrimaryStage().show();
-//                            AnchorPane bodyBox = (AnchorPane) getPrimaryStage().getScene().lookup("#bodyBox");
-//                            bodyBox.getChildren().setAll(root);
-//                            updateHeader();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
