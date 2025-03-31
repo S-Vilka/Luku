@@ -4,6 +4,7 @@ import model.entity.Notification;
 import model.entity.Reservation;
 import model.entity.User;
 import model.entity.Book;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -59,28 +60,19 @@ public class NotificationDao extends BaseDao {
 
         // Fetch user
         Long userId = rs.getLong("user_id");
-//        UserDao userDao = new UserDao();
         User user = userDao.getUserById(userId);
         notification.setUser(user);
 
         return notification;
     }
 
-    public void createNotificationForReservation(Long reservationId, String currentLanguage) {
-//        ReservationDao reservationDao = new ReservationDao();
-        Reservation reservation = reservationDao.getReservationById(reservationId, currentLanguage);
+    public void createNotificationForReservation(Long reservationId) {
+        Reservation reservation = reservationDao.getReservationById(reservationId);
         if (reservation == null) {
             throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
         }
         User user = reservation.getUser();
         Book book = reservation.getBook();
-//        String bookTitle = book.getTitle(currentLanguage);
-//        String message_en = "Dear " + user.getUsername() + ", you have borrowed the book '" + bookTitle +
-//                "'. Please return it by " + reservation.getDueDate() + ".";
-//        String message_ur = "محترم " + user.getUsername() + ", آپ نے کتاب '" + bookTitle +
-//                "' ادھار لی ہے۔ براہ کرم اسے " + reservation.getDueDate() + " تک واپس کریں۔";
-//        String message_ru = "Уважаемый " + user.getUsername() + ", вы взяли книгу '" + bookTitle +
-//                "'. Пожалуйста, верните её до " + reservation.getDueDate() + ".";
         String bookTitleEn = book.getTitleEn();
         String bookTitleUr = book.getTitleUr();
         String bookTitleRu = book.getTitleRu();
@@ -111,9 +103,9 @@ public class NotificationDao extends BaseDao {
         }
     }
 
-    public void updateNotification(Long reservationId, String currentLanguage) {
+    public void updateNotification(Long reservationId) {
         ReservationDao reservationDao = new ReservationDao();
-        Reservation reservation = reservationDao.getReservationById(reservationId, currentLanguage);
+        Reservation reservation = reservationDao.getReservationById(reservationId);
         User user = reservation.getUser();
         Book book = reservation.getBook();
 
@@ -127,7 +119,7 @@ public class NotificationDao extends BaseDao {
         String query = "UPDATE notifications SET message_en = ?, message_ur = ?, message_ru = ? WHERE reservation_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, messageEn);
-            stmt.setString(2,messageUr);
+            stmt.setString(2, messageUr);
             stmt.setString(3, messageRu);
             stmt.setLong(4, reservationId);
             stmt.executeUpdate();

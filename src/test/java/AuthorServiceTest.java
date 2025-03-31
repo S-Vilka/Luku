@@ -51,7 +51,9 @@ public class AuthorServiceTest {
 
                 stmt.execute("CREATE TABLE IF NOT EXISTS books (" +
                         "book_id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                        "title VARCHAR(255) NOT NULL, " +
+                        "title_en VARCHAR(255) NOT NULL, " +
+                        "title_ur VARCHAR(255), " +
+                        "title_ru VARCHAR(255), " +
                         "publication_date DATE, " +
                         "description TEXT, " +
                         "availability_status VARCHAR(255), " +
@@ -60,6 +62,7 @@ public class AuthorServiceTest {
                         "isbn VARCHAR(255), " +
                         "location VARCHAR(255)" +
                         ")");
+
                 stmt.execute("CREATE TABLE IF NOT EXISTS writes (" +
                         "author_id BIGINT, " +
                         "book_id BIGINT, " +
@@ -74,9 +77,9 @@ public class AuthorServiceTest {
                         "('John', 'Doe', 'A famous author', '1970-01-01', 'New York', 'path/to/john_doe.jpg')");
                 stmt.execute("INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, profile_image) VALUES " +
                         "('Jane', 'Austin', 'A very famous author', '1970-01-01', 'London', 'path/to/jane_austin.jpg')");
-                stmt.execute("INSERT INTO books (title, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
-                        "('Effective Java', '2008-05-08', 'A comprehensive guide to best practices in Java programming', 'Available', 'Programming', 'English', '978-0134685991', 'Aisle 3'), " +
-                        "('Clean Code', '2008-08-01', 'A handbook of agile software craftsmanship', 'Available', 'Programming', 'English', '978-0132350884', 'Aisle 4')");
+                stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, publication_date, description, availability_status, category, language, isbn, location) VALUES " +
+                        "('Effective Java', NULL, NULL, '2008-05-08', 'A comprehensive guide to best practices in Java programming', 'Available', 'Programming', 'English', '978-0134685991', 'Aisle 3'), " +
+                        "('Clean Code', NULL, NULL, '2008-08-01', 'A handbook of agile software craftsmanship', 'Available', 'Programming', 'English', '978-0132350884', 'Aisle 4')");
                 stmt.execute("INSERT INTO writes (author_id, book_id) VALUES " +
                         "(1, 1), (1, 2)");
             }

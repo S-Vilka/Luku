@@ -23,12 +23,14 @@ public class User {
 
 
     // Default constructor
-    public User() {}
+    public User() {
+    }
 
     // Constructor with bookId
     public User(Long userId) {
-        this.userId = userId    ;
+        this.userId = userId;
     }
+
     // Getters and Setters
     public Long getUserId() {
         return userId;

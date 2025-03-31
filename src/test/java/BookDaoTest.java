@@ -39,7 +39,9 @@ public class BookDaoTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getLong("book_id")).thenReturn(1L);
-        when(mockResultSet.getString("title")).thenReturn("Title");
+        when(mockResultSet.getString("title_en")).thenReturn("Title in English");
+        when(mockResultSet.getString("title_ur")).thenReturn("Title in Urdu");
+        when(mockResultSet.getString("title_ru")).thenReturn("Title in Russian");
         when(mockResultSet.getDate("publication_date")).thenReturn(Date.valueOf("2008-05-08"));
         when(mockResultSet.getString("description")).thenReturn("description");
         when(mockResultSet.getString("availability_status")).thenReturn("Available");
@@ -59,11 +61,9 @@ public class BookDaoTest {
 
         Book book = bookDaoSpy.getBookById(1L);
 
-
         assertNotNull(book);
-
         assertEquals(1L, book.getBookId());
-        assertEquals("Title", book.getTitle("English"));
+        assertEquals("Title in English", book.getTitle("English"));
         assertEquals("Language", book.getLanguage());
         assertEquals("category", book.getCategory());
         assertEquals("Available", book.getAvailabilityStatus());
@@ -121,7 +121,9 @@ public class BookDaoTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getLong("book_id")).thenReturn(1L);
-        when(mockResultSet.getString("title")).thenReturn("Title");
+        when(mockResultSet.getString("title_en")).thenReturn("Title in English");
+        when(mockResultSet.getString("title_ur")).thenReturn("Title in Urdu");
+        when(mockResultSet.getString("title_ru")).thenReturn("Title in Russian");
         when(mockResultSet.getDate("publication_date")).thenReturn(Date.valueOf("2008-05-08"));
         when(mockResultSet.getString("description")).thenReturn("description");
         when(mockResultSet.getString("availability_status")).thenReturn("Available");
@@ -140,11 +142,10 @@ public class BookDaoTest {
         doReturn(mockAuthors).when(bookDaoSpy).getAuthorsByBookId(1L);
         String currentLanguage = "English";
 
-            List<Book> books = bookDaoSpy.getBooksByTitle("Title", currentLanguage);
-            assertNotNull(books);
-            assertEquals(1, books.size());
-            assertEquals("Title", books.getFirst().getTitle(currentLanguage));
-
+        List<Book> books = bookDaoSpy.getBooksByTitle("Title", currentLanguage);
+        assertNotNull(books);
+        assertEquals(1, books.size());
+        assertEquals("Title in English", books.get(0).getTitle(currentLanguage));
     }
 
     @Test
@@ -153,7 +154,9 @@ public class BookDaoTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getLong("book_id")).thenReturn(1L);
-        when(mockResultSet.getString("title")).thenReturn("Title");
+        when(mockResultSet.getString("title_en")).thenReturn("Title in English");
+        when(mockResultSet.getString("title_ur")).thenReturn("Title in Urdu");
+        when(mockResultSet.getString("title_ru")).thenReturn("Title in Russian");
         when(mockResultSet.getDate("publication_date")).thenReturn(Date.valueOf("2008-05-08"));
         when(mockResultSet.getString("description")).thenReturn("description");
         when(mockResultSet.getString("availability_status")).thenReturn("Available");
@@ -184,7 +187,9 @@ public class BookDaoTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getLong("book_id")).thenReturn(1L);
-        when(mockResultSet.getString("title")).thenReturn("Title");
+        when(mockResultSet.getString("title_en")).thenReturn("Title in English");
+        when(mockResultSet.getString("title_ur")).thenReturn("Title in Urdu");
+        when(mockResultSet.getString("title_ru")).thenReturn("Title in Russian");
         when(mockResultSet.getDate("publication_date")).thenReturn(Date.valueOf("2008-05-08"));
         when(mockResultSet.getString("description")).thenReturn("description");
         when(mockResultSet.getString("availability_status")).thenReturn("Available");
@@ -228,7 +233,9 @@ public class BookDaoTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getLong("book_id")).thenReturn(1L);
-        when(mockResultSet.getString("title")).thenReturn("Title");
+        when(mockResultSet.getString("title_en")).thenReturn("Title in English");
+        when(mockResultSet.getString("title_ur")).thenReturn("Title in Urdu");
+        when(mockResultSet.getString("title_ru")).thenReturn("Title in Russian");
         when(mockResultSet.getDate("publication_date")).thenReturn(Date.valueOf("2008-05-08"));
         when(mockResultSet.getString("description")).thenReturn("description");
         when(mockResultSet.getString("availability_status")).thenReturn("Available");
@@ -250,7 +257,7 @@ public class BookDaoTest {
         List<Book> books = bookDaoSpy.searchBooks("Title", currentLanguage);
         assertNotNull(books);
         assertEquals(1, books.size());
-        assertEquals("Title", books.getFirst().getTitle(currentLanguage));
+        assertEquals("Title in English", books.getFirst().getTitle(currentLanguage));
     }
 
     @Test

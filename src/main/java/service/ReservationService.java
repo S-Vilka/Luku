@@ -2,6 +2,7 @@ package service;
 
 import model.entity.Reservation;
 import model.dao.impl.ReservationDao;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,13 +14,13 @@ public class ReservationService {
         reservationDao = new ReservationDao();
     }
 
-    public Reservation getReservationById(Long reservationId, String currentLanguage) {
-        return reservationDao.getReservationById(reservationId, currentLanguage);
+    public Reservation getReservationById(Long reservationId) {
+        return reservationDao.getReservationById(reservationId);
     }
 
-    public List<Reservation> getAllReservations(String currentLanguage) {
+    public List<Reservation> getAllReservations() {
 
-        return reservationDao.getAllReservations(currentLanguage);
+        return reservationDao.getAllReservations();
     }
 
     public void extendReservation(Long reservationId, LocalDateTime newDueDate) {
@@ -31,25 +32,25 @@ public class ReservationService {
         reservationDao.updateReservation(reservation);
     }
 
-    public List<Reservation> getReservationsByUserId(Long userId, String currentLanguage) {
-        return reservationDao.getReservationsByUserId(userId, currentLanguage);
+    public List<Reservation> getReservationsByUserId(Long userId) {
+        return reservationDao.getReservationsByUserId(userId);
     }
 
 
     public void createReservation(Reservation reservation) {
-         reservationDao.saveReservation(reservation);
+        reservationDao.saveReservation(reservation);
     }
 
-    public Reservation getReservationByUserAndBook(Long userId, Long bookId, String currentLanguage) {
-        return reservationDao.getReservationByUserAndBook(userId, bookId, currentLanguage);
+    public Reservation getReservationByUserAndBook(Long userId, Long bookId) {
+        return reservationDao.getReservationByUserAndBook(userId, bookId);
     }
 
     public void deleteReservation(Long reservationId) {
         reservationDao.deleteReservation(reservationId);
     }
 
-    public List<Reservation> getReservationsDueSoon(Long userId, String currentLanguage) {
-        return reservationDao.getReservationsDueSoon(userId, currentLanguage);
+    public List<Reservation> getReservationsDueSoon(Long userId) {
+        return reservationDao.getReservationsDueSoon(userId);
     }
 
 

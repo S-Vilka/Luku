@@ -124,7 +124,9 @@ public class AuthorDaoTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(true, true, false);
         when(mockResultSet.getLong("book_id")).thenReturn(1L, 2L);
-        when(mockResultSet.getString("title")).thenReturn("Effective Java", "Clean Code");
+        when(mockResultSet.getString("title_en")).thenReturn("Effective Java", "Clean Code");
+        when(mockResultSet.getString("title_ur")).thenReturn("موثر جاوا", "صاف کوڈ");
+        when(mockResultSet.getString("title_ru")).thenReturn("Эффективная Java", "Чистый код");
         when(mockResultSet.getString("category")).thenReturn("Programming", "Programming");
         when(mockResultSet.getDate("publication_date")).thenReturn(Date.valueOf(LocalDate.of(2008, 5, 8)), Date.valueOf(LocalDate.of(2008, 8, 1)));
         when(mockResultSet.getString("description")).thenReturn("A comprehensive guide to best practices in Java programming", "A handbook of agile software craftsmanship");
@@ -133,12 +135,13 @@ public class AuthorDaoTest {
         when(mockResultSet.getString("isbn")).thenReturn("978-0134685991", "978-0132350884");
         when(mockResultSet.getString("location")).thenReturn("Aisle 3", "Aisle 4");
 
+        String currentLanguage = "English";
         List<Book> books = authorDao.getBooksByAuthorName("John", "Doe", "English");
 
         assertNotNull(books);
         assertEquals(2, books.size());
-        assertEquals("Effective Java", books.get(0).getTitle("English"));
-        assertEquals("Clean Code", books.get(1).getTitle("English"));
+        assertEquals("Effective Java", books.get(0).getTitle(currentLanguage));
+        assertEquals("Clean Code", books.get(1).getTitle(currentLanguage));
     }
 
 

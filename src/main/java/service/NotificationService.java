@@ -25,8 +25,8 @@ public class NotificationService {
         notificationDao.saveNotification(notification);
     }
 
-    public void createNotificationForReservation(Long reservation, String currentLanguage) {
-         notificationDao.createNotificationForReservation(reservation, currentLanguage);
+    public void createNotificationForReservation(Long reservation) {
+        notificationDao.createNotificationForReservation(reservation);
 
 
     }
@@ -39,18 +39,15 @@ public class NotificationService {
         notificationDao.deleteNotification(reservation);
     }
 
-    public void updateNotification(Long reservationId, String currentLanguage) {
+    public void updateNotification(Long reservationId) {
 
-        notificationDao.updateNotification(reservationId, currentLanguage);
+        notificationDao.updateNotification(reservationId);
     }
 
-    public void createReminderNotification(Reservation reservation, String currentLanguage) {
+    public void createReminderNotification(Reservation reservation) {
         User user = reservation.getUser();
         Book book = reservation.getBook();
 
-//        String messageEn = "Reminder: Dear " + user.getUsername() + ", the book '" + book.getTitle(currentLanguage) + "' is due tomorrow. Please return it on time.";
-//        String messageUr = "یاد دہانی: محترم " + user.getUsername() + ", کتاب '" + book.getTitle(currentLanguage) + "' کل واپس کرنی ہے۔ براہ کرم وقت پر واپس کریں۔";
-//        String messageRu = "Напоминание: Уважаемый " + user.getUsername() + ", книга '" + book.getTitle(currentLanguage) + "' должна быть возвращена завтра. Пожалуйста, верните её вовремя.";
         String messageEn = "Reminder: Dear " + user.getUsername() + ", the book '" + book.getTitleEn() + "' is due tomorrow. Please return it on time.";
         String messageUr = "یاد دہانی: محترم " + user.getUsername() + ", کتاب '" + book.getTitleUr() + "' کل واپس کرنی ہے۔ براہ کرم وقت پر واپس کریں۔";
         String messageRu = "Напоминание: Уважаемый " + user.getUsername() + ", книга '" + book.getTitleRu() + "' должна быть возвращена завтра. Пожалуйста, верните её вовремя.";
