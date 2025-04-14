@@ -8,3 +8,4 @@ src/.idea/
 src/main/main.iml
 src/test/test.iml
 .idea/jarRepositories.xml
+.scannerwork/
