@@ -8,21 +8,54 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import model.entity.User;
 
-public class myProfileController extends LibraryController {
+/**
+ * Controller for handling user profile information and password changes.
+ */
+public class MyProfileController extends LibraryController {
 
-    @FXML private AnchorPane showState, editState, passwordChangeState;
-    @FXML private TextField changeNameField, changeEmailField, changePhoneField;
-    @FXML private PasswordField oldPasswordField, newPasswordField, confirmNewPasswordField;
-    @FXML private Label nameLabel, emailLabel, phoneLabel, errorMessage;
-    @FXML private Button changePasswordButton, donePasswordButton;
+    /** State pane for viewing user profile. */
+    @FXML private AnchorPane showState;
+    /** State pane for editing user profile. */
+    @FXML private AnchorPane editState;
+    /** State pane for changing user password. */
+    @FXML private AnchorPane passwordChangeState;
 
-    public void initializeProfilePage() {
-        // Initialize the profile information
+    /** TextField for changing name. */
+    @FXML private TextField changeNameField;
+    /** TextField for changing email. */
+    @FXML private TextField changeEmailField;
+    /** TextField for changing phone number. */
+    @FXML private TextField changePhoneField;
+
+    /** Field for entering old password. */
+    @FXML private PasswordField oldPasswordField;
+    /** Field for entering new password. */
+    @FXML private PasswordField newPasswordField;
+    /** Field for confirming new password. */
+    @FXML private PasswordField confirmNewPasswordField;
+
+    /** Label for displaying user's name. */
+    @FXML private Label nameLabel;
+    /** Label for displaying user's email. */
+    @FXML private Label emailLabel;
+    /** Label for displaying user's phone. */
+    @FXML private Label phoneLabel;
+    /** Label for showing error messages. */
+    @FXML private Label errorMessage;
+
+    /** Button to switch to password change mode. */
+    @FXML private Button changePasswordButton;
+    /** Button to confirm password change. */
+    @FXML private Button donePasswordButton;
+
+    /**
+     * Initializes the profile page with saved user data and default view state.
+     */
+    public final void initializeProfilePage() {
         nameLabel.setText(getSavedUsername());
         emailLabel.setText(getSavedEmail());
         phoneLabel.setText(getSavedPhoneNumber());
 
-        // Set initial visibility
         showState.setVisible(true);
         editState.setVisible(false);
         passwordChangeState.setVisible(false);
@@ -30,14 +63,21 @@ public class myProfileController extends LibraryController {
         donePasswordButton.setVisible(false);
     }
 
+    /**
+     * Handles switch to user edit mode.
+     */
     @FXML
     private void handleEditUser() {
-        // Show edit state and hide others
         showState.setVisible(false);
         editState.setVisible(true);
         passwordChangeState.setVisible(false);
     }
 
+    /**
+     * Handles saving changes to user profile.
+     *
+     * @throws Exception if the update fails
+     */
     @FXML
     private void handleDoneUser() throws Exception {
         String newName = changeNameField.getText();
@@ -45,7 +85,6 @@ public class myProfileController extends LibraryController {
         String newPhone = changePhoneField.getText();
         Long userId = getSavedUserId();
 
-        // Retrieve the user's information and update it
         User user = getUserService().getUserById(userId);
         if (user != null) {
             if (!newName.isEmpty()) {
@@ -61,15 +100,12 @@ public class myProfileController extends LibraryController {
                 setSavedPhoneNumber(newPhone);
             }
 
-            // Save the updated user
             getUserService().updateUser(user);
 
-            // Update profile information
             nameLabel.setText(getSavedUsername());
             emailLabel.setText(getSavedEmail());
             phoneLabel.setText(getSavedPhoneNumber());
 
-            // Show showState and hide others
             showState.setVisible(true);
             editState.setVisible(false);
             passwordChangeState.setVisible(false);
@@ -82,9 +118,11 @@ public class myProfileController extends LibraryController {
         }
     }
 
+    /**
+     * Handles switch to password change mode.
+     */
     @FXML
     private void handleChangePassword() {
-        // Show password change state and hide others
         showState.setVisible(false);
         editState.setVisible(false);
         passwordChangeState.setVisible(true);
@@ -92,6 +130,9 @@ public class myProfileController extends LibraryController {
         donePasswordButton.setVisible(true);
     }
 
+    /**
+     * Handles confirming password change and updating user password.
+     */
     @FXML
     private void handleDonePassword() {
         try {
@@ -102,36 +143,40 @@ public class myProfileController extends LibraryController {
 
             User user = getUserService().getUserById(userId);
             if (user != null) {
-                String hashedOldPassword = getUserService().hashPassword(oldPassword);
+                String hashedOldPassword = getUserService()
+                        .hashPassword(oldPassword);
                 if (!hashedOldPassword.equals(user.getPassword())) {
-                    errorMessage.setText(getResourceBundle().getString("error.oldPasswordIncorrect"));
+                    errorMessage.setText(getResourceBundle()
+                            .getString("error.oldPasswordIncorrect"));
                     return;
                 }
 
                 if (!newPassword.equals(confirmNewPassword)) {
-                    errorMessage.setText(getResourceBundle().getString("error.newPasswordsDoNotMatch"));
+                    errorMessage.setText(getResourceBundle()
+                            .getString("error.newPasswordsDoNotMatch"));
                     return;
                 }
 
-                String hashedNewPassword = getUserService().hashPassword(newPassword);
+                String hashedNewPassword = getUserService()
+                        .hashPassword(newPassword);
                 user.setPassword(hashedNewPassword);
                 getUserService().updateUser(user);
 
-                // Clear error message
                 errorMessage.setText("");
 
-                // Switch back to showState
                 showState.setVisible(true);
                 editState.setVisible(false);
                 passwordChangeState.setVisible(false);
                 changePasswordButton.setVisible(true);
                 donePasswordButton.setVisible(false);
             } else {
-                errorMessage.setText(getResourceBundle().getString("error.userNotFound"));
+                errorMessage.setText(getResourceBundle()
+                        .getString("error.userNotFound"));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            errorMessage.setText(getResourceBundle().getString("error.passwordChangeError"));
+            errorMessage.setText(getResourceBundle()
+                    .getString("error.passwordChangeError"));
         }
     }
 }

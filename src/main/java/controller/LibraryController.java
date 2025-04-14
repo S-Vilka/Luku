@@ -339,7 +339,7 @@ public class LibraryController {
     private void chooseAuthor() throws Exception {
         List<Author> authors = authorService.getAllAuthors();
         FXMLLoader loader = loadScene("/authorsPage.fxml");
-        authorsPageController controller = loader.getController();
+        AuthorsPageController controller = loader.getController();
         controller.setAuthors(authors);
     }
 
@@ -349,7 +349,7 @@ public class LibraryController {
         System.out.println("Books fetched for category: " + category + " - " + books.size() + " books found.");
 
         FXMLLoader loader = loadScene("/category.fxml");
-        categoryPageController controller = loader.getController();
+        CategoryPageController controller = loader.getController();
 
         // Map category names to resource bundle keys
         String categoryKey;
@@ -375,7 +375,7 @@ public class LibraryController {
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books); // Ensure books are passed to UI
-        System.out.println("Books set in categoryPageController: " + books.size() + " books.");
+        System.out.println("Books set in CategoryPageController: " + books.size() + " books.");
     }
 
     private void chooseLanguage(String language) throws Exception {
@@ -383,7 +383,7 @@ public class LibraryController {
         List<Book> books = bookService.getBooksByLanguage(language);
 
         FXMLLoader loader = loadScene("/language.fxml");
-        languagePageController controller = loader.getController();
+        LanguagePageController controller = loader.getController();
 
         // Map language names to resource bundle keys
         String languageKey;
@@ -527,7 +527,7 @@ public class LibraryController {
         List<Book> books = bookService.searchBooks(searchTerm, currentLanguage);
 
         FXMLLoader loader = loadScene("/searchPage.fxml");
-        searchPageController controller = loader.getController();
+        SearchPageController controller = loader.getController();
         controller.setSavedSearchTerm(searchTerm);
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
@@ -537,7 +537,7 @@ public class LibraryController {
     public void showAuthorBooks(Author author) throws Exception {
         FXMLLoader loader = loadScene("/booksByAuthor.fxml");
         currentAuthor = author;
-        booksByAuthorController controller = loader.getController();
+        BooksByAuthorController controller = loader.getController();
         controller.setSelectedAuthor(author); // Pass the selected author
         controller.loadBooksByAuthor(); // Load books for that author
     }
@@ -545,7 +545,7 @@ public class LibraryController {
     @FXML
     private void chooseProfile() throws Exception {
         FXMLLoader loader = loadScene("/myProfile.fxml");
-        myProfileController controller = loader.getController();
+        MyProfileController controller = loader.getController();
         controller.initializeProfilePage();
     }
 
@@ -553,7 +553,7 @@ public class LibraryController {
     private void chooseBookings() throws Exception {
         Long userId = getSavedUserId();
         FXMLLoader loader = loadScene("/myBookings.fxml");
-        myBookingController controller = loader.getController();
+        MyBookingController controller = loader.getController();
         controller.setBooksForUser(userId, currentLanguage);
     }
 
