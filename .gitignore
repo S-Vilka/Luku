@@ -7,4 +7,9 @@ src/.idea/
 .idea/runConfigurations/
 src/main/main.iml
 src/test/test.iml
+.env
+.env.docker
+
+
 .idea/jarRepositories.xml
+.scannerwork/

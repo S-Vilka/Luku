@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="authorBox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authorsPageController">
+<AnchorPane fx:id="authorBox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AuthorsPageController">
     <children>
         <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#eeeeee" height="328.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="503.0" />
         <ImageView fx:id="authorImage" fitHeight="225.0" fitWidth="202.0" layoutX="44.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">

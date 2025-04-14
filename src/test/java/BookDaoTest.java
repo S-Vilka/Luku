@@ -1,3 +1,4 @@
+import model.dao.impl.BaseDao;
 import model.dao.impl.BookDao;
 import model.entity.Author;
 import model.entity.Book;
@@ -26,8 +27,9 @@ public class BookDaoTest {
         mockConnection = mock(Connection.class);
         mockPreparedStatement = mock(PreparedStatement.class);
         mockResultSet = mock(ResultSet.class);
+        BaseDao.setConnection(mockConnection);
         bookDao = new BookDao();
-        bookDao.setConnection(mockConnection);
+//        bookDao.setConnection(mockConnection);
     }
 
 

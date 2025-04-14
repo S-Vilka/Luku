@@ -1,3 +1,4 @@
+import model.dao.impl.BaseDao;
 import model.dao.impl.UserDao;
 import model.entity.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +23,8 @@ public class UserDaoTest {
         mockConnection = mock(Connection.class);
         mockPreparedStatement = mock(PreparedStatement.class);
         userDao = new UserDao();
-        userDao.setConnection(mockConnection);
+        BaseDao.setConnection(mockConnection);
+//        userDao.setConnection(mockConnection);
     }
 
 

@@ -1,3 +1,4 @@
+import model.dao.impl.BaseDao;
 import model.dao.impl.NotificationDao;
 import model.dao.impl.ReservationDao;
 import model.dao.impl.UserDao;
@@ -28,7 +29,8 @@ public class NotificationDaoTest {
         mockPreparedStatement = mock(PreparedStatement.class);
         mockResultSet = mock(ResultSet.class);
         notificationDao = new NotificationDao();
-        notificationDao.setConnection(mockConnection);
+        BaseDao.setConnection(mockConnection);
+//        notificationDao.setConnection(mockConnection);
     }
 
 

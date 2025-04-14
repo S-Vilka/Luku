@@ -1,3 +1,4 @@
+import model.dao.impl.BaseDao;
 import model.dao.impl.ReservationDao;
 import model.entity.Book;
 import model.entity.Reservation;
@@ -26,7 +27,8 @@ public class ReservationDaoTest {
         mockPreparedStatement = mock(PreparedStatement.class);
         mockResultSet = mock(ResultSet.class);
         reservationDao = new ReservationDao();
-        reservationDao.setConnection(mockConnection);
+        BaseDao.setConnection(mockConnection);
+//        reservationDao.setConnection(mockConnection);
     }
 
     @Test
