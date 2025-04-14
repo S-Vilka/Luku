@@ -2,8 +2,6 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,15 +16,54 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class myBookingController extends LibraryController {
-    @FXML private Button extendReservation, returnBook;
-    @FXML private VBox bookVBox;
-    @FXML private javafx.scene.control.ScrollPane bookScrollPane;
-    @FXML private AnchorPane scrollBox, noBooks;
+/**
+ * Controller for displaying and managing user's book reservations.
+ */
+public class MyBookingController extends LibraryController {
 
-    public void setBooksForUser(Long userId, String currentLanguage) {
+    /** Spacing between book entries in the layout. */
+    private static final int BOOK_SPACING = 40;
+
+    /**
+     * Button to extend a reservation.
+     */
+    @FXML private Button extendReservation;
+
+    /**
+     * Button to return a reserved book.
+     */
+    @FXML private Button returnBook;
+
+    /**
+     * VBox container for displaying books.
+     */
+    @FXML private VBox bookVBox;
+
+    /**
+     * Scroll pane for book display.
+     */
+    @FXML private javafx.scene.control.ScrollPane bookScrollPane;
+
+    /**
+     * Scroll container pane.
+     */
+    @FXML private AnchorPane scrollBox;
+
+    /**
+     * Pane displayed when no books are available.
+     */
+    @FXML private AnchorPane noBooks;
+
+    /**
+     * Displays books reserved by the user.
+     *
+     * @param userId the ID of the user
+     * @param currentLanguage the current UI language
+     */
+    public final void setBooksForUser(final Long userId,
+                                      final String currentLanguage) {
         bookVBox.getChildren().clear();
-        bookVBox.setSpacing(40);
+        bookVBox.setSpacing(BOOK_SPACING);
 
         List<Reservation> reservations = getMyBookings(userId);
         if (reservations.isEmpty()) {
@@ -39,70 +76,85 @@ public class myBookingController extends LibraryController {
         }
 
         List<Book> books = reservations.stream()
-                .map(reservation -> getBookService().getBookById(reservation.getBookId()))
+                .map(res -> getBookService().getBookById(res.getBookId()))
                 .collect(Collectors.toList());
 
         HBox hBox = null;
         for (int i = 0; i < books.size(); i++) {
             if (i % 2 == 0) {
-                hBox = new HBox(40);
+                hBox = new HBox(BOOK_SPACING);
                 bookVBox.getChildren().add(hBox);
             }
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookingsBookBox.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/bookingsBookBox.fxml"));
                 loader.setResources(getResourceBundle());
                 AnchorPane bookBox = loader.load();
 
                 Label bookName = (Label) bookBox.lookup("#bookName");
                 Label author = (Label) bookBox.lookup("#author");
-                Label publicationDate = (Label) bookBox.lookup("#publicationDate");
+                Label publicationDate = (Label) bookBox.lookup(
+                        "#publicationDate");
                 Label borrowDate = (Label) bookBox.lookup("#borrowDate");
                 Label dueDate = (Label) bookBox.lookup("#dueDate");
                 Label bookId = (Label) bookBox.lookup("#bookId");
-                Button extendButton = (Button) bookBox.lookup("#extendButton");
-                Button returnButton = (Button) bookBox.lookup("#returnButton");
-                ImageView bookCover = (ImageView) bookBox.lookup("#bookCover");
+                Button extendButton = (Button) bookBox.lookup(
+                        "#extendButton");
+                Button returnButton = (Button) bookBox.lookup(
+                        "#returnButton");
+                ImageView bookCover = (ImageView) bookBox.lookup(
+                        "#bookCover");
 
                 Book book = books.get(i);
                 Reservation reservation = reservations.get(i);
                 bookName.setText(book.getTitle(getCurrentLanguage()));
 
-                // Fetch and concatenate author names
-                Set<Author> authorSet = getBookService().getAuthorsByBookId(book.getBookId());
+                Set<Author> authorSet = getBookService()
+                        .getAuthorsByBookId(book.getBookId());
                 String authorsText = authorSet.stream()
                         .map(a -> a.getFirstName() + " " + a.getLastName())
                         .collect(Collectors.joining(", "));
-                author.setText(authorsText.isEmpty() ? getResourceBundle().getString("unknownAuthor") : authorsText);
+                author.setText(authorsText.isEmpty()
+                        ? getResourceBundle().getString("unknownAuthor")
+                        : authorsText);
 
-                publicationDate.setText(book.getPublicationDate() != null ? book.getPublicationDate().toString() : "Unknown");
+                publicationDate.setText(book.getPublicationDate() != null
+                        ? book.getPublicationDate().toString()
+                        : "Unknown");
                 borrowDate.setText(reservation.getBorrowDate().toString());
                 dueDate.setText(reservation.getDueDate().toString());
                 bookId.setText(String.valueOf(book.getBookId()));
 
-                // ** Load book cover **
                 String imagePath = "/" + book.getCoverImage();
                 Image image;
                 try {
-                    image = new Image(getClass().getResourceAsStream(imagePath));
+                    image = new Image(getClass().getResourceAsStream(
+                            imagePath));
                     if (image.isError()) {
                         throw new Exception("Image not found");
                     }
                 } catch (Exception e) {
-                    image = new Image(getClass().getResourceAsStream("/bookpicture.jpg")); // Fallback image
+                    image = new Image(getClass().getResourceAsStream(
+                            "/bookpicture.jpg"));
                 }
                 bookCover.setImage(image);
 
                 Long bookIdNo = book.getBookId();
                 extendButton.setOnAction(event -> {
                     try {
-                        Reservation res = getReservationByUserAndBook(userId, bookIdNo);
+                        Reservation res = getReservationByUserAndBook(
+                                userId, bookIdNo);
                         if (res != null) {
-                            extendReservation(reservation.getReservationId());
-                            getNotificationService().updateNotification(res.getReservationId());
+                            extendReservation(
+                                    reservation.getReservationId());
+                            getNotificationService().updateNotification(
+                                    res.getReservationId());
                             FXMLLoader loader2 = loadScene("/myBookings.fxml");
                             loader2.setResources(getResourceBundle());
-                            myBookingController controller = loader2.getController();
-                            controller.setBooksForUser(userId, currentLanguage);
+                            MyBookingController controller =
+                                    loader2.getController();
+                            controller.setBooksForUser(userId,
+                                    currentLanguage);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -111,12 +163,17 @@ public class myBookingController extends LibraryController {
 
                 returnButton.setOnAction(event -> {
                     try {
-                        Reservation res = getReservationByUserAndBook(userId, bookIdNo);
+                        Reservation res = getReservationByUserAndBook(
+                                userId, bookIdNo);
                         if (res != null) {
-                            getBookService().setBookAvailability(bookIdNo, "Available");
+                            getBookService().setBookAvailability(bookIdNo,
+                                    "Available");
                             getUserService().decreaseUserBookCount(userId);
-                            getNotificationService().deleteNotificationByReservationId(reservation.getReservationId());
-                            getReservationService().deleteReservation(reservation.getReservationId());
+                            getNotificationService()
+                                    .deleteNotificationByReservationId(
+                                            reservation.getReservationId());
+                            getReservationService().deleteReservation(
+                                    reservation.getReservationId());
                             setBooksForUser(userId, currentLanguage);
                         }
                     } catch (Exception e) {
