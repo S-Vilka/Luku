@@ -1,107 +1,208 @@
 package model.entity;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import java.time.LocalDateTime;
-import java.util.List;
 
+
+/** * User entity class representing a user in the system.
+ * This class is mapped to the "users" table in the database.
+ */
 @Entity
 @Table(name = "users")
 public class User {
+    /**
+     * Unique identifier for the user.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
+    /**
+     * The username of the user.
+     */
     private String username;
+    /**
+     * The password of the user.
+     */
     private String password;
+    /**
+     * The email of the user.
+     */
     private String email;
+    /**
+     * The phone number of the user.
+     */
     private String phone;
+    /**
+     * The role of the user (e.g., admin, user).
+     */
     private String role;
+    /**
+     * The number of books associated with the user.
+     */
     private int bookCount;
+    /**
+     * The date and time when the user was created.
+     */
     private LocalDateTime createdAt;
+    /**
+     * The date and time when the user was deleted (if applicable).
+     */
     private LocalDateTime deletedAt;
 
-
-    // Default constructor
+    /**
+     * Default constructor for the User class.
+     */
     public User() {
     }
 
-    // Constructor with bookId
-    public User(Long userId) {
-        this.userId = userId;
+    /**
+     * Constructor for the User class with userId.
+     * @param userIdSelected The unique identifier for the user.
+     */
+    public User(final Long userIdSelected) {
+        this.userId = userIdSelected;
     }
 
-    // Getters and Setters
+    /**
+     * @return userId
+     */
     public Long getUserId() {
         return userId;
     }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    /**
+     * Sets the userId.
+     * @param userIdSelected The unique identifier for the user.
+     */
+    public void setUserId(final Long userIdSelected) {
+        this.userId = userIdSelected;
     }
 
+    /**
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
+    /**
+     * Sets the username.
+     * @param usernameSelected The username of the user.
+     */
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(final String usernameSelected) {
+        this.username = usernameSelected;
     }
+    /**
+     * @return password
+     */
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * Sets the password.
+     * @param passwordSelected The password of the user.
+     */
+    public void setPassword(final String passwordSelected) {
+        this.password = passwordSelected;
     }
 
+    /**
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
+    /**
+     * Sets the email.
+     * @param emailSelected The email of the user.
+     */
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(final String emailSelected) {
+        this.email = emailSelected;
     }
 
+    /**
+     * @return phone
+     */
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    /**
+     * Sets the phone number.
+     * @param phoneSelected The phone number of the user.
+     */
+
+    public void setPhone(final String phoneSelected) {
+        this.phone = phoneSelected;
     }
 
+    /**
+     * @return role
+     */
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    /**
+     * Sets the role.
+     * @param roleSelected The role of the user (e.g., admin, user).
+     */
+    public void setRole(final String roleSelected) {
+        this.role = roleSelected;
     }
+
+    /**
+     * @return bookCount
+     */
 
     public int getBookCount() {
         return bookCount;
     }
 
-    public void setBookCount(int bookCount) {
-        this.bookCount = bookCount;
+    /**
+     * Sets the book count.
+     * @param bookCountSelected The number of books associated with the user.
+     */
+    public void setBookCount(final int bookCountSelected) {
+        this.bookCount = bookCountSelected;
     }
+
+    /**
+     * @return createdAt
+     */
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    /**
+     * Sets the createdAt.
+     * @param createdAtSelected The date and time when the user was created.
+     */
+
+    public void setCreatedAt(final LocalDateTime createdAtSelected) {
+        this.createdAt = createdAtSelected;
     }
 
+    /**
+     * @return deletedAt
+     */
     public LocalDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+    /**
+     * Sets the deletedAt.
+     * @param deletedAtSelected The date and time
+     * when the user was deleted (if applicable).
+     */
+    public void setDeletedAt(final LocalDateTime deletedAtSelected) {
+        this.deletedAt = deletedAtSelected;
     }
-
 }

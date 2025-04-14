@@ -7,11 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorDao extends BaseDao {
+public class AuthorDao {
 
     public Author getAuthorById(Long authorId) {
         String query = "SELECT * FROM authors WHERE author_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
             stmt.setLong(1, authorId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -26,7 +26,7 @@ public class AuthorDao extends BaseDao {
     public List<Author> getAllAuthors() {
         List<Author> authors = new ArrayList<>();
         String query = "SELECT * FROM authors";
-        try (Statement stmt = connection.createStatement()) {
+        try (Statement stmt = BaseDao.getConnection().createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 authors.add(mapRowToAuthor(rs));
@@ -39,7 +39,7 @@ public class AuthorDao extends BaseDao {
 
     public void saveAuthor(Author author) {
         String query = "INSERT INTO authors (first_name, last_name, description, date_of_birth, place_of_birth, profile_image) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, author.getFirstName());
             stmt.setString(2, author.getLastName());
             stmt.setString(3, author.getDescription());
@@ -60,7 +60,7 @@ public class AuthorDao extends BaseDao {
 
     public void updateAuthor(Author author) {
         String query = "UPDATE authors SET first_name = ?, last_name = ?, description = ?, date_of_birth = ?, place_of_birth = ?, profile_image = ? WHERE author_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
             stmt.setString(1, author.getFirstName());
             stmt.setString(2, author.getLastName());
             stmt.setString(3, author.getDescription());
@@ -76,7 +76,7 @@ public class AuthorDao extends BaseDao {
 
     public void deleteAuthor(Long authorId) {
         String query = "DELETE FROM authors WHERE author_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
             stmt.setLong(1, authorId);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -102,7 +102,7 @@ public class AuthorDao extends BaseDao {
                 "JOIN writes w ON b.book_id = w.book_id " +
                 "JOIN authors a ON w.author_id = a.author_id " +
                 "WHERE a.first_name LIKE ? AND a.last_name LIKE ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
             stmt.setString(1, "%" + authorFirstName + "%");
             stmt.setString(2, "%" + authorLastName + "%");
             ResultSet rs = stmt.executeQuery();

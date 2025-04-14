@@ -13,11 +13,26 @@ import service.UserService;
 import java.time.LocalDateTime;
 
 public class SignUpController extends LibraryController {
-    @FXML private TextField usernameField, emailField, teacherID;
-    @FXML private PasswordField passwordField, repeatPassword;
+    /**
+     * This class handles the sign-up process for new users.
+     * It validates user input,
+     * checks for existing users, and registers new users.
+     */
+    @FXML private TextField usernameField;
+    /** TextField for the username input. */
+    @FXML private TextField emailField;
+    /** TextField for the teacher ID input. */
+    @FXML private TextField teacherID;
+    /** PasswordField for the password input. */
+    @FXML private PasswordField passwordField;
+    /** PasswordField for the password confirmation input. */
+    @FXML private PasswordField repeatPassword;
+    /** Label for displaying error messages. */
     @FXML private Label wrongLogIn;
+    /** Label for displaying error messages. */
     @FXML private Button userProfile;
 
+    /** Initialize the class. */
     @FXML
     public void initialize() {
         // Set Enter key event listener for all input fields
@@ -28,7 +43,7 @@ public class SignUpController extends LibraryController {
     }
 
     @FXML
-    private void handleEnterKey(KeyEvent event) {
+    private void handleEnterKey(final KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             try {
                 handleSignup();
@@ -54,7 +69,8 @@ public class SignUpController extends LibraryController {
 
         // Check if passwords match
         if (!password.equals(repeat)) {
-            wrongLogIn.setText(getResourceBundle().getString("passwords.mismatch"));
+            wrongLogIn.setText(getResourceBundle()
+                    .getString("passwords.mismatch"));
             wrongLogIn.setStyle("-fx-text-fill: red;");
             return;
         }
@@ -72,7 +88,15 @@ public class SignUpController extends LibraryController {
         startDueDateChecker();
     }
 
-    public void registerUserSimple(String username, String password, String email) {
+    /**
+     * Registers a new user with the provided username, password, and email.
+     *
+     * @param username the username of the new user
+     * @param password the password of the new user
+     * @param email    the email of the new user
+     */
+    public void registerUserSimple(final String username,
+                                   final String password, final String email) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
