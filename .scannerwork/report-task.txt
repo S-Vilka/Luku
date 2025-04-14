@@ -1,6 +1,0 @@
-projectKey=my-luku-project
-serverUrl=http://localhost:9000
-serverVersion=25.4.0.105899
-dashboardUrl=http://localhost:9000/dashboard?id=my-luku-project
-ceTaskId=d29fefb9-b8ed-4b0d-b692-307c0300d692
-ceTaskUrl=http://localhost:9000/api/ce/task?id=d29fefb9-b8ed-4b0d-b692-307c0300d692
