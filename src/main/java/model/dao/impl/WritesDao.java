@@ -9,11 +9,11 @@ import model.entity.Book;
 import model.entity.Writes;
 
 
-public class WritesDao extends BaseDao {
+public class WritesDao {
 
     public Writes getWritesById(Long writesId) {
         String query = "SELECT * FROM writes WHERE writes_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
             stmt.setLong(1, writesId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -28,7 +28,7 @@ public class WritesDao extends BaseDao {
     public List<Writes> getWritesByAuthorId(Long authorId) {
         List<Writes> writes = new ArrayList<>();
         String query = "SELECT * FROM writes WHERE author_id = ?";
-            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
 //                stmt.setLong(1, writesId);
             stmt.setLong(1, authorId);
             ResultSet rs = stmt.executeQuery();
@@ -44,7 +44,7 @@ public class WritesDao extends BaseDao {
     public List<Writes> getWritesByBookId(Long bookId) {
         List<Writes> writes = new ArrayList<>();
         String query = "SELECT * FROM writes WHERE book_id = ?";
-            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
 
             stmt.setLong(1, bookId);
             ResultSet rs = stmt.executeQuery();

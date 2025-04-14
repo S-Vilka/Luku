@@ -1,4 +1,5 @@
 import model.dao.impl.AuthorDao;
+import model.dao.impl.BaseDao;
 import model.entity.Author;
 import model.entity.Book;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +26,9 @@ public class AuthorDaoTest {
         mockConnection = mock(Connection.class);
         mockPreparedStatement = mock(PreparedStatement.class);
         mockResultSet = mock(ResultSet.class);
+        BaseDao.setConnection(mockConnection);
         authorDao = new AuthorDao();
-        authorDao.setConnection(mockConnection);
+//        authorDao.setConnection(mockConnection);
     }
 
     @Test
