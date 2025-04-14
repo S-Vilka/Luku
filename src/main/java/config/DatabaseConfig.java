@@ -14,7 +14,7 @@ public class DatabaseConfig {
     public static final String PASSWORD = dotenv.get("DB_PASSWORD");
 
     static {
-        // Print environment variables to verify they are being read correctly
+        // Print environment variables to verify they are being read correctly.
         System.out.println("DB_URL: " + DB_URL);
         System.out.println("DB_USER: " + USER);
         System.out.println("DB_PASSWORD: " + PASSWORD);
