@@ -258,4 +258,74 @@ Make sure you are in docker folder of the project. To run the Docker multiple co
 The project uses MariaDB to store data. The changes made while running docker or locally will be persisted in the database. 
 It is because the database is mounted to the host machine.
 
+## Code Quality & Static Analysis
+
+### **Checkstyle Plugin (IntelliJ IDEA)**
+
+We use the **Checkstyle plugin** in IntelliJ IDEA to maintain consistent coding standards across the codebase.
+
+**Checkstyle configuration:**
+
+- Configuration used: `Sun Checks`
+- Total issues found initially: `1622`
+- Issues resolved: `1597`
+
+**Steps to Set Up and Run:**
+
+1. **Install the Checkstyle Plugin:**
+
+   - Go to `Settings → Plugins → Marketplace`
+   - Search for `Checkstyle-IDEA` and install it.
+
+2. **Configure Checkstyle:**
+
+   - Go to `Settings → Tools → Checkstyle`
+   - Click `+` to add a configuration.
+   - Select `"Sun Checks"` from built-in configurations or load a custom `checkstyle.xml`.
+
+3. **Run the Check:**
+
+   - Right-click your project or file → `Checkstyle → Check Current File` or `Scan with Checkstyle`.
+
+This plugin helped us identify and fix **1597** code style violations out of **1622**, ensuring a clean and maintainable codebase.
+
+---
+## SonarQube Code Analysis
+
+We use **SonarQube** for comprehensive static code analysis, focusing on **security**, **reliability**, and **maintainability**.
+
+**Current Quality Gate Rating:**
+
+- **Security: A**
+- **Reliability: A**
+- **Maintainability: A**
+
+### How to Run SonarQube Analysis
+
+1. **Start SonarQube Server (if running locally):**
+   - Navigate to the `bin` directory of your SonarQube installation.
+   - Run the appropriate script:
+     - On Windows: `StartSonar.bat`
+     - On Linux/Mac: `./sonar.sh start`
+   - Access the server at `http://localhost:9000`.
+
+2. **Configure Your Project:**
+   - Create a `sonar-project.properties` file in the root of your project with the following content:
+     ```properties
+     sonar.projectKey=your_project_key
+     sonar.host.url=http://localhost:9000
+     sonar.login=your_generated_token
+     sonar.sources=src
+     ```
+
+3. **Run Sonar Scanner:**
+   - Open a terminal in your project directory.
+   - Execute the command:
+     ```bash
+     sonar-scanner
+     ```
+
+4. **View Results:**
+   - Open `http://localhost:9000` in your browser.
+   - Navigate to your project to view the analysis results.
 
