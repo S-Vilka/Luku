@@ -101,7 +101,7 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                <exclude>**/sampleData/**</exclude>
+                                <exclude>**/sampledata/**</exclude>
                                 <exclude>**/config/**</exclude>
                                 <exclude>**/util/**</exclude>
                                 <exclude>**/view/**</exclude>
@@ -110,6 +110,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 

@@ -145,11 +145,11 @@ public final class UserService {
     /**
      * Retrieves a user by their unique ID.
      *
-     * @param Id the ID of the user
+     * @param id the ID of the user
      * @return the User object if found, otherwise null
      */
-    public User getUserById(final Long Id) {
-        return userDao.getUserById(Id);
+    public User getUserById(final Long id) {
+        return userDao.getUserById(id);
     }
 
     /**

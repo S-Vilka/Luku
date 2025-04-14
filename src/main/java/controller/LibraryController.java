@@ -1,10 +1,17 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import model.entity.*;
+import model.entity.Author;
+import model.entity.Book;
+import model.entity.Notification;
+import model.entity.Reservation;
+import model.entity.User;
 import service.UserService;
 import service.BookService;
 import service.ReservationService;
@@ -27,40 +34,182 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class LibraryController {
-    private static View View;
+    /**
+     * This class serves as the controller for the library application, handling
+     * user interactions, page navigation, and service management.
+     */
+    private static View view;
+    /** Stage for the primary application window. */
     private static Stage primaryStage;
+    /** Page Navigation Variables. */
     private static UserService userService;
+    /** Service Variables. */
     private static BookService bookService;
+    /** Service Variables. */
     private static ReservationService reservationService;
+    /** Service Variables. */
     private static NotificationService notificationService;
+    /** Service Variables. */
     private static AuthorService authorService;
+    /** Service Variables. */
     private static String savedUsername;
+    /** Service Variables. */
     private static String savedEmail;
+    /** Service Variables. */
     private static Long savedUserId;
+    /** Service Variables. */
     private static String savedPhoneNumber;
+    /** Service Variables. */
     private static ScheduledExecutorService scheduler;
+    /** Service Variables. */
     private static boolean notiCircleStatus;
+    /** Service Variables. */
     private static String currentLanguage = "English";
+    /** Service Variables. */
     private static Locale locale;
+    /** Service Variables. */
     private static ResourceBundle bundle;
+    /** Service Variables. */
     private static String currentBodyBoxFXML = null;
+    /** Service Variables. */
     private static String currentCategory = null;
+    /** Service Variables. */
     private static String currentBookLanguage = null;
+    /** Service Variables. */
     private static Author currentAuthor = null;
+    /** Service Variables. */
     private static String currentSearchTerm = null;
-
-
-    @FXML private TextField email, usernameField, emailField, teacherID, searchBar1;
-    @FXML private PasswordField password, passwordField, repeatPassword;
-    @FXML private Button searchButton21, logoutButton, myBookingsButton, enterBurron, loginButtonTop, categoryButton, languageButton, authorButton, searchButton, loginButton, signupButton, userProfile, fictionButton, nonFictionButton, scienceButton, historyButton, englishButton, finnishButton, swedishButton, searchButton2, reserveButton, extendButton, returnButton, appLanguage, languageEnglish, languageRussian, languageUrdu, profileButton;
-    @FXML private Label locationTag, wrongLogIn, bookName, author, publicationDate, availability, borrowDate, dueDate, bookId, slogan;
-    @FXML private ImageView noti, languageBall;
+    /** Service Variables. */
+    private static final int MAX_BOOKS_FOR_STUDENTS = 5;
+    /** Service Variables. */
+    private static final int EXTEND_RESERVATION_DAYS = 7;
+    /** Service Variables. */
+    @FXML private TextField email;
+    /** Service Variables. */
+    @FXML private TextField usernameField;
+    /** Service Variables. */
+    @FXML private TextField emailField;
+    /** Service Variables. */
+    @FXML private TextField teacherID;
+    /** Service Variables. */
+    @FXML private TextField searchBar1;
+    /** Service Variables. */
+    @FXML private PasswordField password;
+    /** Service Variables. */
+    @FXML private PasswordField passwordField;
+    /** Service Variables. */
+    @FXML private PasswordField repeatPassword;
+    /** Service Variables. */
+    @FXML private Button searchButton21;
+    /** Service Variables. */
+    @FXML private Button logoutButton;
+    /** Service Variables. */
+    @FXML private Button myBookingsButton;
+    /** Service Variables. */
+    @FXML private Button enterBurron;
+    /** Service Variables. */
+    @FXML private Button loginButtonTop;
+    /** Service Variables. */
+    @FXML private Button categoryButton;
+    /** Service Variables. */
+    @FXML private Button languageButton;
+    /** Service Variables. */
+    @FXML private Button authorButton;
+    /** Service Variables. */
+    @FXML private Button searchButton;
+    /** Service Variables. */
+    @FXML private Button loginButton;
+    /** Service Variables. */
+    @FXML private Button signupButton;
+    /** Service Variables. */
+    @FXML private Button userProfile;
+    /** Service Variables. */
+    @FXML private Button fictionButton;
+    /** Service Variables. */
+    @FXML private Button nonFictionButton;
+    /** Service Variables. */
+    @FXML private Button scienceButton;
+    /** Service Variables. */
+    @FXML private Button historyButton;
+    /** Service Variables. */
+    @FXML private Button englishButton;
+    /** Service Variables. */
+    @FXML private Button finnishButton;
+    /** Service Variables. */
+    @FXML private Button swedishButton;
+    /** Service Variables. */
+    @FXML private Button searchButton2;
+    /** Service Variables. */
+    @FXML private Button reserveButton;
+    /** Service Variables. */
+    @FXML private Button extendButton;
+    /** Service Variables. */
+    @FXML private Button returnButton;
+    /** Service Variables. */
+    @FXML private Button appLanguage;
+    /** Service Variables. */
+    @FXML private Button languageEnglish;
+    /** Service Variables. */
+    @FXML private Button languageRussian;
+    /** Service Variables. */
+    @FXML private Button languageUrdu;
+    /** Service Variables. */
+    @FXML private Button profileButton;
+    /** Service Variables. */
+    @FXML private Label locationTag;
+    /** Service Variables. */
+    @FXML private Label wrongLogIn;
+    /** Service Variables. */
+    @FXML private Label bookName;
+    /** Service Variables. */
+    @FXML private Label author;
+    /** Service Variables. */
+    @FXML private Label publicationDate;
+    /** Service Variables. */
+    @FXML private Label availability;
+    /** Service Variables. */
+    @FXML private Label borrowDate;
+    /** Service Variables. */
+    @FXML private Label dueDate;
+    /** Service Variables. */
+    @FXML private Label bookId;
+    /** Service Variables. */
+    @FXML private Label slogan;
+    /** Service Variables. */
+    @FXML private ImageView noti;
+    /** Service Variables. */
+    @FXML private ImageView languageBall;
+    /** Service Variables. */
     @FXML private Circle notiCircle;
+    /** Service Variables. */
     @FXML private VBox notiVBox;
-    @FXML private AnchorPane searchBox, categoryList, languageList, userList, bookBox, userProfileBox, loginBox, notiBox, bodyBox, appLanguageBox;
+    /** Service Variables. */
+    @FXML private AnchorPane searchBox;
+    /** Service Variables. */
+    @FXML private AnchorPane categoryList;
+    /** Service Variables. */
+    @FXML private AnchorPane languageList;
+    /** Service Variables. */
+    @FXML private AnchorPane userList;
+    /** Service Variables. */
+    @FXML private AnchorPane bookBox;
+    /** Service Variables. */
+    @FXML private AnchorPane userProfileBox;
+    /** Service Variables. */
+    @FXML private AnchorPane loginBox;
+    /** Service Variables. */
+    @FXML private AnchorPane notiBox;
+    /** Service Variables. */
+    @FXML private AnchorPane bodyBox;
+    /** Service Variables. */
+    @FXML private AnchorPane appLanguageBox;
+    /** Service Variables. */
     @FXML private ImageView lukulogo;
 
-
+    /**
+     * Constructor for LibraryController.
+     * Initializes the services used in the application.
+     */
     public LibraryController() {
         this.userService = new UserService();
         this.bookService = new BookService();
@@ -69,24 +218,32 @@ public class LibraryController {
         this.authorService = new AuthorService();
     }
 
+    /**
+     * Initializes the controller and sets the default language.
+     */
     public void updateHeader() {
         disablePanelVisibility();
-        AnchorPane loginBox = (AnchorPane) primaryStage.getScene().lookup("#loginBox");
-        AnchorPane userProfileBox = (AnchorPane) primaryStage.getScene().lookup("#userProfileBox");
-        Button appLanguage = (Button) primaryStage.getScene().lookup("#appLanguage");
-        appLanguage.setText(currentLanguage);
+        AnchorPane loginBox1 = (AnchorPane) primaryStage
+                .getScene().lookup("#loginBox");
+        AnchorPane userProfileBox1 = (AnchorPane) primaryStage
+                .getScene().lookup("#userProfileBox");
+        Button appLanguage1 = (Button) primaryStage
+                .getScene().lookup("#appLanguage");
+        appLanguage1.setText(currentLanguage);
 
-        if (loginBox != null && userProfileBox != null) {
+        if (loginBox1 != null && userProfileBox1 != null) {
             if (AuthManager.getInstance().validateToken()) {
-                loginBox.setVisible(false);
-                userProfileBox.setVisible(true);
-                userProfile = (Button) primaryStage.getScene().lookup("#userProfile");
+                loginBox1.setVisible(false);
+                userProfileBox1.setVisible(true);
+                userProfile = (Button) primaryStage
+                        .getScene().lookup("#userProfile");
                 userProfile.setText(savedUsername);
-                Circle notiCircle = (Circle) primaryStage.getScene().lookup("#notiCircle");
-                notiCircle.setVisible(notiCircleStatus);
+                Circle notiCircle1 = (Circle) primaryStage
+                        .getScene().lookup("#notiCircle");
+                notiCircle1.setVisible(notiCircleStatus);
             } else {
-                loginBox.setVisible(true);
-                userProfileBox.setVisible(false);
+                loginBox1.setVisible(true);
+                userProfileBox1.setVisible(false);
             }
         } else {
             System.out.println("Error: loginBox or userProfileBox not found.");
@@ -112,7 +269,12 @@ public class LibraryController {
         setLanguageText(currentBodyBoxFXML);
     }
 
-    public void setLanguageText(String fxmlFile) {
+    /**
+     * Sets the language text based on the selected language.
+     *
+     * @param fxmlFile The FXML file to reload.
+     */
+    public void setLanguageText(final String fxmlFile) {
         if (currentLanguage.equals("English")) {
             setLocale(new Locale("en", "US"));
         } else if (currentLanguage.equals("Русский")) {
@@ -120,7 +282,8 @@ public class LibraryController {
         } else if (currentLanguage.equals("اردو")) {
             setLocale(new Locale("ur", "Pak"));
         }
-        setResourceBundle(ResourceBundle.getBundle("resource_bundle", getCurrentLocale()));
+        setResourceBundle(ResourceBundle
+                .getBundle("resource_bundle", getCurrentLocale()));
 
         // Reload the FXML to apply the new locale
         try {
@@ -131,8 +294,15 @@ public class LibraryController {
         updateHeader();
     }
 
-    public void reloadFXML(String fxmlFile) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainpage.fxml"));
+    /**
+     * Reloads the FXML file and sets the controller.
+     *
+     * @param fxmlFile The FXML file to reload.
+     * @throws Exception If an error occurs during loading.
+     */
+    public void reloadFXML(final String fxmlFile) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass()
+                .getResource("/mainpage.fxml"));
         loader.setController(this);
         loader.setResources(getResourceBundle());
         Parent root = loader.load();
@@ -163,11 +333,13 @@ public class LibraryController {
         notiVBox.getChildren().clear();
         User user = userService.getUserByEmail(savedEmail);
         Long userId = user.getUserId();
-        List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
+        List<Notification> notifications = notificationService
+                .getNotificationsByUserId(userId);
         Collections.reverse(notifications);
         for (Notification notification : notifications) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/notiBox.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass()
+                        .getResource("/notiBox.fxml"));
                 AnchorPane notiPane = loader.load();
                 Label notiTime = (Label) notiPane.lookup("#notiTime");
                 Label notiMessage = (Label) notiPane.lookup("#notiMessage");
@@ -197,16 +369,21 @@ public class LibraryController {
 //== Notification Functions ==//
 
 //== Check Due Dates ==//
+    /**
+     * Starts a scheduled task to check for due dates every minute.
+     */
     public void startDueDateChecker() {
         scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::checkDueDates, 0, 1, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this::checkDueDates,
+                0, 1, TimeUnit.MINUTES);
     }
 
     private void checkDueDates() {
         try {
             User user = userService.getUserByEmail(savedEmail);
             Long userId = user.getUserId();
-            List<Reservation> reservations = reservationService.getReservationsDueSoon(userId);
+            List<Reservation> reservations = reservationService
+                    .getReservationsDueSoon(userId);
             for (Reservation reservation : reservations) {
                 notificationService.createReminderNotification(reservation);
             }
@@ -219,6 +396,9 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Stops the scheduled task for checking due dates.
+     */
     public void stopDueDateChecker() {
         if (scheduler != null) {
             scheduler.shutdown();
@@ -227,55 +407,81 @@ public class LibraryController {
 //== Check Due Dates ==//
 
 //** Book Reservation Functions **//
-    public void chooseReserveCategory(Long bookId) throws Exception {
+    /**
+     * Chooses a book to reserve based on the selected category.
+     *
+     * @param bookId1 The ID of the book to reserve.
+     * @throws Exception If an error occurs during reservation.
+     */
+    public void chooseReserveCategory(final Long bookId1) throws Exception {
         Long userId = getSavedUserId();
         if (userId == null) {
             throw new IllegalStateException("User is not logged in.");
         }
 
-        Book book = bookService.getBookById(bookId);
+        Book book = bookService.getBookById(bookId1);
         String category = book.getCategory();
 
         try {
-            reserveBook(userId, bookId);
+            reserveBook(userId, bookId1);
             chooseCategory(category);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void chooseReserveLanguage(Long bookId) throws Exception {
+    /**
+     * Chooses a book to reserve based on the selected language.
+     *
+     * @param bookId1 The ID of the book to reserve.
+     * @throws Exception If an error occurs during reservation.
+     */
+    public void chooseReserveLanguage(final Long bookId1) throws Exception {
         Long userId = getSavedUserId();
         if (userId == null) {
             throw new IllegalStateException("User is not logged in.");
         }
 
-        Book book = bookService.getBookById(bookId);
+        Book book = bookService.getBookById(bookId1);
         String language = book.getLanguage();
 
         try {
-            reserveBook(userId, bookId);
+            reserveBook(userId, bookId1);
             chooseLanguage(language);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void chooseReserveSearch(Long bookId, String searchTerm) throws Exception {
+    /**
+     * Chooses a book to reserve based on the search term.
+     *
+     * @param bookId1 The ID of the book to reserve.
+     * @param searchTerm The search term used for searching books.
+     * @throws Exception If an error occurs during reservation.
+     */
+    public void chooseReserveSearch(final Long bookId1,
+                                    final String searchTerm) throws Exception {
         Long userId = getSavedUserId();
         if (userId == null) {
             throw new IllegalStateException("User is not logged in.");
         }
 
         try {
-            reserveBook(userId, bookId);
+            reserveBook(userId, bookId1);
             goToSearchPage(searchTerm);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void reserveBook(Long userId, Long bookId) {
+    /**
+     * Reserves a book for the user.
+     *
+     * @param userId The ID of the user reserving the book.
+     * @param bookId1 The ID of the book to reserve.
+     */
+    public void reserveBook(final Long userId, final Long bookId1) {
         if (!AuthManager.getInstance().validateToken()) {
             throw new SecurityException("Invalid token");
         }
@@ -283,48 +489,68 @@ public class LibraryController {
         if (user == null) {
             throw new IllegalArgumentException("User not found.");
         }
-        if ("student".equalsIgnoreCase(user.getRole()) && user.getBookCount() >= 5) {
-            throw new IllegalArgumentException("Students cannot reserve more than 5 books.");
+        if ("student".equalsIgnoreCase(user.getRole()) && user
+                .getBookCount() >= MAX_BOOKS_FOR_STUDENTS) {
+            throw new IllegalArgumentException(
+                    "Students cannot reserve more than 5 books.");
         }
 
         Reservation reservation = new Reservation();
         reservation.setUserId(userId);
-        reservation.setBookId(bookId);
+        reservation.setBookId(bookId1);
 
         reservationService.createReservation(reservation);
-        notificationService.createNotificationForReservation(reservation.getReservationId());
-        Circle notiCircle = (Circle) primaryStage.getScene().lookup("#notiCircle");
-        if (notiCircle != null) {
-            notiCircle.setVisible(true);
+        notificationService.createNotificationForReservation(
+                reservation.getReservationId());
+        Circle notiCircle1 = (Circle) primaryStage
+                .getScene().lookup("#notiCircle");
+        if (notiCircle1 != null) {
+            notiCircle1.setVisible(true);
         }
         setNotiCircleStatus(true);
-        bookService.setBookAvailability(bookId, "Checked Out");
+        bookService.setBookAvailability(bookId1, "Checked Out");
 
         // Update the user's book count
         user.setBookCount(user.getBookCount() + 1);
         userService.updateUser(user);
     }
 
-    public void extendReservation(Long reservationId) {
-        Reservation reservation = reservationService.getReservationById(reservationId);
+    /**
+     * Returns a book that the user has reserved.
+     *
+     * @param reservationId The ID of the reservation to return.
+     */
+    public void extendReservation(final Long reservationId) {
+        Reservation reservation = reservationService
+                .getReservationById(reservationId);
         if (reservation != null) {
-            LocalDateTime newDueDate = reservation.getDueDate().plusDays(7);
+            LocalDateTime newDueDate = reservation
+                    .getDueDate().plusDays(EXTEND_RESERVATION_DAYS);
             reservation.setDueDate(newDueDate);
             reservationService.updateReservation(reservation);
         } else {
-            throw new IllegalArgumentException("Reservation with ID " + reservationId + " not found.");
+            throw new IllegalArgumentException(
+                    "Reservation with ID " + reservationId + " not found.");
         }
     }
 //** Book Reservation Functions **//
 
 //== Page Navigation Functions ==//
-    public FXMLLoader loadScene(String fxmlFile) throws Exception {
+    /**
+     * Loads the specified FXML file and sets it as the current scene.
+     *
+     * @param fxmlFile The FXML file to load.
+     * @return The FXMLLoader used to load the FXML file.
+     * @throws Exception If an error occurs during loading.
+     */
+    public FXMLLoader loadScene(final String fxmlFile) throws Exception {
         currentBodyBoxFXML = fxmlFile;
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         loader.setResources(getResourceBundle());
         Parent component = loader.load();
-        AnchorPane bodyBox = (AnchorPane) primaryStage.getScene().lookup("#bodyBox");
-        bodyBox.getChildren().setAll(component);
+        AnchorPane bodyBox1 = (AnchorPane) primaryStage
+                .getScene().lookup("#bodyBox");
+        bodyBox1.getChildren().setAll(component);
         updateHeader();
         return loader;
     }
@@ -343,10 +569,17 @@ public class LibraryController {
         controller.setAuthors(authors);
     }
 
-    public void chooseCategory(String category) throws Exception {
+    /**
+     * Chooses a category and loads the corresponding books.
+     *
+     * @param category The category to choose.
+     * @throws Exception If an error occurs during loading.
+     */
+    public void chooseCategory(final String category) throws Exception {
         // Fetch books without requiring authentication
         List<Book> books = bookService.getBooksByCategory(category);
-        System.out.println("Books fetched for category: " + category + " - " + books.size() + " books found.");
+        System.out.println("Books fetched for category: "
+                + category + " - " + books.size() + " books found.");
 
         FXMLLoader loader = loadScene("/category.fxml");
         CategoryPageController controller = loader.getController();
@@ -367,7 +600,7 @@ public class LibraryController {
                 categoryKey = "science.button";
                 break;
             default:
-                categoryKey = category; // Fallback to the original category if no match
+                categoryKey = category;
         }
 
         String categoryTranslation = getResourceBundle().getString(categoryKey);
@@ -375,10 +608,11 @@ public class LibraryController {
         controller.clearBookLists();
         controller.getAvailabilityCheckBox().setSelected(false);
         controller.setBooks(books); // Ensure books are passed to UI
-        System.out.println("Books set in CategoryPageController: " + books.size() + " books.");
+        System.out.println("Books set in CategoryPageController: "
+                + books.size() + " books.");
     }
 
-    private void chooseLanguage(String language) throws Exception {
+    private void chooseLanguage(final String language) throws Exception {
         // Fetch books by language
         List<Book> books = bookService.getBooksByLanguage(language);
 
@@ -398,7 +632,7 @@ public class LibraryController {
                 languageKey = "swedish.button";
                 break;
             default:
-                languageKey = language; // Fallback to the original language if no match
+                languageKey = language;
         }
 
         String languageTranslation = getResourceBundle().getString(languageKey);
@@ -451,19 +685,37 @@ public class LibraryController {
     }
 
     private void disablePanelVisibility() {
-        AnchorPane categoryList = (AnchorPane) primaryStage.getScene().lookup("#categoryList");
-        AnchorPane languageList = (AnchorPane) primaryStage.getScene().lookup("#languageList");
-        AnchorPane searchBox = (AnchorPane) primaryStage.getScene().lookup("#searchBox");
-        AnchorPane userList = (AnchorPane) primaryStage.getScene().lookup("#userList");
-        AnchorPane notiBox = (AnchorPane) primaryStage.getScene().lookup("#notiBox");
-        AnchorPane appLanguageBox = (AnchorPane) primaryStage.getScene().lookup("#appLanguageBox");
+        AnchorPane categoryList1 = (AnchorPane) primaryStage
+                .getScene().lookup("#categoryList");
+        AnchorPane languageList1 = (AnchorPane) primaryStage
+                .getScene().lookup("#languageList");
+        AnchorPane searchBox1 = (AnchorPane) primaryStage
+                .getScene().lookup("#searchBox");
+        AnchorPane userList1 = (AnchorPane) primaryStage
+                .getScene().lookup("#userList");
+        AnchorPane notiBox1 = (AnchorPane) primaryStage
+                .getScene().lookup("#notiBox");
+        AnchorPane appLanguageBox1 = (AnchorPane) primaryStage
+                .getScene().lookup("#appLanguageBox");
 
-        if (categoryList != null) categoryList.setVisible(false);
-        if (languageList != null) languageList.setVisible(false);
-        if (searchBox != null) searchBox.setVisible(false);
-        if (userList != null) userList.setVisible(false);
-        if (notiBox != null) notiBox.setVisible(false);
-        if (appLanguageBox != null) appLanguageBox.setVisible(false);
+        if (categoryList1 != null) {
+            categoryList1.setVisible(false);
+        }
+        if (languageList1 != null) {
+            languageList1.setVisible(false);
+        }
+        if (searchBox1 != null) {
+            searchBox1.setVisible(false);
+        }
+        if (userList1 != null) {
+            userList1.setVisible(false);
+        }
+        if (notiBox1 != null) {
+            notiBox1.setVisible(false);
+        }
+        if (appLanguageBox1 != null) {
+            appLanguageBox1.setVisible(false);
+        }
     }
 
     @FXML
@@ -523,7 +775,7 @@ public class LibraryController {
         goToSearchPage(searchTerm);
     }
 
-    private void goToSearchPage(String searchTerm) throws Exception {
+    private void goToSearchPage(final String searchTerm) throws Exception {
         List<Book> books = bookService.searchBooks(searchTerm, currentLanguage);
 
         FXMLLoader loader = loadScene("/searchPage.fxml");
@@ -534,11 +786,17 @@ public class LibraryController {
         controller.setBooks(books);
     }
 
-    public void showAuthorBooks(Author author) throws Exception {
+    /**
+     * Loads the books by the selected author.
+     *
+     * @param author1 The author whose books to load.
+     * @throws Exception If an error occurs during loading.
+     */
+    public void showAuthorBooks(final Author author1) throws Exception {
         FXMLLoader loader = loadScene("/booksByAuthor.fxml");
-        currentAuthor = author;
+        currentAuthor = author1;
         BooksByAuthorController controller = loader.getController();
-        controller.setSelectedAuthor(author); // Pass the selected author
+        controller.setSelectedAuthor(author1); // Pass the selected author
         controller.loadBooksByAuthor(); // Load books for that author
     }
 
@@ -582,164 +840,246 @@ public class LibraryController {
 //== Page Navigation Functions ==//
 
 //** Setters **//
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    /**
+     * Sets the main application view.
+     *
+     * @param view1 The main application view.
+     */
+    public void setMainApp(final View view1) {
+        this.view = view1;
     }
 
-    public void setReservationService(ReservationService reservationService) {
-        this.reservationService = reservationService;
+    /**
+     * Sets the primary stage for the application.
+     *
+     * @param primaryStage1 The primary stage.
+     */
+    public void setPrimaryStage(final Stage primaryStage1) {
+        this.primaryStage = primaryStage1;
     }
 
-    public void setAuthorService(AuthorService authorService) {
-        this.authorService = authorService;
+    /**
+     * Sets the saved username.
+     *
+     * @param savedUsername1 The saved username.
+     */
+    public void setSavedUsername(final String savedUsername1) {
+        this.savedUsername = savedUsername1;
     }
 
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
+    /**
+     * Sets the saved email.
+     *
+     * @param savedEmail1 The saved email.
+     */
+    public void setSavedEmail(final String savedEmail1) {
+        this.savedEmail = savedEmail1;
     }
 
-    public void setMainApp(View View) {
-        this.View = View;;
+    /**
+     * Sets the saved user ID.
+     *
+     * @param savedUserId1 The saved user ID.
+     */
+    public void setSavedUserId(final Long savedUserId1) {
+        this.savedUserId = savedUserId1;
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    /**
+     * Sets the saved phone number.
+     *
+     * @param savedPhoneNumber1 The saved phone number.
+     */
+    public void setSavedPhoneNumber(final String savedPhoneNumber1) {
+        this.savedPhoneNumber = savedPhoneNumber1;
     }
 
-    public void setSavedUsername(String savedUsername) {
-        this.savedUsername = savedUsername;
+    /**
+     * Sets the notification circle status.
+     *
+     * @param notiCircleStatus1 The notification circle status.
+     */
+    public void setNotiCircleStatus(final boolean notiCircleStatus1) {
+        this.notiCircleStatus = notiCircleStatus1;
     }
 
-    public void setSavedEmail(String savedEmail) {
-        this.savedEmail = savedEmail;
+    /**
+     * Sets the saved language.
+     * @param locale1 The saved language.
+     */
+    public void setLocale(final Locale locale1) {
+        this.locale = locale1;
     }
 
-    public void setSavedUserId(Long savedUserId) {
-        this.savedUserId = savedUserId;
-    }
-
-    public void setSavedPhoneNumber(String savedPhoneNumber) {
-        this.savedPhoneNumber = savedPhoneNumber;
-    }
-
-    public void setNotiCircleStatus(boolean notiCircleStatus) {
-        this.notiCircleStatus = notiCircleStatus;
-    }
-
-    public void updateUserInfo(User user) {
-        userService.updateUser(user);
-    }
-
-    public void setCurrentLanguage(String language) {
-        currentLanguage = language;
-    }
-
-    public void setLocale(Locale locale) {
-        this.locale = locale;
-    }
-
-    public void setResourceBundle(ResourceBundle resourceBundle) {
-        this.bundle = resourceBundle;
+    /**
+     * Sets the resource bundle for localization.
+     *
+     * @param resourceBundle1 The resource bundle.
+     */
+    public void setResourceBundle(final ResourceBundle resourceBundle1) {
+        this.bundle = resourceBundle1;
     }
 //** Setters **//
 
 //** Getters **//
+    /**
+     * Gets the user service.
+     *
+     * @return The user service.
+     */
     public UserService getUserService() {
         return userService;
     }
 
+    /**
+     * Gets the reservation service.
+     *
+     * @return The reservation service.
+     */
     public ReservationService getReservationService() {
         return reservationService;
     }
 
-
+    /**
+     * Gets the author service.
+     *
+     * @return The author service.
+     */
     public AuthorService getAuthorService() {
         return authorService;
     }
 
+    /**
+     * Gets the book service.
+     *
+     * @return The book service.
+     */
     public BookService getBookService() {
         return bookService;
     }
 
+    /**
+     * Gets the notification service.
+     *
+     * @return The notification service.
+     */
     public NotificationService getNotificationService() {
         return notificationService;
     }
 
+    /**
+     * Gets the main application view.
+     *
+     * @return The main application view.
+     */
     public View getView() {
-        return View;
+        return view;
     }
 
+    /**
+     * Gets the primary stage of the application.
+     *
+     * @return The primary stage.
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * Gets the saved username.
+     *
+     * @return The saved username.
+     */
     public String getSavedUsername() {
         return savedUsername;
     }
 
+    /**
+     * Gets the saved email.
+     *
+     * @return The saved email.
+     */
     public String getSavedEmail() {
         return savedEmail;
     }
 
+    /**
+     * Gets the saved user ID.
+     *
+     * @return The saved user ID.
+     */
     public Long getSavedUserId() {
         return savedUserId;
     }
 
+    /**
+     * Gets the saved phone number.
+     *
+     * @return The saved phone number.
+     */
     public String getSavedPhoneNumber() {
         return savedPhoneNumber;
     }
 
-    public String getUserPhone(String email){
-        return userService.getUserPhone(email);
+    /**
+     * Gets the notification circle status.
+     * @param email1 The email of the user.
+     * @return The notification circle status.
+     */
+    public String getUserPhone(final String email1) {
+        return userService.getUserPhone(email1);
     }
 
-    public Reservation getReservationByUserAndBook (Long userId, Long bookId) {
-        return reservationService.getReservationByUserAndBook(userId, bookId);
+    /**
+     * Gets the notification circle status.
+     * @param userId1 The ID of the user.
+     * @param bookId1 The ID of the book.
+     * @return The notification circle status.
+     */
+    public Reservation getReservationByUserAndBook(final Long userId1,
+                                                   final Long bookId1) {
+        return reservationService.getReservationByUserAndBook(userId1, bookId1);
     }
 
-    public String getUserNameByEmail(String email) {
-        return userService.getUserByEmail(email).getUsername();
+    /**
+     * Gets the notification circle status.
+     * @param email1 The email of the user.
+     * @return The notification circle status.
+     */
+    public String getUserNameByEmail(final String email1) {
+        return userService.getUserByEmail(email1).getUsername();
     }
 
-    public User getUserByEmail(String email) {
-        return userService.getUserByEmail(email);
+    /**
+     * Gets the notification circle status.
+     * @param email1 The email of the user.
+     * @return The notification circle status.
+     */
+    public User getUserByEmail(final String email1) {
+        return userService.getUserByEmail(email1);
     }
 
-    public List<Book> getBooksByCategory(String category) {
-        if (!AuthManager.getInstance().validateToken()) {
-            throw new SecurityException("Invalid token");
-        }
-        return bookService.getBooksByCategory(category);
+    /**
+     * Gets the notification circle status.
+     * @param userId1 The ID of the user.
+     * @return The notification circle status.
+     */
+    public List<Reservation> getMyBookings(final Long userId1) {
+        return reservationService.getReservationsByUserId(userId1);
     }
 
-    public List<Book> searchBooksByAuthor(String authorFirstName, String authorLastName) {
-        return authorService.getBooksByAuthor(authorFirstName, authorLastName, currentLanguage);
-    }
-
-    public List<Book> searchBooksByTitle(String title, String currentLanguage) {
-        return bookService.getBooksByTitle(title, currentLanguage);
-    }
-
-    public List<Book> searchBooksByCategory(String genre) {
-        return bookService.getBooksByCategory(genre);
-    }
-
-    public List<Book> searchBooksByLanguage(String language) {
-        return bookService.getBooksByLanguage(language);
-    }
-
-    public int getUserBookCount(Long userId) {
-        return userService.getUserBookCount(userId);
-    }
-
-    public List<Reservation> getMyBookings(Long userId) {
-        return reservationService.getReservationsByUserId(userId);
-    }
-
+    /**
+     * Gets the current language.
+     * @return The current language.
+     */
     public String getCurrentLanguage() {
         return currentLanguage;
     }
 
+    /**
+     * Gets the current locale.
+     * @return The current locale.
+     */
     public Locale getCurrentLocale() {
         if (this.locale == null) {
             this.locale = new Locale("en", "US");
@@ -747,9 +1087,14 @@ public class LibraryController {
         return this.locale;
     }
 
+    /**
+     * Gets the resource bundle for localization.
+     * @return The resource bundle.
+     */
     public ResourceBundle getResourceBundle() {
         if (this.bundle == null) {
-            this.bundle = ResourceBundle.getBundle("resource_bundle", getCurrentLocale());
+            this.bundle = ResourceBundle
+                    .getBundle("resource_bundle", getCurrentLocale());
         }
         return this.bundle;
     }

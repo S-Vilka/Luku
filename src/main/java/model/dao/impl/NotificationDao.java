@@ -80,7 +80,8 @@ public class NotificationDao {
         String query = "INSERT INTO notifications (user_id, message_en, "
                 + "message_ur, message_ru, created_at, reservation_id) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setLong(USER_ID_INDEX,
                     notification.getUser().getUserId());
             stmt.setString(MESSAGE_EN_INDEX,
@@ -106,7 +107,8 @@ public class NotificationDao {
     public List<Notification> getNotificationsByUserId(final Long userId) {
         List<Notification> notifications = new ArrayList<>();
         String query = "SELECT * FROM notifications WHERE user_id = ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setLong(1, userId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -186,7 +188,8 @@ public class NotificationDao {
 
     public void deleteNotification(final Long reservationId) {
         String query = "DELETE FROM notifications WHERE reservation_id = ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setLong(1, reservationId);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -225,7 +228,8 @@ public class NotificationDao {
                 + "message_ur = ?, "
                 + "message_ru = ? "
                 + "WHERE reservation_id = ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setString(MESSAGE_EN_INDEX, messageEn);
             stmt.setString(MESSAGE_UR_INDEX, messageUr);
             stmt.setString(MESSAGE_RU_INDEX, messageRu);

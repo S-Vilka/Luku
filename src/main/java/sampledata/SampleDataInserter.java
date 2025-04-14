@@ -1,4 +1,4 @@
-package sampleData;
+package sampledata;
 
 import config.DatabaseConfig;
 import model.dao.impl.BaseDao;
@@ -17,21 +17,21 @@ public final class SampleDataInserter {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    public static void main(String[] args) {
+    /**
+     * Main method to insert sample data into the database.
+     *
+     * @param args Command-line arguments (not used).
+     */
+    public static void main(final String[] args) {
         try {
             Connection connection = DatabaseConfig.getConnection();
             BaseDao.setConnection(connection);
             UserDao userDao = new UserDao();
-
             // Drop existing tables
             try (Statement stmt = connection.createStatement()) {
-
-
-                // Drop
                 stmt.execute("DROP TABLE IF EXISTS notifications, reservations,"
                         + " writes, books, authors, users");
             }
-
             // Create the users table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS users ("
@@ -46,8 +46,7 @@ public final class SampleDataInserter {
                         + "deleted_at TIMESTAMP"
                         + ")");
             }
-
-            // Insert sample users
+            // Insert sample user
             User user1 = new User();
             user1.setUsername("user1");
             user1.setPassword("password1");
@@ -58,20 +57,7 @@ public final class SampleDataInserter {
             user1.setCreatedAt(LocalDateTime.now());
             user1.setDeletedAt(null);
             userDao.saveUser(user1);
-
-            User user2 = new User();
-            user2.setUsername("user2");
-            user2.setPassword("password2");
-            user2.setEmail("user2@example.com");
-            user2.setPhone("0987654321");
-            user2.setRole("teacher");
-            user2.setBookCount(0);
-            user2.setCreatedAt(LocalDateTime.now());
-            user2.setDeletedAt(null);
-            userDao.saveUser(user2);
-
-            System.out.println("✅ Sample users inserted successfully!");
-
+            System.out.println("✅ Sample user inserted successfully!");
             // Create the authors table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS authors ("
@@ -84,7 +70,6 @@ public final class SampleDataInserter {
                         + "profile_image VARCHAR(255)"
                         + ")");
             }
-
             // Insert sample authors
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO authors (first_name, last_name, "
@@ -101,9 +86,7 @@ public final class SampleDataInserter {
                         + "('Bill', 'Black', 'History research', "
                         + "'1995-12-01', 'Sacramento', NULL)");
             }
-
             System.out.println("✅ Sample authors inserted successfully!");
-
             // Create the books table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS books ("
@@ -124,8 +107,7 @@ public final class SampleDataInserter {
                         + "cover_image VARCHAR(255)"
                         + ") CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
             }
-
-// Insert sample books
+            // Insert sample books
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO books (title_en, title_ur, title_ru, "
                         + "publication_date, description,"
@@ -160,7 +142,6 @@ public final class SampleDataInserter {
                         + "'888-8888888', 'Shelf H8', 'world_history.png')");
             }
             System.out.println("✅ Sample books inserted successfully!");
-
             // Create the writes table
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS writes ("
@@ -171,15 +152,12 @@ public final class SampleDataInserter {
                         + "FOREIGN KEY (author_id) REFERENCES authors(author_id)"
                         + ")");
             }
-
             // Insert sample writes
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO writes (book_id, author_id) VALUES "
                         + "(1, 1), (2, 2), (3, 3), (4, 4), (5, 1), (6, 2), (7, 3), (8, 4)");
             }
-
             System.out.println("✅ Sample writes inserted successfully!");
-
             // **CREATE RESERVATIONS TABLE**
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS reservations ("
@@ -192,17 +170,13 @@ public final class SampleDataInserter {
                         + "FOREIGN KEY (book_id) REFERENCES books(book_id)"
                         + ")");
             }
-
             System.out.println("✅ Reservations table created successfully!");
-
             // Insert sample reservations
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("INSERT INTO reservations (user_id, book_id, borrow_date, due_date) VALUES "
                         + "(1, 1, '2024-03-09 10:00:00', '2024-03-23 10:00:00')");
             }
-
             System.out.println("✅ Sample reservations inserted successfully!");
-
             // **CREATE NOTIFICATIONS TABLE**
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("CREATE TABLE IF NOT EXISTS notifications ("
@@ -217,9 +191,7 @@ public final class SampleDataInserter {
                         + "FOREIGN KEY (reservation_id) REFERENCES reservations(reservation_id)"
                         + ") CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
             }
-
             System.out.println("✅ Notifications table created successfully!");
-
         } catch (Exception e) {
             e.printStackTrace();
         }

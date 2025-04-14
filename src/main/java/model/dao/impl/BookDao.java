@@ -3,17 +3,26 @@ package model.dao.impl;
 import model.entity.Author;
 import model.entity.Book;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BookDao {
+public final class BookDao {
 
-    public Book getBookById(Long bookId) {
+    /**
+     * Retrieves a book by its ID.
+     * @param bookId The ID of the book to retrieve.
+     * @return The book with the specified ID, or null if not found.
+     */
+    public Book getBookById(final Long bookId) {
         String query = "SELECT * FROM books WHERE book_id = ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setLong(1, bookId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -25,12 +34,17 @@ public class BookDao {
         return null;
     }
 
-
-    public List<Book> getBooksByAuthorId(Long authorId) {
+    /**
+     * Retrieves a list of books by the author's ID.
+     * @param authorId The ID of the author whose books to retrieve.
+     * @return A list of books written by the specified author.
+     */
+    public List<Book> getBooksByAuthorId(final Long authorId) {
         List<Book> books = new ArrayList<>();
-//        String query = "SELECT * FROM books WHERE author_id = ?";
-        String query = "SELECT b.* FROM books b JOIN writes w ON b.book_id = w.book_id WHERE w.author_id = ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        String query = "SELECT b.* FROM books b JOIN writes w "
+                       + "ON b.book_id = w.book_id WHERE w.author_id = ?";
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setLong(1, authorId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -42,6 +56,10 @@ public class BookDao {
         return books;
     }
 
+    /**
+     * Retrieves the total number of books in the database.
+     * @return The total number of books.
+     */
     public int getBookCount() {
         String query = "SELECT COUNT(*) FROM books";
         try (Statement stmt = BaseDao.getConnection().createStatement()) {
@@ -55,7 +73,10 @@ public class BookDao {
         return 0;
     }
 
-
+    /**
+     * Retrieves all books from the database.
+     * @return A list of all books.
+     */
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
         String query = "SELECT * FROM books";
@@ -70,7 +91,7 @@ public class BookDao {
         return books;
     }
 
-    private Book mapRowToBook(ResultSet rs) throws SQLException {
+    private Book mapRowToBook(final ResultSet rs) throws SQLException {
         Book book = new Book();
         book.setBookId(rs.getLong("book_id"));
         book.setTitleEn(rs.getString("title_en"));
@@ -91,10 +112,17 @@ public class BookDao {
         return book;
     }
 
-    public Set<Author> getAuthorsByBookId(Long bookId) {
+    /**
+     * Retrieves authors for a specific book by its ID.
+     * @param bookId The ID of the book whose authors to retrieve.
+     * @return A set of authors who wrote the specified book.
+     */
+    public Set<Author> getAuthorsByBookId(final Long bookId) {
         Set<Author> authors = new HashSet<>();
-        String query = "SELECT a.* FROM authors a JOIN writes w ON a.author_id = w.author_id WHERE w.book_id = ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        String query = "SELECT a.* FROM authors a JOIN writes w "
+                        + "ON a.author_id = w.author_id WHERE w.book_id = ?";
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setLong(1, bookId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -111,7 +139,14 @@ public class BookDao {
         return authors;
     }
 
-    public List<Book> getBooksByTitle(String title, String currentLanguage) {
+    /**
+     * Retrieves books by their title in the specified language.
+     * @param title The title of the book to search for.
+     * @param currentLanguage The current language of the user.
+     * @return A list of books matching the specified title and language.
+     */
+    public List<Book> getBooksByTitle(final String title,
+                                      final String currentLanguage) {
         List<Book> books = new ArrayList<>();
         String query = "SELECT * FROM books WHERE ";
 
@@ -128,7 +163,8 @@ public class BookDao {
                 break;
         }
 
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setString(1, "%" + title + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -140,10 +176,16 @@ public class BookDao {
         return books;
     }
 
-    public List<Book> getBooksByCategory(String genre) {
+    /**
+     * Retrieves books by their category.
+     * @param genre The category of the book to search for.
+     * @return A list of books matching the specified category.
+     */
+    public List<Book> getBooksByCategory(final String genre) {
         List<Book> books = new ArrayList<>();
         String query = "SELECT * FROM books WHERE category LIKE ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setString(1, "%" + genre + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -155,10 +197,16 @@ public class BookDao {
         return books;
     }
 
-    public List<Book> getBooksByLanguage(String language) {
+    /**
+     * Retrieves books by their language.
+     * @param language The language of the book to search for.
+     * @return A list of books matching the specified language.
+     */
+    public List<Book> getBooksByLanguage(final String language) {
         List<Book> books = new ArrayList<>();
         String query = "SELECT * FROM books WHERE language LIKE ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setString(1, "%" + language + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -170,9 +218,17 @@ public class BookDao {
         return books;
     }
 
-    public void updateBookAvailabilityStatus(Long bookId, String availabilityStatus) {
-        String query = "UPDATE books SET availability_status = ? WHERE book_id = ?";
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+    /**
+     * Updates the availability status of a book.
+     * @param bookId The ID of the book to update.
+     * @param availabilityStatus The new availability status.
+     */
+    public void updateBookAvailabilityStatus(final Long bookId,
+                                             final String availabilityStatus) {
+        String query = "UPDATE books SET availability_status = ? "
+                        + "WHERE book_id = ?";
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             stmt.setString(1, availabilityStatus);
             stmt.setLong(2, bookId);
             stmt.executeUpdate();
@@ -181,7 +237,14 @@ public class BookDao {
         }
     }
 
-    public List<Book> searchBooks(String keyword, String currentLanguage) {
+    /**
+     * Updates the location of a book.
+     * @param keyword The keyword to search for.
+     * @param currentLanguage The current language of the user.
+     * @return A list of books matching the specified keyword.
+     */
+    public List<Book> searchBooks(final String keyword,
+                                  final String currentLanguage) {
         List<Book> books = new ArrayList<>();
         String query = "SELECT * FROM books WHERE ";
 
@@ -198,7 +261,8 @@ public class BookDao {
                 break;
         }
 
-        try (PreparedStatement stmt = BaseDao.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = BaseDao.getConnection()
+                .prepareStatement(query)) {
             String searchKeyword = "%" + keyword + "%";
             stmt.setString(1, searchKeyword);
             stmt.setString(2, searchKeyword);

@@ -155,7 +155,6 @@ public class CategoryPageController extends LibraryController {
     public final void setBooks(final List<Book> books) {
         bookVBox.getChildren().clear();
         bookVBox.setSpacing(BOOK_SPACING);
-
         if (books == null || books.isEmpty()) {
             scrollBox.setVisible(false);
             noBooks.setVisible(true);
@@ -164,11 +163,9 @@ public class CategoryPageController extends LibraryController {
             scrollBox.setVisible(true);
             noBooks.setVisible(false);
         }
-
         if (!availabilityCheckBox.isSelected()) {
             setAllBooks(books);
         }
-
         HBox hBox = null;
         for (int i = 0; i < books.size(); i++) {
             if (i % 2 == 0) {
@@ -180,7 +177,6 @@ public class CategoryPageController extends LibraryController {
                         getClass().getResource("/bookBox.fxml"));
                 loader.setResources(getResourceBundle());
                 AnchorPane bookBox = loader.load();
-
                 Label bookName = (Label) bookBox.lookup("#bookName");
                 Label author = (Label) bookBox.lookup("#author");
                 Label publicationDate = (Label) bookBox.lookup(
@@ -194,7 +190,6 @@ public class CategoryPageController extends LibraryController {
 
                 Book book = books.get(i);
                 bookName.setText(book.getTitle(getCurrentLanguage()));
-
                 Set<Author> authorSet = getBookService()
                         .getAuthorsByBookId(book.getBookId());
                 String authorsText = authorSet.stream()
@@ -203,24 +198,19 @@ public class CategoryPageController extends LibraryController {
                 author.setText(authorsText.isEmpty()
                         ? getResourceBundle().getString("unknownAuthor")
                         : authorsText);
-
                 publicationDate.setText(book.getPublicationDate() != null
                         ? book.getPublicationDate().toString()
                         : getResourceBundle().getString("unknown"));
-
                 availability.setText("Available".equals(
                         book.getAvailabilityStatus())
                         ? getResourceBundle().getString("available")
                         : getResourceBundle().getString("checkedout"));
-
                 location.setText(book.getLocation() != null
                         ? book.getLocation()
                         : getResourceBundle().getString("unknown"));
                 bookId.setText(String.valueOf(book.getBookId()));
-
                 String imagePath = book.getCoverImage();
                 Image image;
-
                 if (imagePath != null && !imagePath.isEmpty()) {
                     try {
                         image = new Image(getClass().getResourceAsStream(
@@ -240,12 +230,9 @@ public class CategoryPageController extends LibraryController {
                     image = new Image(getClass().getResourceAsStream(
                             "/bookpicture.jpg"));
                 }
-
                 bookCover.setImage(image);
-
                 Long userId = getSavedUserId();
                 boolean isLoggedIn = userId != null;
-
                 if (!isLoggedIn) {
                     reserveButton.setText(getResourceBundle().getString(
                             "loginToReserve"));
@@ -255,7 +242,6 @@ public class CategoryPageController extends LibraryController {
                     String userRole = getUserService().getUserRole(userId);
                     int userBookCount = getUserService()
                             .getUserBookCount(userId);
-
                     if ("teacher".equalsIgnoreCase(userRole)) {
                         reserveButton.setText(getResourceBundle().getString(
                                 "reserve"));
@@ -291,7 +277,6 @@ public class CategoryPageController extends LibraryController {
                         availability.setStyle("-fx-text-fill: red;");
                     }
                 }
-
                 Long bookIdNo = book.getBookId();
                 reserveButton.setOnAction(event -> {
                     if (isLoggedIn) {
@@ -302,7 +287,6 @@ public class CategoryPageController extends LibraryController {
                         }
                     }
                 });
-
                 hBox.getChildren().add(bookBox);
             } catch (Exception e) {
                 e.printStackTrace();

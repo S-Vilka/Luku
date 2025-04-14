@@ -181,7 +181,6 @@ public class BooksByAuthorController extends LibraryController {
     public void setBooks(final List<Book> books) {
         bookVBox.getChildren().clear();
         bookVBox.setSpacing(AUTHOR_SPACING);
-
         if (books == null || books.isEmpty()) {
             scrollBox.setVisible(false);
             noBooks.setVisible(true);
@@ -190,25 +189,21 @@ public class BooksByAuthorController extends LibraryController {
             scrollBox.setVisible(true);
             noBooks.setVisible(false);
         }
-
         if (!availabilityCheckBox.isSelected()) {
             setAllBooks(books);
         }
-
         HBox hBox = null;
         for (int i = 0; i < books.size(); i++) {
             if (i % 2 == 0) {
                 hBox = new HBox(AUTHOR_SPACING);
                 bookVBox.getChildren().add(hBox);
             }
-
             try {
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource("/bookBox.fxml")
                 );
                 loader.setResources(getResourceBundle());
                 AnchorPane bookBox = loader.load();
-
                 Label bookName = (Label) bookBox.lookup("#bookName");
                 Label author = (Label) bookBox.lookup("#author");
                 Label publicationDate =
@@ -221,10 +216,8 @@ public class BooksByAuthorController extends LibraryController {
                         (Button) bookBox.lookup("#reserveButton");
                 ImageView bookCover =
                         (ImageView) bookBox.lookup("#bookCover");
-
                 Book book = books.get(i);
                 bookName.setText(book.getTitle(getCurrentLanguage()));
-
                 Set<Author> authorSet =
                         bookService.getAuthorsByBookId(book.getBookId());
                 String authorsText = authorSet.stream()
@@ -233,7 +226,6 @@ public class BooksByAuthorController extends LibraryController {
                 author.setText(authorsText.isEmpty()
                         ? getResourceBundle().getString("unknownAuthor")
                         : authorsText);
-
                 publicationDate.setText(book.getPublicationDate() != null
                         ? book.getPublicationDate().toString()
                         : getResourceBundle().getString("unknown"));
@@ -245,42 +237,28 @@ public class BooksByAuthorController extends LibraryController {
                         ? book.getLocation()
                         : getResourceBundle().getString("unknown"));
                 bookIdLabel.setText(String.valueOf(book.getBookId()));
-
                 Image image;
                 String imagePath = book.getCoverImage();
-
                 if (imagePath != null && !imagePath.isEmpty()) {
                     try {
-                        image = new Image(
-                                getClass().getResourceAsStream("/" + imagePath)
-                        );
+                        image = new Image(getClass()
+                            .getResourceAsStream("/" + imagePath));
                         if (image.isError() || image.getWidth() <= 0) {
-                            throw new Exception("Image not found: "
-                                    + imagePath);
+                            throw new Exception("Image not found");
                         }
                     } catch (Exception e) {
-                        System.out.println(
-                                "Falling back to default image: bookpicture.jpg"
-                        );
                         image = new Image(
                                 getClass().getResourceAsStream(
                                         "/bookpicture.jpg")
                         );
                     }
                 } else {
-                    System.out.println(
-                            "No cover image found for book. Using default."
-                    );
-                    image = new Image(
-                            getClass().getResourceAsStream("/bookpicture.jpg")
-                    );
+                    image = new Image(getClass()
+                            .getResourceAsStream("/bookpicture.jpg"));
                 }
-
                 bookCover.setImage(image);
-
                 Long userId = getSavedUserId();
                 boolean isLoggedIn = userId != null;
-
                 if (!isLoggedIn) {
                     reserveButton.setText(
                             getResourceBundle().getString("loginToReserve")
@@ -292,11 +270,9 @@ public class BooksByAuthorController extends LibraryController {
                             getUserService().getUserRole(userId);
                     int userBookCount =
                             getUserService().getUserBookCount(userId);
-
                     if ("teacher".equalsIgnoreCase(userRole)) {
-                        reserveButton.setText(
-                                getResourceBundle().getString("reserve")
-                        );
+                        reserveButton.setText(getResourceBundle()
+                                .getString("reserve"));
                         reserveButton.setStyle(
                                 "-fx-text-fill: green; -fx-font-size: 18px; "
                                         + "-fx-font-weight: bold;"
@@ -336,7 +312,6 @@ public class BooksByAuthorController extends LibraryController {
                         availability.setStyle("-fx-text-fill: red;");
                     }
                 }
-
                 final Long bookIdNo = book.getBookId();
                 reserveButton.setOnAction(event -> {
                     if (isLoggedIn) {
@@ -347,7 +322,6 @@ public class BooksByAuthorController extends LibraryController {
                         }
                     }
                 });
-
                 hBox.getChildren().add(bookBox);
             } catch (Exception e) {
                 e.printStackTrace();
