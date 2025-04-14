@@ -5,4 +5,3 @@ public class Main {
         View.launch(View.class);
     }
 }
-
