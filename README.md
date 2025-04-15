@@ -261,6 +261,8 @@ Make sure you are in docker folder of the project. To run the Docker multiple co
     ```sh
     docker-compose up
     ```
+This will start the application and the database in separate containers.
+
 ---
 ## Data Persistence
 
