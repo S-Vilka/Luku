@@ -3,7 +3,7 @@
 ## Overview
 Luku is a Library Management System developed for students and teachers, offering intuitive features to browse, search, and reserve books. Users can search by category, author, or title, and manage their reservations with ease.
 
-The project is implemented in Java using Maven and supports localization in English, Russian, and Urdu.
+The project is implemented in Java using Maven and supports **localization** in English, Russian, and Urdu.
 
 Luku was developed as part of a second-year Software Engineering course at Metropolia University of Applied Sciences.
 
@@ -30,6 +30,7 @@ Luku was developed as part of a second-year Software Engineering course at Metro
 - Testcontainers
 - Docker
 - Jenkins
+- SonarScanner
 
 ## Prerequisites
 - Java 11 or higher
@@ -37,6 +38,11 @@ Luku was developed as part of a second-year Software Engineering course at Metro
 - MariaDB
 - Docker
 - XQuartz (for macOS)
+- Xming (for Windows)
+- Jenkins (optional for CI/CD)
+- SonarQube (optional for code analysis)
+- IntelliJ IDEA (or any Java IDE)
+- JavaFX (for GUI)
 
 
 ## Use Case Diagram
@@ -115,6 +121,9 @@ The project includes unit tests for the service and controller layers. To run th
 - SampleDataInserter.java: Inserts sample data into the database.
 - pom.xml: Contains the Maven project configuration.
 - Dockerfile: Contains the Docker image configuration.
+- .env: Contains environment variables for the application.
+- .env.docker: Contains environment variables for the Docker container.
+- sonar-project.properties: Contains the SonarQube project configuration.
 
 ## Jenkins Setup
 **Install Jenkins:**
@@ -252,17 +261,38 @@ Make sure you are in docker folder of the project. To run the Docker multiple co
     ```sh
     docker-compose up
     ```
-
+---
 ## Data Persistence
 
 The project uses MariaDB to store data. The changes made while running docker or locally will be persisted in the database. 
 It is because the database is mounted to the host machine.
 
+### **Volume Mounting**
+
+The mariadb_data volume is used to persist database data. 
+This ensures that even if the MariaDB container is stopped or removed, the data remains intact and can be reused when the container is restarted.
+
+### **Database Initialization**
+
+An `SQL script (db_init.sql)` is mounted to the container at `/docker-entrypoint-initdb.d/`. 
+This script is executed automatically when the database is initialized, allowing you to prepopulate the database with required data.
+
+### **Backup and Restore**
+To back up the database, you can use the following command:
+```sh
+  docker exec -t mariadb_container_name mysqldump -u root --password=root library_db > backup.sql
+```
+
+### Restore the database from a backup:
+```sh
+  docker exec -i mariadb_container_name mysql -u root --password=root library_db < backup.sql
+```
+---
 ## Code Quality & Static Analysis
 
 ### **Checkstyle Plugin (IntelliJ IDEA)**
 
-We use the **Checkstyle plugin** in IntelliJ IDEA to maintain consistent coding standards across the codebase.
+The project uses **Checkstyle plugin** in IntelliJ IDEA to maintain consistent coding standards across the codebase.
 
 **Checkstyle configuration:**
 
@@ -292,7 +322,7 @@ This plugin helped us identify and fix **1597** code style violations out of **1
 ---
 ## SonarQube Code Analysis
 
-We use **SonarQube** for comprehensive static code analysis, focusing on **security**, **reliability**, and **maintainability**.
+The project uses **SonarQube** for comprehensive static code analysis, focusing on **security**, **reliability**, and **maintainability**.
 
 **Current Quality Gate Rating:**
 
