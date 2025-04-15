@@ -258,6 +258,7 @@ If you cannot find the XLaunch executable, make sure that you have installed Xmi
 **Run Docker Compose:**
 
 Make sure you are in docker folder of the project. To run the Docker multiple container, use the following command:
+
     ```sh
     docker-compose up
     ```
