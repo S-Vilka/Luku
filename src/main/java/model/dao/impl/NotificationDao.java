@@ -66,6 +66,10 @@ public class NotificationDao {
      * Index for the reservation ID in the SQL query.
      */
     private static final int RESERVATION_ID_INDEX = 6;
+    /**
+     * Index for the reservation ID in the SQL query.
+     */
+    private static final int RESERVATION_INDEX = 4;
 
     /**
      * Saves a notification to the database.
@@ -233,7 +237,7 @@ public class NotificationDao {
             stmt.setString(MESSAGE_EN_INDEX, messageEn);
             stmt.setString(MESSAGE_UR_INDEX, messageUr);
             stmt.setString(MESSAGE_RU_INDEX, messageRu);
-            stmt.setLong(RESERVATION_ID_INDEX, reservationId);
+            stmt.setLong(RESERVATION_INDEX, reservationId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

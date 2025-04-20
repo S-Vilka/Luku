@@ -162,8 +162,7 @@ public class AuthorsPageController extends LibraryController {
 
                 hBox.getChildren().add(authorBox);
             } catch (Exception e) {
-                System.out.println("Error loading authorBox.fxml:");
-                e.printStackTrace();
+                System.err.println("Error loading authorBox.fxml: " + e.getClass().getSimpleName() + " - " + e.getMessage());
             }
         }
     }

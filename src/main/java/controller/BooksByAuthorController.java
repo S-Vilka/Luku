@@ -169,7 +169,8 @@ public class BooksByAuthorController extends LibraryController {
             reserveBook(userId, bookId);
             showAuthorBooks(selectedAuthor);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error reserving book or showing author books: "
+                    + e.getClass().getSimpleName() + " - " + e.getMessage());
         }
     }
 
@@ -318,13 +319,15 @@ public class BooksByAuthorController extends LibraryController {
                         try {
                             chooseReserveAuthor(bookIdNo);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            System.err.println("Error loading book or showing author books: "
+                                    + e.getClass().getSimpleName() + " - " + e.getMessage());
                         }
                     }
                 });
                 hBox.getChildren().add(bookBox);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.println("Error loading books or showing author books: "
+                        + e.getClass().getSimpleName() + " - " + e.getMessage());
             }
         }
     }
