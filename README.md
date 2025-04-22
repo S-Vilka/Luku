@@ -5,8 +5,6 @@ Luku is a Library Management System developed for students and teachers, offerin
 
 The project is implemented in Java using Maven and supports **localization** in English, Russian, and Urdu.
 
-Luku was developed as part of a second-year Software Engineering course at Metropolia University of Applied Sciences.
-
 ## Features
 - Manage reservations (create, update)
 - Manage users (register, update)
