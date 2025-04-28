@@ -380,6 +380,8 @@ The detailed evaluation can be found in the Team 5 - Heuristic Report.pdf locate
 **Suggested Improvements:**
 - Enhance session handling and error feedback, add confirmations and tooltips, improve navigation, adopt European date format, and lock reservations.
 
+
+
 ### User Acceptance Testing (UAT)
 
 **UAT Plan:**
