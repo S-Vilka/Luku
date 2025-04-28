@@ -360,4 +360,39 @@ The project uses **SonarQube** for comprehensive static code analysis, focusing 
 4. **View Results:**
    - Open `http://localhost:9000` in your browser.
    - Navigate to your project to view the analysis results.
+  
+---
+## Heuristic Evaluation and User Acceptance Testing
+
+### Heuristic Evaluation
+
+During Sprint 7, a Heuristic Evaluation of the Luku project was conducted using Jakob Nielsen’s 10 Usability Heuristics.
+The detailed evaluation can be found in the Team 5 - Heuristic Report.pdf located in the doc folder of the project.
+
+**Summary of Heuristic Evaluation:**
+
+**Strengths:**
+	•	Consistent and user-friendly interface with clear feedback and localization support.
+
+**Identified Usability Issues:**
+	•	Session management, vague error messages, missing cancel options, tedious navigation, no keyboard shortcuts, and lack of help features.
+
+**Suggested Improvements:**
+	•	Enhance session handling and error feedback, add confirmations and tooltips, improve navigation, adopt European date format, and lock reservations.
+
+### User Acceptance Testing (UAT)
+
+**UAT Plan:**
+	•	Updated to reflect the latest development progress.
+	•	Focused on validating core functionalities against user requirements.
+
+**UAT Execution:**
+	•	12 UAT test cases created based on the product backlog.
+
+**Results:**
+	•	10 tests passed successfully.
+	•	2 tests failed and were documented for further fixes.
+
+The detailed results of the tests can be found in the Team 5 - User Acceptance Test.pdf located in the doc folder of the project.
+
 
