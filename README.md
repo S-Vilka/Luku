@@ -372,26 +372,26 @@ The detailed evaluation can be found in the Team 5 - Heuristic Report.pdf locate
 **Summary of Heuristic Evaluation:**
 
 **Strengths:**
-	•	Consistent and user-friendly interface with clear feedback and localization support.
+	• Consistent and user-friendly interface with clear feedback and localization support.
 
 **Identified Usability Issues:**
-	•	Session management, vague error messages, missing cancel options, tedious navigation, no keyboard shortcuts, and lack of help features.
+	• Session management, vague error messages, missing cancel options, tedious navigation, no keyboard shortcuts, and lack of help features.
 
 **Suggested Improvements:**
-	•	Enhance session handling and error feedback, add confirmations and tooltips, improve navigation, adopt European date format, and lock reservations.
+	• Enhance session handling and error feedback, add confirmations and tooltips, improve navigation, adopt European date format, and lock reservations.
 
 ### User Acceptance Testing (UAT)
 
 **UAT Plan:**
-	•	Updated to reflect the latest development progress.
-	•	Focused on validating core functionalities against user requirements.
+	• Updated to reflect the latest development progress.
+ 	• Focused on validating core functionalities against user requirements.
 
 **UAT Execution:**
-	•	12 UAT test cases created based on the product backlog.
+	• 12 UAT test cases created based on the product backlog.
 
 **Results:**
-	•	10 tests passed successfully.
-	•	2 tests failed and were documented for further fixes.
+	• 10 tests passed successfully.
+ 	• 2 tests failed and were documented for further fixes.
 
 The detailed results of the tests can be found in the Team 5 - User Acceptance Test.pdf located in the doc folder of the project.
 
