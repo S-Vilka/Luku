@@ -391,7 +391,7 @@ The detailed evaluation can be found in the Team 5 - Heuristic Report.pdf locate
 
 **Results:**
 - 10 tests passed successfully.
-- - 2 tests failed and were documented for further fixes.
+- 2 tests failed and were documented for further fixes.
 
 The detailed results of the tests can be found in the Team 5 - User Acceptance Test.pdf located in the doc folder of the project.
 
