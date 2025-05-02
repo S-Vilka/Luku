@@ -362,7 +362,7 @@ The project uses **SonarQube** for comprehensive static code analysis, focusing 
    - Navigate to your project to view the analysis results.
   
 ---
-## Heuristic Evaluation and User Acceptance Testing
+## Non Functional Testing
 
 ### Heuristic Evaluation
 
