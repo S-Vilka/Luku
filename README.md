@@ -397,4 +397,8 @@ The detailed evaluation can be found in the Team 5 - Heuristic Report.pdf locate
 
 The detailed results of the tests can be found in the Team 5 - User Acceptance Test.pdf located in the doc folder of the project.
 
+---
+## Javadoc 
+To access the Javadoc, open the **`index.html`** file located in the **/apidocs directory** in the main project.
 
+Or visit: `http://localhost:63342/Luku/apidocs/index.html`
