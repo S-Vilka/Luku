@@ -44,10 +44,10 @@ The project is implemented in Java using Maven and supports **localization** in 
 
 
 ## Use Case Diagram
-![Screenshot 2025-03-19 at 20 30 10](https://github.com/user-attachments/assets/0e5b8b43-27ef-4387-b4ca-8f5a2032cb64)
+![Screenshot 2025-03-19 at 20 30 10](https://github.com/S-Vilka/Luku/blob/main/doc/Diagrams/Use_Case_Diagram.jpg)
 
 ## Class Diagram
-![Screenshot 2025-03-19 at 20 29 14](https://github.com/user-attachments/assets/b770566f-6b6d-4fa3-a1ea-b74dc86c6090)
+![Screenshot 2025-03-19 at 20 29 14](https://github.com/S-Vilka/Luku/blob/main/doc/Diagrams/Class_Daigram.jpg)
 
 
 
